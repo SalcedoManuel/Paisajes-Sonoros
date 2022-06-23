@@ -8,7 +8,6 @@ const btn_create = document.getElementById("btn_create");
 const btn_quiz = document.getElementById("btn_quiz");
 const btn_show = document.getElementById("btn_show");
 
-const btn_test = document.getElementById("btn_test");
 const display = document.getElementById("display");
 const info1 = document.getElementById("info1");
 const info2 = document.getElementById("info2");
@@ -22,7 +21,7 @@ info1.textContent = process.arch;
 info2.textContent = process.platform;
 info3.textContent = process.cwd();
 
-btn_create.onclick = () => {
+home.onclick = () => {
     console.log("Creamos un nuevo Cuestionario");
     //-- Enviar mensaje al proceso principal
     electron.ipcRenderer.invoke('home', "Vuelta a la página principal");
@@ -41,7 +40,7 @@ btn_quiz.onclick = () => {
     console.log("Rellenamos el Cuestionario");
 
     //-- Enviar mensaje al proceso principal
-    electron.ipcRenderer.invoke('create', "NUEVO CUESTIONARIO DE PAISAJES SONOROS.");
+    electron.ipcRenderer.invoke('quiz', "RELLENAR CUESTIONARIO DE PAISAJES SONOROS.");
 }
 
 btn_show.onclick = () => {
