@@ -24,15 +24,6 @@ electron.app.on('ready', () => {
         }
     });
 
-  //-- En la parte superior se nos ha creado el menu
-  //-- por defecto
-  //-- Si lo queremos quitar, hay que añadir esta línea
-  //win.setMenuBarVisibility(false)
-
-  //-- Cargar contenido web en la ventana
-  //-- La ventana es en realidad.... ¡un navegador!
-  //win.loadURL('https://www.urjc.es/etsit');
-
   //-- Cargar interfaz gráfica en HTML
   win.loadFile("index.html");
 
@@ -55,3 +46,21 @@ electron.app.on('ready', () => {
 electron.ipcMain.handle('test', (event, msg) => {
   console.log("-> Mensaje: " + msg);
 });
+
+electron.ipcMain.handle('create', (event, msg) => {
+  console.log("-> Mensaje: " + msg);
+  win.loadFile("create_quiz.html");
+});
+electron.ipcMain.handle('quiz', (event, msg) => {
+  console.log("-> Mensaje: " + msg);
+  win.loadFile("quiz.html");
+});
+electron.ipcMain.handle('show', (event, msg) => {
+  console.log("-> Mensaje: " + msg);
+  win.loadFile("read_file.html");
+});
+electron.ipcMain.handle('home', (event, msg) => {
+  console.log("-> Mensaje: " + msg);
+  win.loadFile("index.html");
+});
+

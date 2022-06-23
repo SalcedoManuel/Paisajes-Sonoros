@@ -1,6 +1,16 @@
 body{
     background-color: rgb(0, 0, 0);
 }
+.wrapper{
+    text-align: center;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    grid-template-columns: minmax(200px,300px)1fr;
+}
+button{
+    width: 150px;
+    height: 80px;
+}
 .nav{
     display: flex;
     align-items: center;
@@ -41,12 +51,4 @@ body{
 .nav__link:hover::after{
     transform: scaleX(1);
     transform-origin: left;
-}
-.f1{
-    font-family: "Arial";
-    padding: auto;
-    color: black;
-    text-align: center;
-    border-radius: 20px;
-
 }
