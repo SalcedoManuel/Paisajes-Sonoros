@@ -7,6 +7,8 @@ console.log("Arrancando electron...");
 //-- Se pone aquí para que sea global al módulo principal
 let win = null;
 
+var questions = [true,true,true,true,true,true,true,true,true,true,true,true,true,true]
+
 //-- Punto de entrada. En cuanto electron está listo,
 //-- ejecuta esta función
 electron.app.on('ready', () => {
@@ -59,4 +61,8 @@ electron.ipcMain.handle('home', (event, msg) => {
   console.log("-> Mensaje: " + msg);
   win.loadFile("index.html");
 });
-
+electron.ipcMain.handle('test', (event, msg) => {
+  console.log("-> Mensaje: " + msg);
+  questions = msg;
+  console.log(questions);
+});

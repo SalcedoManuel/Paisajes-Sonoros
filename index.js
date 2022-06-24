@@ -2,6 +2,13 @@ const electron = require('electron');
 
 console.log("Hola desde el proceso de la web...");
 
+var wrapper1 = document.getElementById("wrapper1");
+var wrapper2 = document.getElementById("wrapper2");
+var wrapper3 = document.getElementById("wrapper3");
+var wrapper4 = document.getElementById("wrapper4");
+
+var back = document.getElementById("back");
+
 //-- Obtener elementos de la interfaz
 const home = document.getElementById("home");
 const btn_create = document.getElementById("btn_create");
@@ -20,6 +27,55 @@ const print = document.getElementById("print");
 info1.textContent = process.arch;
 info2.textContent = process.platform;
 info3.textContent = process.cwd();
+
+function create_quiz() {
+    var questions = [];
+    var Part1_Traffic = document.getElementById("Part1_Traffic");
+    questions.push(Part1_Traffic.checked);
+    var Part1_Other = document.getElementById("Part1_Other");
+    questions.push(Part1_Other.checked)
+    var Part1_Human = document.getElementById("Part1_Human");
+    questions.push(Part1_Human.checked);
+    var Part1_Natural = document.getElementById("Part1_Natural");
+    questions.push(Part1_Natural.checked);
+
+    var Part2_Pleasant = document.getElementById("Part2_Pleasant");
+    questions.push(Part2_Pleasant.checked);
+    var Part2_Chaotic = document.getElementById("Part2_Chaotic");
+    questions.push(Part2_Chaotic.checked);
+    var Part2_Vibrant = document.getElementById("Part2_Vibrant");
+    questions.push(Part2_Vibrant.checked);
+    var Part2_Uneventful = document.getElementById("Part2_Uneventful");
+    questions.push(Part2_Uneventful.checked);
+    var Part2_Calm = document.getElementById("Part2_Calm");
+    questions.push(Part2_Calm.checked);
+    var Part2_Annoying = document.getElementById("Part2_Annoying");
+    questions.push(Part2_Annoying.checked);
+    var Part2_Eventful = document.getElementById("Part2_Eventful");
+    questions.push(Part2_Eventful.checked);
+    
+    var Part3 = document.getElementById("Part3");
+    questions.push(Part3.checked);
+
+    var Part4 = document.getElementById("Part4");
+    questions.push(Part4.checked);
+
+    wrapper1.style.display = "none";
+    wrapper2.style.display = "none";
+    wrapper3.style.display = "none";
+    wrapper4.style.display = "none";
+
+    back.innerHTML = "Cuestionario creado. Vuelva al menú principal.";
+
+    console.log(questions);
+    electron.ipcRenderer.invoke('test',questions);
+}
+
+
+
+
+
+
 
 home.onclick = () => {
     console.log("Creamos un nuevo Cuestionario");
