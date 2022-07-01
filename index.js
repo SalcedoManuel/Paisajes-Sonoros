@@ -21,6 +21,7 @@ const info2 = document.getElementById("info2");
 const info3 = document.getElementById("info3");
 const print = document.getElementById("print");
 
+const input = document.getElementById('inputFileServer');
 //-- Acceder a la API de node para obtener la info
 //-- Sólo es posible si nos han dado permisos desde
 //-- el proceso princpal
@@ -28,7 +29,38 @@ info1.textContent = process.arch;
 info2.textContent = process.platform;
 info3.textContent = process.cwd();
 
+// Variables que marcan las ubicaciones de los archivos.
+var audio_files = [];
+var video_files = [];
+var imagen_file = [];
+
+
+function cambiarFile(number){
+
+    if(input.files && input.files[0])
+        console.log("File Seleccionado : ", input.files[0]);
+        if (input.files[0].type.split("/")[0] == "imagen") {
+            console.log("Es una imagen");
+        }else if (input.files[0].type.split("/")[0] == "video") {
+            console.log("Es una video");
+        }else if (input.files[0].type.split("/")[0] == "audio") {
+            console.log("Es una audio");
+        }
+}
+
+
 function create_quiz() {
+    var ejemplos = [];
+    var audio0 = document.getElementById("audio0").value;
+    ejemplos.push(audio0);
+    var audio1 = document.getElementById("audio1").value;
+    ejemplos.push(audio1);
+    var audio2 = document.getElementById("audio2").value;
+    ejemplos.push(audio2);
+    var audio3 = document.getElementById("audio3").value;
+    ejemplos.push(audio3);
+    console.log(ejemplos);
+
     var questions = [];
     var Part1_Traffic = document.getElementById("Part1_Traffic");
     questions.push(Part1_Traffic.checked);
@@ -66,7 +98,6 @@ function create_quiz() {
     wrapper4.style.display = "none";
 
     back.innerHTML = "Cuestionario creado. Vuelva al menú principal.";
-
     console.log(questions);
     electron.ipcRenderer.invoke('test',questions);
 }
