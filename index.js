@@ -2,6 +2,7 @@ const electron = require('electron');
 
 console.log("Hola desde el proceso de la web...");
 
+var wrapper0 = document.getElementById("wrapper0");
 var wrapper1 = document.getElementById("wrapper1");
 var wrapper2 = document.getElementById("wrapper2");
 var wrapper3 = document.getElementById("wrapper3");
@@ -32,19 +33,56 @@ info3.textContent = process.cwd();
 // Variables que marcan las ubicaciones de los archivos.
 var audio_files = [];
 var video_files = [];
-var imagen_file = [];
+
+const output = document.querySelector('.output_video');
+const myFiles = document.querySelector("#myfiles_video");
+
+function logFilenames(){
+  const fileInput = document.querySelector("#myfiles_video");
+  const files = fileInput.files;
+  console.log(files)
+  const fileListLength = files.length;
+  for (let i = 0; i < fileListLength; i++) {
+    output.innerText = `${output.innerText}\n${i}. ${files.item(i).name}`;
+    video_files[i] = files.item(i).path; 
+  }
+  console.log(video_files);
+}
+
+myFiles.addEventListener("change", logFilenames);
 
 
-function cambiarFile(number){
-
+function cambiarFile(type,number,number_id){
     if(input.files && input.files[0])
+        console.log("File update");
         console.log("File Seleccionado : ", input.files[0]);
-        if (input.files[0].type.split("/")[0] == "imagen") {
-            console.log("Es una imagen");
-        }else if (input.files[0].type.split("/")[0] == "video") {
-            console.log("Es una video");
-        }else if (input.files[0].type.split("/")[0] == "audio") {
-            console.log("Es una audio");
+        console.log("Files: ", input.files[1])
+        let mode = input.files[0].type.split("/")[0];
+        console.log("Mode: " + mode + " Type: " + type);
+        if (mode == "audio" && type == "audio") {
+            console.log("Es un audio");
+            audio_files[number] = input.files[0];
+            let status_element = document.getElementById(number_id);
+            status_element.src = "images/ok.png";
+            console.log(status_element.src)
+        }else if (mode == "video" && type == "video") {
+            console.log("Es un video");
+            video_files[number] = input.files[0];
+            let status_element = document.getElementById(number_id);
+            status_element.src = "images/ok.png";
+            console.log(status_element.src)
+        }else if(mode == "image" && type == "video" ){
+            console.log("Es un imagen");
+            video_files[number] = input.files[0];
+            let status_element = document.getElementById(number_id);
+            status_element.src = "images/ok.png";
+            console.log(status_element.src)
+        }else if (type == "audio") {
+            console.log("No has introducido un audio. Has introducido: " + mode);
+            video_files[number] = null;
+        }else if (type = 'video') {
+            console.log("No has introducido ni video, ni audio. Has introducido: " + mode);
+            video_files[number] = null;
         }
 }
 
@@ -92,6 +130,7 @@ function create_quiz() {
     var Part4 = document.getElementById("Part4");
     questions.push(Part4.checked);
 
+    wrapper0.style.display = "none";
     wrapper1.style.display = "none";
     wrapper2.style.display = "none";
     wrapper3.style.display = "none";

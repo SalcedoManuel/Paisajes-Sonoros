@@ -1,5 +1,6 @@
 body{
-    background-color: rgb(255, 0, 0);
+    background-color: rgb(0, 255, 242);
+    min-width: fit-content;
 }
 .wrapper{
     text-align: center;
@@ -22,9 +23,8 @@ button{
     text-align: center;
 }
 .nav__logo{
-    color: #fff;
     margin-left: 2%;
-    max-height: 5%;
+    padding-bottom:1fr;
 }
 
 .nav__list{
@@ -51,4 +51,8 @@ button{
 .nav__link:hover::after{
     transform: scaleX(1);
     transform-origin: left;
+}
+#status_audio_0{
+    min-width: 10px;
+    min-height: 10px;
 }

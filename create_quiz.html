@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Hoja de estilo de la interfaz -->
     <link rel="stylesheet" href="style.css">
@@ -47,54 +46,56 @@
         <tr>
           <td><p>Num. Pregunta</p></td>
           <td><strong>Audio</strong></td>
-          <td><strong>Video</strong></td>
-          <td><strong>Imagen</strong></td>
+          <td></td>
+          <td><strong>Video/Imagen</strong></td>
         </tr>
 
         <tr>
           <td>1.</td>
-          <td><input type="text" name="" id="audio0"></td>
-          <td><input type="text" name="" id="video0"></td>
-          <td><input type="text" name="" id="imagen0"></td>
-        </tr>
+          <td><input type="file" name="fileToUpload" id="inputFileServer" accept="audio/*" onchange="return cambiarFile('audio',0,'status_audio_0');" multiple/></td>
+          <td><img src="images/no.png" alt="" sizes="10px" srcset="" id="status_audio_0"></td>
+          <!--<td><input type="file" name="VideoToUpload" id="inputFileServer0"  accept="image/*,video/*" onchange="return select_video('video',0,'status_video_0');"/ multiple></td>
+          <td><img src="images/no.png" alt="" sizes="10px" srcset="" id="status_video_0"></td>-->
+          <!--'multiple' is set to allow multiple files to be selected-->
+          <td><input id="myfiles_video" multiple type="file">
+            <div class="output_video"></div></td>
 
+
+        </tr>
+<!--
         <tr>
           <td>2.</td>
-          <td><input type="text" name="" id="audio1"></td>
-          <td><input type="text" name="" id="video0"></td>
-          <td><input type="text" name="" id="imagen0"></td>
+          <td><input type="file" name="fileToUpload" id="inputFileServer" accept="audio/*" onchange="return cambiarFile('audio',1,'status_audio_1');" /></td>
+          <td><img src="images/no.png" alt="" sizes="10px" srcset="" id="status_audio_1"></td>
+          <td><input type="file" name="fileToUpload" id="inputFileServer" accept="video/*,image/*" onchange="return cambiarFile('video',1,'status_video_1');"/></td>
+          <td><img src="images/no.png" alt="" sizes="10px" srcset="" id="status_video_1"></td>
         </tr>
 
         <tr>
           <td>3.</td>
-          <td><input type="text" name="" id="audio2"></td>
-          <td><input type="text" name="" id="video0"></td>
-          <td><input type="text" name="" id="imagen0"></td>
+          <td><input type="file" name="fileToUpload" id="inputFileServer" accept="audio/*" onchange="return cambiarFile('audio',2,'status_audio_2');" /></td>
+          <td><img src="images/no.png" alt="" sizes="10px" srcset="" id="status_audio_2"></td>
+          <td><input type="file" name="fileToUpload" id="inputFileServer" accept="video/*,image/*" onchange="return cambiarFile('video',2,'status_video_2');"/></td>
+          <td><img src="images/no.png" alt="" sizes="10px" srcset="" id="status_video_2"></td>
         </tr>
 
         <tr>
           <td>4.</td>
-          <td><input type="text" name="" id="audio3"></td>
-          <td><input type="text" name="" id="video0"></td>
-          <td><input type="text" name="" id="imagen0"></td>
+          <td><input type="file" name="fileToUpload" id="inputFileServer" accept="audio/*" onchange="return cambiarFile('audio',3,'status_audio_3');" /></td>
+          <td><img src="images/no.png" alt="" sizes="10px" srcset="" id="status_audio_3"></td>
+          <td><input type="file" name="fileToUpload" id="inputFileServer" accept="video/*,image/*" onchange="return cambiarFile('video',3,'status_video_3');"/></td>
+          <td><img src="images/no.png" alt="" sizes="10px" srcset="" id="status_video_3"></td>
         </tr>
 
         <tr>
           <td>5.</td>
-          <td><input type="text" name="" id="audio4"></td>
-          <td><input type="text" name="" id="video0"></td>
-          <td><input type="text" name="" id="imagen0"></td>
-        </tr>
+          <td><input type="file" name="fileToUpload" id="inputFileServer" accept="audio/*" onchange="return cambiarFile('audio',4,'status_audio_4');" /></td>
+          <td><img src="images/no.png" alt="" sizes="10px" srcset="" id="status_audio_4"></td>
+          <td><input type="file" name="fileToUpload" id="inputFileServer" accept="video/*,image/*" onchange="return cambiarFile('video',4,'status_video_4');"/></td>
+          <td><img src="images/no.png" alt="" sizes="10px" srcset="" id="status_video_4"></td>
+        </tr>-->
       </table>
     </span>
-    <span>
-      <h4>Añadir Ejemplo</h4>
-      <input type="file" name="fileToUpload" id="inputFileServer" accept="image/*,video/*" onchange="return cambiarFile();" />
-    </span>
-    <p><input type="checkbox" name="" id="Part1_Traffic">Traffic noise (e.g,cars, buses, trains, air planes</p>
-    <p><input type="checkbox" name="" id="Part1_Other">Other noise (e.g, sirens, construction, industry, loading of goods</p>
-    <p><input type="checkbox" name="" id="Part1_Human">Sounds from human begins (e.g., conversation, laughter, children at play, footsteps</p>
-    <p><input type="checkbox" name="" id="Part1_Natural">Natural sounds(e.g., singing birds, flowing water, wind in vegetation)</p>
   </div>
 
   <div class="wrapper" id="wrapper1">
