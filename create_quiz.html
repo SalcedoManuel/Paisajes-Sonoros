@@ -52,48 +52,22 @@
 
         <tr>
           <td>1.</td>
-          <td><input type="file" name="fileToUpload" id="inputFileServer" accept="audio/*" onchange="return cambiarFile('audio',0,'status_audio_0');" multiple/></td>
-          <td><img src="images/no.png" alt="" sizes="10px" srcset="" id="status_audio_0"></td>
-          <!--<td><input type="file" name="VideoToUpload" id="inputFileServer0"  accept="image/*,video/*" onchange="return select_video('video',0,'status_video_0');"/ multiple></td>
-          <td><img src="images/no.png" alt="" sizes="10px" srcset="" id="status_video_0"></td>-->
-          <!--'multiple' is set to allow multiple files to be selected-->
-          <td><input id="myfiles_video" multiple type="file">
-            <div class="output_video"></div></td>
+          <!--<td><input type="file" name="fileToUpload" id="inputFileServer" accept="audio/*" onchange="return cambiarFile('audio',0,'status_audio_0');" multiple/></td>
+          -->
+          <td><input id="myfiles_audio" multiple type="file"></td>
+          <td><img src="images/no.png" alt="" sizes="10px" srcset="" id="status_audio"></td>
+          <td><input id="myfiles_video" multiple type="file"></td>
+          <td><img src="images/no.png" alt="" sizes="10px" srcset="" id="status_video"></td>
 
 
         </tr>
-<!--
         <tr>
-          <td>2.</td>
-          <td><input type="file" name="fileToUpload" id="inputFileServer" accept="audio/*" onchange="return cambiarFile('audio',1,'status_audio_1');" /></td>
-          <td><img src="images/no.png" alt="" sizes="10px" srcset="" id="status_audio_1"></td>
-          <td><input type="file" name="fileToUpload" id="inputFileServer" accept="video/*,image/*" onchange="return cambiarFile('video',1,'status_video_1');"/></td>
-          <td><img src="images/no.png" alt="" sizes="10px" srcset="" id="status_video_1"></td>
+          <td></td>
+          <td><div class="output_audio"></div></td>
+          <td></td>
+          <td><div class="output_video"></div></td>
+          <td></td>
         </tr>
-
-        <tr>
-          <td>3.</td>
-          <td><input type="file" name="fileToUpload" id="inputFileServer" accept="audio/*" onchange="return cambiarFile('audio',2,'status_audio_2');" /></td>
-          <td><img src="images/no.png" alt="" sizes="10px" srcset="" id="status_audio_2"></td>
-          <td><input type="file" name="fileToUpload" id="inputFileServer" accept="video/*,image/*" onchange="return cambiarFile('video',2,'status_video_2');"/></td>
-          <td><img src="images/no.png" alt="" sizes="10px" srcset="" id="status_video_2"></td>
-        </tr>
-
-        <tr>
-          <td>4.</td>
-          <td><input type="file" name="fileToUpload" id="inputFileServer" accept="audio/*" onchange="return cambiarFile('audio',3,'status_audio_3');" /></td>
-          <td><img src="images/no.png" alt="" sizes="10px" srcset="" id="status_audio_3"></td>
-          <td><input type="file" name="fileToUpload" id="inputFileServer" accept="video/*,image/*" onchange="return cambiarFile('video',3,'status_video_3');"/></td>
-          <td><img src="images/no.png" alt="" sizes="10px" srcset="" id="status_video_3"></td>
-        </tr>
-
-        <tr>
-          <td>5.</td>
-          <td><input type="file" name="fileToUpload" id="inputFileServer" accept="audio/*" onchange="return cambiarFile('audio',4,'status_audio_4');" /></td>
-          <td><img src="images/no.png" alt="" sizes="10px" srcset="" id="status_audio_4"></td>
-          <td><input type="file" name="fileToUpload" id="inputFileServer" accept="video/*,image/*" onchange="return cambiarFile('video',4,'status_video_4');"/></td>
-          <td><img src="images/no.png" alt="" sizes="10px" srcset="" id="status_video_4"></td>
-        </tr>-->
       </table>
     </span>
   </div>
@@ -128,7 +102,7 @@
   </div>
 
   <button id="end_create" onclick="create_quiz()">Finalizar</button>
-
+<!--
     <h1>INTERFAZ GRÁFICA</h1>
     <img src="logo-urjc.png" alt="Logo-URJC" width=150px>
 
@@ -145,6 +119,6 @@
     <p>Print:  <span id='print' class="red"></span> </p>
     <p>   <input type="button" value="Test" id="btn_test"> </p>
    <p>Display:</p>
-    <p id="display"></p>
+    <p id="display"></p>-->
 </body>
 </html>

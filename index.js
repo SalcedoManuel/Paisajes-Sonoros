@@ -32,25 +32,73 @@ info3.textContent = process.cwd();
 
 // Variables que marcan las ubicaciones de los archivos.
 var audio_files = [];
+var image_files = [];
 var video_files = [];
 
 const output = document.querySelector('.output_video');
+const output_Audio = document.querySelector('.output_audio');
 const myFiles = document.querySelector("#myfiles_video");
+const myFiles_Audio = document.querySelector("#myfiles_audio");
 
 function logFilenames(){
+  // Variable que marca si los archivos añadidos son válidos o no.
+  let ok_files = true;
   const fileInput = document.querySelector("#myfiles_video");
   const files = fileInput.files;
   console.log(files)
   const fileListLength = files.length;
+  output.innerHTML = "";
   for (let i = 0; i < fileListLength; i++) {
-    output.innerText = `${output.innerText}\n${i}. ${files.item(i).name}`;
-    video_files[i] = files.item(i).path; 
+    output.innerText = `${output.innerText}\n${i+1}. ${files.item(i).name}`;
+    let mode = files.item(i).type.split("/")[0];
+    if (mode == "image") {
+        image_files[i] = files.item(i).path;
+    }else if(mode  == "video"){
+        video_files[i] = files.item(i).path; 
+    }else{
+        ok_files = false;
+    }
+    
   }
-  console.log(video_files);
+  let status_element = document.getElementById("status_video");
+  if (ok_files) {
+    status_element.src = "images/ok.png";
+  }else{
+    status_element.src = "images/no.png";
+  }
+  console.log("Archivos de Video: "+video_files);
+  console.log("Archivos de Imagen: "+image_files);
+}
+
+function logFilenamesAudio() {
+     // Variable que marca si los archivos añadidos son válidos o no.
+    let ok_files = true;
+    const fileInput_Audio = document.querySelector("#myfiles_audio");
+    const files_Audio = fileInput_Audio.files;
+    console.log(files_Audio)
+    const fileListLength_Audio = files_Audio.length;
+    output_Audio.innerHTML = "";
+  for (let i = 0; i < fileListLength_Audio; i++) {
+    output_Audio.innerText = `${output_Audio.innerText}\n${i+1}. ${files_Audio.item(i).name}`;
+    let mode = files_Audio.item(i).type.split("/")[0];
+    if (mode == "audio") {
+        audio_files[i] = files_Audio.item(i).path;
+    }else{
+        ok_files = false;
+    }
+    
+  }
+  let status_element = document.getElementById("status_audio");
+  if (ok_files) {
+    status_element.src = "images/ok.png";
+  }else{
+    status_element.src = "images/no.png";
+  }
+  console.log("Archivos de Audio: " + audio_files);
 }
 
 myFiles.addEventListener("change", logFilenames);
-
+myFiles_Audio.addEventListener("change", logFilenamesAudio)
 
 function cambiarFile(type,number,number_id){
     if(input.files && input.files[0])
