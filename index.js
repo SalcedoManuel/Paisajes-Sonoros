@@ -2,11 +2,14 @@ const electron = require('electron');
 
 console.log("Hola desde el proceso de la web...");
 
+var file_table = document.getElementById("file_table");
 var wrapper0 = document.getElementById("wrapper0");
 var wrapper1 = document.getElementById("wrapper1");
 var wrapper2 = document.getElementById("wrapper2");
 var wrapper3 = document.getElementById("wrapper3");
 var wrapper4 = document.getElementById("wrapper4");
+var end_boton = document.getElementById("end_create");
+
 
 var back = document.getElementById("back");
 
@@ -17,28 +20,30 @@ const btn_quiz = document.getElementById("btn_quiz");
 const btn_show = document.getElementById("btn_show");
 
 const display = document.getElementById("display");
-const info1 = document.getElementById("info1");
-const info2 = document.getElementById("info2");
-const info3 = document.getElementById("info3");
 const print = document.getElementById("print");
 
 const input = document.getElementById('inputFileServer');
-//-- Acceder a la API de node para obtener la info
-//-- Sólo es posible si nos han dado permisos desde
-//-- el proceso princpal
-info1.textContent = process.arch;
-info2.textContent = process.platform;
-info3.textContent = process.cwd();
+
 
 // Variables que marcan las ubicaciones de los archivos.
 var audio_files = [];
 var image_files = [];
 var video_files = [];
 
+// Variable que aglutinará toda la información.
+var data = [];
+
+
 const output = document.querySelector('.output_video');
 const output_Audio = document.querySelector('.output_audio');
 const myFiles = document.querySelector("#myfiles_video");
 const myFiles_Audio = document.querySelector("#myfiles_audio");
+
+//  Número de ejemplos que aparecerán en el cuestionario.
+var number_examples = 0;
+
+// Número de preguntas del Cuestionario.
+const number_questions = 13;
 
 function logFilenames(){
   // Variable que marca si los archivos añadidos son válidos o no.
@@ -48,8 +53,12 @@ function logFilenames(){
   console.log(files)
   const fileListLength = files.length;
   output.innerHTML = "";
+  if (fileListLength > number_examples) {
+    fileListLength = number_examples;
+  }
   for (let i = 0; i < fileListLength; i++) {
     output.innerText = `${output.innerText}\n${i+1}. ${files.item(i).name}`;
+    console.log(output.innerHTML)
     let mode = files.item(i).type.split("/")[0];
     if (mode == "image") {
         image_files[i] = files.item(i).path;
@@ -58,8 +67,16 @@ function logFilenames(){
     }else{
         ok_files = false;
     }
-    
   }
+    //  Se añade contenido sin apoyo visual.
+    if (fileListLength < number_examples) {
+    for (let i = fileListLength; i < number_examples; i++) {
+        let value_default = "image_default.png";
+        output.innerText = `${output.innerText}\n${i+1}. ${value_default}`;
+        image_files[i] = "images/image_default.png";
+        video_files[i] = null;
+    }
+    }
   let status_element = document.getElementById("status_video");
   if (ok_files) {
     status_element.src = "images/ok.png";
@@ -78,74 +95,96 @@ function logFilenamesAudio() {
     console.log(files_Audio)
     const fileListLength_Audio = files_Audio.length;
     output_Audio.innerHTML = "";
-  for (let i = 0; i < fileListLength_Audio; i++) {
-    output_Audio.innerText = `${output_Audio.innerText}\n${i+1}. ${files_Audio.item(i).name}`;
-    let mode = files_Audio.item(i).type.split("/")[0];
-    if (mode == "audio") {
-        audio_files[i] = files_Audio.item(i).path;
-    }else{
-        ok_files = false;
+    let number = fileListLength_Audio - number_examples;
+    if (number_examples == fileListLength_Audio) {
+        for (let i = 0; i < fileListLength_Audio; i++) {
+            output_Audio.innerText = `${output_Audio.innerText}\n${i+1}. ${files_Audio.item(i).name}`;
+            let mode = files_Audio.item(i).type.split("/")[0];
+            if (mode == "audio") {
+                audio_files[i] = files_Audio.item(i).path;
+            }else{
+                ok_files = false;
+            }
+          }
+          let status_element = document.getElementById("status_audio");
+          if (ok_files) {
+            status_element.src = "images/ok.png";
+          }else{
+            status_element.src = "images/no.png";
+          }
+          console.log("Archivos de Audio: " + audio_files);
+    }else if (number < 0) {
+        output_Audio.innerHTML = "Faltan " + (number*(-1)) + " audios.";
+    }else if(number > 0){
+        output_Audio.innerHTML = "Se han introducido " + number + " de mas."       
     }
-    
-  }
-  let status_element = document.getElementById("status_audio");
-  if (ok_files) {
-    status_element.src = "images/ok.png";
-  }else{
-    status_element.src = "images/no.png";
-  }
-  console.log("Archivos de Audio: " + audio_files);
+
 }
 
 myFiles.addEventListener("change", logFilenames);
 myFiles_Audio.addEventListener("change", logFilenamesAudio)
 
-function cambiarFile(type,number,number_id){
-    if(input.files && input.files[0])
-        console.log("File update");
-        console.log("File Seleccionado : ", input.files[0]);
-        console.log("Files: ", input.files[1])
-        let mode = input.files[0].type.split("/")[0];
-        console.log("Mode: " + mode + " Type: " + type);
-        if (mode == "audio" && type == "audio") {
-            console.log("Es un audio");
-            audio_files[number] = input.files[0];
-            let status_element = document.getElementById(number_id);
-            status_element.src = "images/ok.png";
-            console.log(status_element.src)
-        }else if (mode == "video" && type == "video") {
-            console.log("Es un video");
-            video_files[number] = input.files[0];
-            let status_element = document.getElementById(number_id);
-            status_element.src = "images/ok.png";
-            console.log(status_element.src)
-        }else if(mode == "image" && type == "video" ){
-            console.log("Es un imagen");
-            video_files[number] = input.files[0];
-            let status_element = document.getElementById(number_id);
-            status_element.src = "images/ok.png";
-            console.log(status_element.src)
-        }else if (type == "audio") {
-            console.log("No has introducido un audio. Has introducido: " + mode);
-            video_files[number] = null;
-        }else if (type = 'video') {
-            console.log("No has introducido ni video, ni audio. Has introducido: " + mode);
-            video_files[number] = null;
+function select_everything() {
+    var questions = [];
+    for (let i = 0; i < number_questions; i++) {
+        questions.push(true);     
+    }
+    end_create_quiz();
+}
+
+// Función que sirve para enviar al main.js la información sobre todo el proceso.
+function end_create_quiz() {
+    wrapper0.style.display = "none";
+    wrapper1.style.display = "none";
+    wrapper2.style.display = "none";
+    wrapper3.style.display = "none";
+    wrapper4.style.display = "none";
+    end_boton.style.display = "none";
+
+    back.innerHTML = 'Cuestionario creado. Vuelva al menú principal. <a href="index.html"><button id="retry">Vuelta al menú principal</button></a>';
+    data.push(audio_files);
+    data.push(video_files);
+    data.push(image_files);
+    data.push(questions);
+    console.log(data);
+
+    electron.ipcRenderer.invoke('test',data);
+}
+
+function roughScale(x) {
+    const parsed = Number.parseInt(x, 10);
+    if (Number.isNaN(parsed)) {
+      return 0;
+    }
+    return parsed;
+}
+
+function comprobar_numero() {
+    number_examples = document.getElementById("number_examples").value;
+    number_examples = roughScale(number_examples)
+
+    if (number_examples > 0 && number_examples < 6) {
+        console.log("activar lectura de archivos");
+        file_table.style.display = "inline-block";        
+    }else{
+        if (number_examples > 6) {
+            back.innerHTML = "El valor introducido supera el número máximo de preguntas"
+        }else{
+            console.log("Error en el número introducido")
+            back.innerHTML = "El valor introducido no es un número positivo."
         }
+        file_table.style.display = "none";
+        wrapper0.style.display = "none";
+        wrapper1.style.display = "none";
+        wrapper2.style.display = "none";
+        wrapper3.style.display = "none";
+        wrapper4.style.display = "none";
+        end_boton.style.display = "none";
+    }
 }
 
 
 function create_quiz() {
-    var ejemplos = [];
-    var audio0 = document.getElementById("audio0").value;
-    ejemplos.push(audio0);
-    var audio1 = document.getElementById("audio1").value;
-    ejemplos.push(audio1);
-    var audio2 = document.getElementById("audio2").value;
-    ejemplos.push(audio2);
-    var audio3 = document.getElementById("audio3").value;
-    ejemplos.push(audio3);
-    console.log(ejemplos);
 
     var questions = [];
     var Part1_Traffic = document.getElementById("Part1_Traffic");
@@ -188,10 +227,6 @@ function create_quiz() {
     console.log(questions);
     electron.ipcRenderer.invoke('test',questions);
 }
-
-
-
-
 
 
 

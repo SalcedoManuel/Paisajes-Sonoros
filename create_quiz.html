@@ -37,12 +37,21 @@
   </nav>
   <h1>Crea tu propio Cuestionario</h1>
   <div id="back"></div>
-  <div id="imagen_file"></div>
 
   <div class="wrapper" id="wrapper0">
     <h2>Recursos del Cuestionario</h2> 
     <span>
       <table>
+        <tr>
+            <td><p>Número de Preguntas:</p></td>
+            <td><input type="text" id="number_examples"></td>
+            <td><button type="submit" id="send" onclick="comprobar_numero()">Aceptar</button></td>
+        </tr>
+        <tr>
+          <td><p>Máximo 6</p></td>
+        </tr>
+      </table>
+      <table id="file_table" style="display: none">
         <tr>
           <td><p>Num. Pregunta</p></td>
           <td><strong>Audio</strong></td>
@@ -52,8 +61,6 @@
 
         <tr>
           <td>1.</td>
-          <!--<td><input type="file" name="fileToUpload" id="inputFileServer" accept="audio/*" onchange="return cambiarFile('audio',0,'status_audio_0');" multiple/></td>
-          -->
           <td><input id="myfiles_audio" multiple type="file"></td>
           <td><img src="images/no.png" alt="" sizes="10px" srcset="" id="status_audio"></td>
           <td><input id="myfiles_video" multiple type="file"></td>
@@ -70,6 +77,7 @@
         </tr>
       </table>
     </span>
+    <p>Si se desea seleccionar todas las opciones por defecto pulsar aquí: <button id="button_select_everything" onclick="select_everything()">Seleccionar</button></p>
   </div>
 
   <div class="wrapper" id="wrapper1">
@@ -102,23 +110,6 @@
   </div>
 
   <button id="end_create" onclick="create_quiz()">Finalizar</button>
-<!--
-    <h1>INTERFAZ GRÁFICA</h1>
-    <img src="logo-urjc.png" alt="Logo-URJC" width=150px>
-
-    <hr>
-    <h2>Información:</h2>
-    <ul>
-        <li>Arquitectura: <span id="info1" class="blue"></span> </li>
-        <li>Plataforma: <span id="info2" class="blue"></span></li>
-        <li>Diretorio: <span id="info3" class="blue"></span></li>
-    </ul>
-
-    <hr>
-    <p>Mensajes enviados desde el proceso main:</p>
-    <p>Print:  <span id='print' class="red"></span> </p>
-    <p>   <input type="button" value="Test" id="btn_test"> </p>
-   <p>Display:</p>
-    <p id="display"></p>-->
+  <a href="create_quiz.html"><button id="retry">Reintentar</button></a>
 </body>
 </html>
