@@ -8,6 +8,9 @@ body{
     margin-bottom: 1%;
     grid-template-columns: minmax(200px,300px)1fr;
 }
+#wrapper0,#wrapper1,#wrapper2,#wrapper3,#wrapper4{
+    display: none;
+}
 button{
     width: 150px;
     height: 80px;

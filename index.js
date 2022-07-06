@@ -10,6 +10,20 @@ var wrapper3 = document.getElementById("wrapper3");
 var wrapper4 = document.getElementById("wrapper4");
 var end_boton = document.getElementById("end_create");
 
+function ocultar_wrapper(){
+    wrapper0.style.display = "none";
+    wrapper1.style.display = "none";
+    wrapper2.style.display = "none";
+    wrapper3.style.display = "none";
+    wrapper4.style.display = "none";
+}
+function show_wrapper(){
+    wrapper0.style.display = "block";
+    wrapper1.style.display = "block";
+    wrapper2.style.display = "block";
+    wrapper3.style.display = "block";
+    wrapper4.style.display = "block";
+}
 
 var back = document.getElementById("back");
 
@@ -34,12 +48,14 @@ var video_files = [];
 var data = [];
 
 
-const output = document.querySelector('.output_video');
-const output_Audio = document.querySelector('.output_audio');
-const myFiles = document.querySelector("#myfiles_video");
-const myFiles_Audio = document.querySelector("#myfiles_audio");
+const output = document.querySelector('.output_video1');
+const output_Audio = document.querySelector('.output_audio1');
+const myFiles = document.querySelector("#myfiles_video1");
+const myFiles_Audio = document.querySelector("#myfiles_audio1");
 
 //  Número de ejemplos que aparecerán en el cuestionario.
+var number_places = 0;
+var number_sistems = 1;
 var number_examples = 0;
 
 // Número de preguntas del Cuestionario.
@@ -134,11 +150,7 @@ function select_everything() {
 
 // Función que sirve para enviar al main.js la información sobre todo el proceso.
 function end_create_quiz() {
-    wrapper0.style.display = "none";
-    wrapper1.style.display = "none";
-    wrapper2.style.display = "none";
-    wrapper3.style.display = "none";
-    wrapper4.style.display = "none";
+    ocultar_wrapper();
     end_boton.style.display = "none";
 
     back.innerHTML = 'Cuestionario creado. Vuelva al menú principal. <a href="index.html"><button id="retry">Vuelta al menú principal</button></a>';
@@ -151,81 +163,98 @@ function end_create_quiz() {
     electron.ipcRenderer.invoke('test',data);
 }
 
-function roughScale(x) {
-    const parsed = Number.parseInt(x, 10);
-    if (Number.isNaN(parsed)) {
-      return 0;
-    }
-    return parsed;
+function restart_creation() {
+    file_table.style.display = "none";
+    document.getElementById("wrapper_files").innerHTML = "";
+    ocultar_wrapper();
+    end_boton.style.display = "none";
+
+    document.getElementById("zero").style.display = "block";
+    document.getElementById("one_option").style.display = "block";
+
+    document.getElementById("place_to_evaluate").innerHTML = "¿Cuántos lugares se van a evaluar? :";
+    document.getElementById("sistems_recording").innerHTML = "Sistemas de grabación por cada lugar :"; 
+    let message = '<button onclick="start_creation()" style="width:fit-content">Iniciar recogida de archivos</button>'     
+    document.getElementById("button_start_creation").innerHTML = message;
+    document.getElementById("space_buttons_creation").innerHTML = "<br><br><br><br><br>";
 }
 
-function comprobar_numero() {
-    number_examples = document.getElementById("number_examples").value;
-    number_examples = roughScale(number_examples)
+function create_file_section(){
+    // Dependiendo del número de lugares a evaluar se crean los contenedores necesarios.
+    // Por cada lugar se creará un contenedor.
+    for (let i = 0; i < number_places; i++) {
+        message = '<div id="wrapper_file"><label for="name_place">Nombre del lugar: </label> <input type="text" id="name_place'+i+'"><br><table><tr>'+
+            '<td><div id="mini_wrapper"><label>Audios: </label><input id="myfiles_audio'+i+'" multiple type="file"><img src="images/no.png" alt="" sizes="10px" srcset="" id="status_audio'+i+'">'+
+            '<div style="background:white;"></div></div><td><div id="mini_wrapper"><label>Apoyo Visual: </label><input id="myfiles_video'+i+'" multiple type="file">'+
+            '<img src="images/no.png" alt="" sizes="10px" srcset="" id="status_video'+i+'"></div></tr></table></div><br>';
+        document.getElementById("wrapper_files").innerHTML += message;
+    }
+}
 
-    if (number_examples > 0 && number_examples < 6) {
-        console.log("activar lectura de archivos");
-        file_table.style.display = "inline-block";        
+function start_creation() {
+    if (number_examples > 0) {
+        document.getElementById("zero").style.display = "none";
+        document.getElementById("one_option").style.display = "none";
+        document.getElementById("place_to_evaluate").innerHTML += " <strong>" + number_places + "</strong>  .";
+        document.getElementById("sistems_recording").innerHTML += " <strong>" + number_sistems + "</strong>"; 
+        let message = '<button onclick="restart_creation()" style="width:fit-content">Modificar número de audios</button>'     
+        document.getElementById("button_start_creation").innerHTML = message;
+        document.getElementById("space_buttons_creation").innerHTML = "<br><br>";
+        // Activamos que aparezcan el resto de opciones.
+        file_table.style.display = "block";
+        show_wrapper();
+        end_boton.style.display = "block";
+        create_file_section();
     }else{
-        if (number_examples > 6) {
-            back.innerHTML = "El valor introducido supera el número máximo de preguntas"
-        }else{
-            console.log("Error en el número introducido")
-            back.innerHTML = "El valor introducido no es un número positivo."
-        }
+        back.innerHTML = "El número de lugares seleccionados es cero, cosa imposible.";
         file_table.style.display = "none";
-        wrapper0.style.display = "none";
-        wrapper1.style.display = "none";
-        wrapper2.style.display = "none";
-        wrapper3.style.display = "none";
-        wrapper4.style.display = "none";
+        ocultar_wrapper();
         end_boton.style.display = "none";
     }
 }
 
 
 function create_quiz() {
+    if (number_examples = 0) {
+        back.innerHTML = "No has seleccionado nada."
+    }else{
+        var questions = [];
+        var Part1_Traffic = document.getElementById("Part1_Traffic");
+        questions.push(Part1_Traffic.checked);
+        var Part1_Other = document.getElementById("Part1_Other");
+        questions.push(Part1_Other.checked)
+        var Part1_Human = document.getElementById("Part1_Human");
+        questions.push(Part1_Human.checked);
+        var Part1_Natural = document.getElementById("Part1_Natural");
+        questions.push(Part1_Natural.checked);
 
-    var questions = [];
-    var Part1_Traffic = document.getElementById("Part1_Traffic");
-    questions.push(Part1_Traffic.checked);
-    var Part1_Other = document.getElementById("Part1_Other");
-    questions.push(Part1_Other.checked)
-    var Part1_Human = document.getElementById("Part1_Human");
-    questions.push(Part1_Human.checked);
-    var Part1_Natural = document.getElementById("Part1_Natural");
-    questions.push(Part1_Natural.checked);
+        var Part2_Pleasant = document.getElementById("Part2_Pleasant");
+        questions.push(Part2_Pleasant.checked);
+        var Part2_Chaotic = document.getElementById("Part2_Chaotic");
+        questions.push(Part2_Chaotic.checked);
+        var Part2_Vibrant = document.getElementById("Part2_Vibrant");
+        questions.push(Part2_Vibrant.checked);
+        var Part2_Uneventful = document.getElementById("Part2_Uneventful");
+        questions.push(Part2_Uneventful.checked);
+        var Part2_Calm = document.getElementById("Part2_Calm");
+        questions.push(Part2_Calm.checked);
+        var Part2_Annoying = document.getElementById("Part2_Annoying");
+        questions.push(Part2_Annoying.checked);
+        var Part2_Eventful = document.getElementById("Part2_Eventful");
+        questions.push(Part2_Eventful.checked);
+        
+        var Part3 = document.getElementById("Part3");
+        questions.push(Part3.checked);
 
-    var Part2_Pleasant = document.getElementById("Part2_Pleasant");
-    questions.push(Part2_Pleasant.checked);
-    var Part2_Chaotic = document.getElementById("Part2_Chaotic");
-    questions.push(Part2_Chaotic.checked);
-    var Part2_Vibrant = document.getElementById("Part2_Vibrant");
-    questions.push(Part2_Vibrant.checked);
-    var Part2_Uneventful = document.getElementById("Part2_Uneventful");
-    questions.push(Part2_Uneventful.checked);
-    var Part2_Calm = document.getElementById("Part2_Calm");
-    questions.push(Part2_Calm.checked);
-    var Part2_Annoying = document.getElementById("Part2_Annoying");
-    questions.push(Part2_Annoying.checked);
-    var Part2_Eventful = document.getElementById("Part2_Eventful");
-    questions.push(Part2_Eventful.checked);
-    
-    var Part3 = document.getElementById("Part3");
-    questions.push(Part3.checked);
+        var Part4 = document.getElementById("Part4");
+        questions.push(Part4.checked);
 
-    var Part4 = document.getElementById("Part4");
-    questions.push(Part4.checked);
+        ocultar_wrapper();
 
-    wrapper0.style.display = "none";
-    wrapper1.style.display = "none";
-    wrapper2.style.display = "none";
-    wrapper3.style.display = "none";
-    wrapper4.style.display = "none";
-
-    back.innerHTML = "Cuestionario creado. Vuelva al menú principal.";
-    console.log(questions);
-    electron.ipcRenderer.invoke('test',questions);
+        back.innerHTML = "Cuestionario creado. Vuelva al menú principal.";
+        console.log(questions);
+        electron.ipcRenderer.invoke('test',questions);
+    }
 }
 
 
@@ -266,6 +295,69 @@ btn_test.onclick = () => {
 
     //-- Enviar mensaje al proceso principal
     electron.ipcRenderer.invoke('test', "MENSAJE DE PRUEBA: Boton apretado");
+}
+
+
+
+function select_option(value,mode){
+    var zero_places = document.getElementById("zero_places");
+    var one_places = document.getElementById("one_places");
+    var two_places = document.getElementById("two_places");
+    var three_places = document.getElementById("three_places");
+
+    var zero = document.getElementById("zero");
+    var one = document.getElementById("one");
+    var two = document.getElementById("two");
+    var three = document.getElementById("three");
+
+    var one_places_1 = document.getElementById("one_places_1");
+    var two_places_1 = document.getElementById("two_places_1");
+    var three_places_1 = document.getElementById("three_places_1");
+
+    var one_option = document.getElementById("one_option");
+    var two_option = document.getElementById("two_option");
+    var three_option = document.getElementById("three_option");
+    console.log(mode)
+    if (mode == '1') {
+        if (zero_places.value == value) {
+            zero.innerHTML = '<button id="zero_places" value="0" onclick="select_option(0,1)">0</button>';
+            one.innerHTML = '<button id="one_places" value="1" onclick="select_option(1,1)">1</button>';
+            two.innerHTML = '<button id="two_places" value="2" onclick="select_option(2,1)">2</button>';
+            three.innerHTML = '<button id="three_places" value="3" onclick="select_option(3,1)">3</button>';
+      }else if(one_places.value == value){
+            zero.innerHTML = '<button id="one_places" value="1" onclick="select_option(1,1)">1</button>';
+            one.innerHTML = '<button id="zero_places" value="0" onclick="select_option(0,1)">0</button>';
+            two.innerHTML = '<button id="two_places" value="2" onclick="select_option(2,1)">2</button>';
+            three.innerHTML = '<button id="three_places" value="3" onclick="select_option(3,1)">3</button>';
+      }else if(two_places.value == value){
+            zero.innerHTML = '<button id="two_places" value="2" onclick="select_option(2,1)">2</button>';
+            one.innerHTML = '<button id="zero_places" value="0" onclick="select_option(0,1)">0</button>';
+            two.innerHTML = '<button id="one_places" value="1" onclick="select_option(1,1)">1</button>';
+            three.innerHTML = '<button id="three_places" value="3" onclick="select_option(3,1)">3</button>';
+      }else if(three_places.value == value){
+            zero.innerHTML = '<button id="three_places" value="3" onclick="select_option(3,1)">3</button>';
+            one.innerHTML = '<button id="zero_places" value="0" onclick="select_option(0,1)">0</button>';
+            two.innerHTML = '<button id="one_places" value="1" onclick="select_option(1,1)">1</button>';
+            three.innerHTML = '<button id="two_places" value="2" onclick="select_option(2,1)">2</button>';
+      }
+      number_places = value;
+    }else{
+        if (one_places_1.value == value) {
+            one_option.innerHTML = '<button id="one_places_1" value="1" onclick="select_option(1,2)">1</button>';
+            two_option.innerHTML = '<button id="two_places_1" value="2" onclick="select_option(2,2)">2</button>';
+            three_option.innerHTML = '<button id="three_places_1" value="3" onclick="select_option(3,2)">3</button>';
+        }else if (two_places_1.value ==  value) {
+            one_option.innerHTML = '<button id="two_places_1" value="2" onclick="select_option(2,2)">2</button>';
+            two_option.innerHTML = '<button id="one_places_1" value="1" onclick="select_option(1,2)">1</button>';
+            three_option.innerHTML = '<button id="three_places_1" value="3" onclick="select_option(3,2)">3</button>';
+        }else if (three_places_1.value ==  value) {
+            one_option.innerHTML = '<button id="three_places_1" value="3" onclick="select_option(3,2)">3</button>';
+            two_option.innerHTML = '<button id="one_places_1" value="1" onclick="select_option(1,2)">1</button>';
+            three_option.innerHTML = '<button id="two_places_1" value="2" onclick="select_option(2,2)">2</button>';
+        }
+        number_sistems = value;
+    }
+    number_examples = number_places * number_sistems;
 }
 
 //-- Mensaje recibido del proceso MAIN
