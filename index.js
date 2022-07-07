@@ -1,29 +1,11 @@
 const electron = require('electron');
 
+const functions_extras = require('./functions');
+
 console.log("Hola desde el proceso de la web...");
 
-var file_table = document.getElementById("file_table");
-var wrapper0 = document.getElementById("wrapper0");
-var wrapper1 = document.getElementById("wrapper1");
-var wrapper2 = document.getElementById("wrapper2");
-var wrapper3 = document.getElementById("wrapper3");
-var wrapper4 = document.getElementById("wrapper4");
 var end_boton = document.getElementById("end_create");
 
-function ocultar_wrapper(){
-    wrapper0.style.display = "none";
-    wrapper1.style.display = "none";
-    wrapper2.style.display = "none";
-    wrapper3.style.display = "none";
-    wrapper4.style.display = "none";
-}
-function show_wrapper(){
-    wrapper0.style.display = "block";
-    wrapper1.style.display = "block";
-    wrapper2.style.display = "block";
-    wrapper3.style.display = "block";
-    wrapper4.style.display = "block";
-}
 
 var back = document.getElementById("back");
 
@@ -47,11 +29,11 @@ var video_files = [];
 // Variable que aglutinará toda la información.
 var data = [];
 
-
-const output = document.querySelector('.output_video1');
-const output_Audio = document.querySelector('.output_audio1');
-const myFiles = document.querySelector("#myfiles_video1");
-const myFiles_Audio = document.querySelector("#myfiles_audio1");
+// Constantes usadas para la extracción de los ficheros.
+const output_video = document.querySelector('.output_video');
+const output_Audio = document.querySelector('.output_audio');
+const myFiles_Video = document.querySelector("#myfiles_video");
+const myFiles_Audio = document.querySelector("#myfiles_audio");
 
 //  Número de ejemplos que aparecerán en el cuestionario.
 var number_places = 0;
@@ -61,20 +43,22 @@ var number_examples = 0;
 // Número de preguntas del Cuestionario.
 const number_questions = 13;
 
-function logFilenames(){
+function logFilenames_Video(){
   // Variable que marca si los archivos añadidos son válidos o no.
   let ok_files = true;
   const fileInput = document.querySelector("#myfiles_video");
   const files = fileInput.files;
-  console.log(files)
+  console.log("Ficheros: " +files)
   const fileListLength = files.length;
-  output.innerHTML = "";
+  output_video.innerHTML = "";
+  console.log("Número de ficheros ingresados: " + fileListLength)
+  console.log("Número de ficheros necesarios: " + number_examples)
   if (fileListLength > number_examples) {
     fileListLength = number_examples;
   }
   for (let i = 0; i < fileListLength; i++) {
-    output.innerText = `${output.innerText}\n${i+1}. ${files.item(i).name}`;
-    console.log(output.innerHTML)
+    output_video.innerText = `${output_video.innerText}\n${i+1}. ${files.item(i).name}`;
+    console.log(output_video.innerHTML)
     let mode = files.item(i).type.split("/")[0];
     if (mode == "image") {
         image_files[i] = files.item(i).path;
@@ -86,12 +70,13 @@ function logFilenames(){
   }
     //  Se añade contenido sin apoyo visual.
     if (fileListLength < number_examples) {
-    for (let i = fileListLength; i < number_examples; i++) {
-        let value_default = "image_default.png";
-        output.innerText = `${output.innerText}\n${i+1}. ${value_default}`;
-        image_files[i] = "images/image_default.png";
-        video_files[i] = null;
-    }
+        console.log("Se añade contenido sin apoyo visual")
+        for (let i = fileListLength; i < number_examples; i++) {
+            let value_default = "image_default.png";
+            output_video.innerText = `${output_video.innerText}\n${i+1}. ${value_default}`;
+            image_files[i] = "images/image_default.png";
+            video_files[i] = null;
+        }
     }
   let status_element = document.getElementById("status_video");
   if (ok_files) {
@@ -137,7 +122,7 @@ function logFilenamesAudio() {
 
 }
 
-myFiles.addEventListener("change", logFilenames);
+myFiles_Video.addEventListener("change", logFilenames_Video);
 myFiles_Audio.addEventListener("change", logFilenamesAudio)
 
 function select_everything() {
@@ -150,7 +135,7 @@ function select_everything() {
 
 // Función que sirve para enviar al main.js la información sobre todo el proceso.
 function end_create_quiz() {
-    ocultar_wrapper();
+    functions_extras.ocultar_wrapper();
     end_boton.style.display = "none";
 
     back.innerHTML = 'Cuestionario creado. Vuelva al menú principal. <a href="index.html"><button id="retry">Vuelta al menú principal</button></a>';
@@ -163,93 +148,13 @@ function end_create_quiz() {
     electron.ipcRenderer.invoke('test',data);
 }
 
-function restart_creation() {
-    file_table.style.display = "none";
-    document.getElementById("wrapper_files").innerHTML = "";
-    ocultar_wrapper();
-    end_boton.style.display = "none";
-
-    document.getElementById("zero").style.display = "block";
-    document.getElementById("one_option").style.display = "block";
-
-    document.getElementById("place_to_evaluate").innerHTML = "¿Cuántos lugares se van a evaluar? :";
-    document.getElementById("sistems_recording").innerHTML = "Sistemas de grabación por cada lugar :"; 
-    let message = '<button onclick="start_creation()" style="width:fit-content">Iniciar recogida de archivos</button>'     
-    document.getElementById("button_start_creation").innerHTML = message;
-    document.getElementById("space_buttons_creation").innerHTML = "<br><br><br><br><br>";
-}
-
-function create_file_section(){
-    // Dependiendo del número de lugares a evaluar se crean los contenedores necesarios.
-    // Por cada lugar se creará un contenedor.
-    for (let i = 0; i < number_places; i++) {
-        message = '<div id="wrapper_file"><label for="name_place">Nombre del lugar: </label> <input type="text" id="name_place'+i+'"><br><table><tr>'+
-            '<td><div id="mini_wrapper"><label>Audios: </label><input id="myfiles_audio'+i+'" multiple type="file"><img src="images/no.png" alt="" sizes="10px" srcset="" id="status_audio'+i+'">'+
-            '<div style="background:white;"></div></div><td><div id="mini_wrapper"><label>Apoyo Visual: </label><input id="myfiles_video'+i+'" multiple type="file">'+
-            '<img src="images/no.png" alt="" sizes="10px" srcset="" id="status_video'+i+'"></div></tr></table></div><br>';
-        document.getElementById("wrapper_files").innerHTML += message;
-    }
-}
-
-function start_creation() {
-    if (number_examples > 0) {
-        document.getElementById("zero").style.display = "none";
-        document.getElementById("one_option").style.display = "none";
-        document.getElementById("place_to_evaluate").innerHTML += " <strong>" + number_places + "</strong>  .";
-        document.getElementById("sistems_recording").innerHTML += " <strong>" + number_sistems + "</strong>"; 
-        let message = '<button onclick="restart_creation()" style="width:fit-content">Modificar número de audios</button>'     
-        document.getElementById("button_start_creation").innerHTML = message;
-        document.getElementById("space_buttons_creation").innerHTML = "<br><br>";
-        // Activamos que aparezcan el resto de opciones.
-        file_table.style.display = "block";
-        show_wrapper();
-        end_boton.style.display = "block";
-        create_file_section();
-    }else{
-        back.innerHTML = "El número de lugares seleccionados es cero, cosa imposible.";
-        file_table.style.display = "none";
-        ocultar_wrapper();
-        end_boton.style.display = "none";
-    }
-}
-
 
 function create_quiz() {
     if (number_examples = 0) {
         back.innerHTML = "No has seleccionado nada."
     }else{
-        var questions = [];
-        var Part1_Traffic = document.getElementById("Part1_Traffic");
-        questions.push(Part1_Traffic.checked);
-        var Part1_Other = document.getElementById("Part1_Other");
-        questions.push(Part1_Other.checked)
-        var Part1_Human = document.getElementById("Part1_Human");
-        questions.push(Part1_Human.checked);
-        var Part1_Natural = document.getElementById("Part1_Natural");
-        questions.push(Part1_Natural.checked);
-
-        var Part2_Pleasant = document.getElementById("Part2_Pleasant");
-        questions.push(Part2_Pleasant.checked);
-        var Part2_Chaotic = document.getElementById("Part2_Chaotic");
-        questions.push(Part2_Chaotic.checked);
-        var Part2_Vibrant = document.getElementById("Part2_Vibrant");
-        questions.push(Part2_Vibrant.checked);
-        var Part2_Uneventful = document.getElementById("Part2_Uneventful");
-        questions.push(Part2_Uneventful.checked);
-        var Part2_Calm = document.getElementById("Part2_Calm");
-        questions.push(Part2_Calm.checked);
-        var Part2_Annoying = document.getElementById("Part2_Annoying");
-        questions.push(Part2_Annoying.checked);
-        var Part2_Eventful = document.getElementById("Part2_Eventful");
-        questions.push(Part2_Eventful.checked);
-        
-        var Part3 = document.getElementById("Part3");
-        questions.push(Part3.checked);
-
-        var Part4 = document.getElementById("Part4");
-        questions.push(Part4.checked);
-
-        ocultar_wrapper();
+        var questions = functions_extras.checking_quiz();
+        functions_extras.ocultar_wrapper();
 
         back.innerHTML = "Cuestionario creado. Vuelva al menú principal.";
         console.log(questions);
