@@ -30,15 +30,23 @@
                             "¿Qué sonidos podrías distinguir en la toma?":0,
                             "¿Consideras ruidoso el audio del paisaje sonoro?":0,
                             "¿Consideras buena la calidad del audio?":0,
-                            "¿Consideras ruidoso el audio del paisaje sonor?":0,
-                            "¿Consideras ruidoso el audio del paisaje sonor?":0,
-                            "¿Consideras ruidoso el audio del paisaje sonor?":0,
-                            "¿Consideras ruidoso el audio del paisaje sonor?":0,
-                            "email":"nuncapierdo@norris.es"
+                            "¿Consideras realista el audio del paisaje sonoro?":0,
+                            "¿Consideras alto el volumen del audio?":0,
+                            "¿Consideras desagradable el audio del paisaje sonoro?":0,
+                            "¿Consideras definido el audio del paisaje sonoro?":0,
+                            "¿Has notado espacialidad en el audio del paisaje sonoro?":0,
+                            "¿Consideras que te ha gustado la toma?":0
                         }
                     ],[
                         {
-
+                            "De más a menos ruidosa":0,
+                            "De más calidad a menos calidad":0,
+                            "De más realista a menos realista":0,
+                            "De más desagradable a menos desagradable":0,
+                            "De más definida a menos definida":0,
+                            "De más espacial a menos espacial":0,
+                            "De más alta a menos alta":0,
+                            "De la que más te ha gustado, a la que menos":0,
                         }
                     ]
     }
