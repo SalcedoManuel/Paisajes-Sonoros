@@ -73,34 +73,100 @@
 
   <div class="wrapper" id="wrapper0">
     <span>
-      <div id="wrapper_files"></div>
-      <!--Tabla que sirve para subir los archivos-->
-      <table id="file_table" style="display: none">
-        <tr>
-          <td><p>Lugar</p></td>
-          <td><strong>Audio</strong></td>
-          <td></td>
-          <td><strong>Video/Imagen</strong></td>
-        </tr>
-
-        <tr>
-          <td>1.</td>
-          <td><input id="myfiles_audio" multiple type="file"></td>
-          <td><img src="images/no.png" alt="" sizes="10px" srcset="" id="status_audio"></td>
-          <td><input id="myfiles_video" multiple type="file"></td>
-          <td><img src="images/no.png" alt="" sizes="10px" srcset="" id="status_video"></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td><div class="output_audio"></div></td>
-          <td></td>
-          <td><div class="output_video"></div></td>
-          <td></td>
-        </tr>
-      </table>
+      <div id="wrapper_files" style="text-align: center;"></div>
+      <div id="file_table1">
+        <span class="encabezado">
+            <label> Nombre del Escenario 1: </label>
+            <input type="text" id="name_place1">
+        </span>
+        <table>
+            <tr>
+                <td>
+                    <div id="wrapper_audio1">
+                        <span style="padding:2vh">
+                            <label>Audios: </label>
+                            <label>Insertar </label><label id="recording_number_text_audio1"> </label>
+                            <input type="file" multiple id="myfiles_audio1" class="input_file" accept="audio/*">
+                            <div id="output_audio1" class="output"></div>
+                        </span>
+                    </div>
+                </td>
+                <td>
+                    <div id="wrapper_video1">
+                        <span style="padding: 2vh;">
+                            <label>Videos: </label>
+                            <label>Insertar </label><label id="recording_number_text_video1"></label>
+                            <input type="file" multiple id="myfiles_video1" class="input_file" accept="video/*, image/*" >
+                        </span>
+                        <div id="output_video1" class="output"></div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+      </div>
+      <div id="file_table2">
+        <span class="encabezado">
+            <label> Nombre del Escenario 2: </label>
+            <input type="text" id="name_place2">
+        </span>
+        <table>
+            <tr>
+                <td>
+                    <div id="wrapper_audio2">
+                        <span style="padding:2vh">
+                            <label>Audios: </label>
+                            <label>Insertar </label><label id="recording_number_text_audio2"> </label>
+                            <input type="file" multiple id="myfiles_audio2" class="input_file" accept="audio/*">
+                            <div id="output_audio2" class="output"></div>
+                        </span>
+                    </div>
+                </td>
+                <td>
+                    <div id="wrapper_video2">
+                        <span style="padding: 2vh;">
+                            <label>Videos: </label>
+                            <label>Insertar </label><label id="recording_number_text_video2"></label>
+                            <input type="file" multiple id="myfiles_video2" class="input_file" accept="video/*, image/*" >
+                        </span>
+                        <div id="output_video2" class="output"></div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+      </div>
+      <div id="file_table3">
+        <span class="encabezado">
+            <label> Nombre del Escenario 3: </label>
+            <input type="text" id="name_place3">
+        </span>
+        <table>
+            <tr>
+                <td>
+                    <div id="wrapper_audio3">
+                        <span style="padding:2vh">
+                            <label>Audios: </label>
+                            <label>Insertar </label><label id="recording_number_text_audio3"> </label>
+                            <input type="file" multiple id="myfiles_audio3" class="input_file" accept="audio/*">
+                            <div id="output_audio3" class="output"></div>
+                        </span>
+                    </div>
+                </td>
+                <td>
+                    <div id="wrapper_video3">
+                        <span style="padding: 2vh;">
+                            <label>Videos: </label>
+                            <label>Insertar </label><label id="recording_number_text_video3"></label>
+                            <input type="file" multiple id="myfiles_video3" class="input_file" accept="video/*, image/*" >
+                        </span>
+                        <div id="output_video3" class="output"></div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+      </div>
     </span>
     <br>
-    <p>Si se desea seleccionar todas las opciones por defecto pulsar aquí: <button id="button_select_everything" onclick="select_everything()" style="min-width:fit-content ;">Seleccionar</button></p>
+    <p>Si se desea seleccionar todas las opciones por defecto pulsar aquí: <button id="button_select_everything" onclick="functions_extras.select_every_checkbox()" style="min-width:fit-content ;">Seleccionar</button></p>
   </div>
 
   <div class="wrapper" id="wrapper1">
@@ -133,7 +199,17 @@
   </div>
   <br>
   <br>
-  <button id="end_create" onclick="create_quiz()" style="width:fit-content">Finalizar</button>
-  <a href="create_quiz.html"><button id="retry" style="width:fit-content">Reintentar</button></a>
+  <table style="text-align: center;">
+    <tr>
+      <td>
+        <button id="end_create" onclick="create_quiz()" style="width:fit-content">Finalizar</button>
+      </td>
+      <td>
+        <a href="create_quiz.html"><button id="retry" style="width:fit-content">Reintentar</button></a>
+      </td>
+    </tr>
+  </table>
+  
+  
 </body>
 </html>

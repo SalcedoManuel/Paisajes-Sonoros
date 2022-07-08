@@ -10,6 +10,7 @@ body{
 }
 #wrapper0,#wrapper1,#wrapper2,#wrapper3,#wrapper4{
     display: none;
+    text-align: center;
 }
 button{
     width: 150px;

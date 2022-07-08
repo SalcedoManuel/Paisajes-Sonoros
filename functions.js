@@ -13,7 +13,9 @@ function ocultar_wrapper(){
     document.getElementById("wrapper4").style.display = "none";
 }
 function restart_creation() {
-    file_table.style.display = "none";
+    document.getElementById("file_table1").style.display = "none";
+    document.getElementById("file_table2").style.display = "none";
+    document.getElementById("file_table3").style.display = "none";
     document.getElementById("wrapper_files").innerHTML = "";
     ocultar_wrapper();
     end_boton.style.display = "none";
@@ -38,15 +40,62 @@ function start_creation() {
         document.getElementById("button_start_creation").innerHTML = message;
         document.getElementById("space_buttons_creation").innerHTML = "<br><br>";
         // Activamos que aparezcan el resto de opciones.
-        file_table.style.display = "block";
+        document.getElementById("file_table1").style.display = "block";
+        document.getElementById("file_table2").style.display = "block";
+        document.getElementById("file_table3").style.display = "block";
         show_wrapper();
         end_boton.style.display = "block";
+        switch (number_sistems) {
+            case 1:
+                document.getElementById("recording_number_text_audio1").innerHTML = " un audio.";
+                document.getElementById("recording_number_text_video1").innerHTML = " un vídeo.";
+                if (number_places > 1) {
+                    document.getElementById("recording_number_text_audio2").innerHTML = " un audio.";
+                    document.getElementById("recording_number_text_video2").innerHTML = " un vídeo.";
+                }
+                if (number_places > 2) {
+                    document.getElementById("recording_number_text_audio3").innerHTML = " un audio.";
+                    document.getElementById("recording_number_text_video3").innerHTML = " un vídeo.";
+                }
+                break;
+            default:
+                document.getElementById("recording_number_text_audio1").innerHTML = number_sistems + " audios.";
+                document.getElementById("recording_number_text_video1").innerHTML = number_sistems + " vídeos."
+                if (number_places > 1) {
+                    document.getElementById("recording_number_text_audio2").innerHTML = number_sistems + " audios.";
+                    document.getElementById("recording_number_text_video2").innerHTML = number_sistems + " vídeos.";
+                }
+                if (number_places > 2) {
+                    document.getElementById("recording_number_text3").innerHTML = number_sistems + " audios.";
+                    document.getElementById("recording_number_text3").innerHTML = number_sistems + " vídeos.";
+                }
+                break;
+        }
     }else{
         back.innerHTML = "El número de lugares seleccionados es cero, cosa imposible.";
         file_table.style.display = "none";
         ocultar_wrapper();
         end_boton.style.display = "none";
     }
+}
+
+function select_every_checkbox (){
+    document.getElementById("Part1_Traffic").checked = true;
+    document.getElementById("Part1_Other").checked = true;
+    document.getElementById("Part1_Human").checked = true;
+    document.getElementById("Part1_Natural").checked = true;
+
+    document.getElementById("Part2_Pleasant").checked = true;
+    document.getElementById("Part2_Chaotic").checked = true;
+    document.getElementById("Part2_Vibrant").checked = true;
+    document.getElementById("Part2_Uneventful").checked = true;
+    document.getElementById("Part2_Calm").checked = true;
+    document.getElementById("Part2_Annoying").checked = true;
+    document.getElementById("Part2_Eventful").checked = true;
+    document.getElementById("Part2_Monotonous").checked = true;
+
+    document.getElementById("Part3").checked = true;
+    document.getElementById("Part4").checked = true;
 }
 
 function checking_quiz() {
@@ -74,12 +123,15 @@ function checking_quiz() {
     questions.push(Part2_Annoying.checked);
     var Part2_Eventful = document.getElementById("Part2_Eventful");
     questions.push(Part2_Eventful.checked);
-    
+    var Part2_Monotonous = document.getElementById("Part2_Monotonous").checked = true;
+    questions.push(Part2_Monotonous.checked);
+
     var Part3 = document.getElementById("Part3");
     questions.push(Part3.checked);
 
     var Part4 = document.getElementById("Part4");
     questions.push(Part4.checked);
+    
     return questions;
 }
 
@@ -88,5 +140,6 @@ module.exports = {
     start_creation,
     show_wrapper,
     ocultar_wrapper,
-    checking_quiz
+    checking_quiz,
+    select_every_checkbox
 }

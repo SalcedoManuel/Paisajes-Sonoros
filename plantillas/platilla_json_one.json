@@ -1,0 +1,45 @@
+[
+    {
+        "files":
+                    [
+                        {
+                            "name":"Nombre_Escenario1",
+                            "Audio_files":[],
+                            "Visual_files":[],
+                        }
+                    ]
+
+    },{
+        "questions":
+                    [
+                        {
+                            "¿Cuántos años tienes?":23,
+                            "¿Cuál es tu género?":"Hombre",
+                            "¿Tienes problemas auditivos?":"NO"
+                        }
+                    ],[
+                        {
+                            "¿Conoces el escenario?":"SÍ",
+                            "¿Cuál es la frecuencia de paso por él?":1,
+                            "Cúando lo has transitado, ¿Has prestado atención al sonido que te rodeaba?":"NO",
+                            "¿Las grabaciones se asemejan a tu recuerdo del escenario?":"SÍ"
+                        }
+                    ],[
+                        {
+                            "¿Buena definición?":"Sí",
+                            "¿Qué sonidos podrías distinguir en la toma?":0,
+                            "¿Consideras ruidoso el audio del paisaje sonoro?":0,
+                            "¿Consideras buena la calidad del audio?":0,
+                            "¿Consideras ruidoso el audio del paisaje sonor?":0,
+                            "¿Consideras ruidoso el audio del paisaje sonor?":0,
+                            "¿Consideras ruidoso el audio del paisaje sonor?":0,
+                            "¿Consideras ruidoso el audio del paisaje sonor?":0,
+                            "email":"nuncapierdo@norris.es"
+                        }
+                    ],[
+                        {
+
+                        }
+                    ]
+    }
+]
