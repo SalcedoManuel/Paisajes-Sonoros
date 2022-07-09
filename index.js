@@ -1,4 +1,5 @@
 const electron = require('electron');
+const fs = require('fs');
 
 const functions_extras = require('./functions');
 
@@ -6,6 +7,13 @@ console.log("Hola desde el proceso de la web...");
 
 var end_boton = document.getElementById("end_create");
 
+var name_quiz = "Quiz1";
+
+var get_files = false;
+
+var get_files1 = false;
+var get_files2 = false;
+var get_files3 = false;
 
 var back = document.getElementById("back");
 
@@ -23,11 +31,17 @@ const input = document.getElementById('inputFileServer');
 
 // Variables que marcan las ubicaciones de los archivos.
 var audio_files = [];
-var image_files = [];
-var video_files = [];
+var visual_files = [];
 
-// Variable que aglutinará toda la información.
-var data = [];
+// Array de ficheros de audio.
+var audio_files1 = [];
+var audio_files2 = [];
+var audio_files3 = [];
+
+var visual_files1 = [];
+var visual_files2 = [];
+var visual_files3 = [];
+
 
 // Constantes usadas para la extracción de los ficheros.
 const output_video1 = document.querySelector('#output_video1');
@@ -51,8 +65,6 @@ var number_places = 0;
 var number_sistems = 1;
 var number_examples = 0;
 
-// Número de preguntas del Cuestionario.
-const number_questions = 13;
 
 function logFilenames_Video1(){
   // Variable que marca si los archivos añadidos son válidos o no.
@@ -71,10 +83,8 @@ function logFilenames_Video1(){
     output_video1.innerText = `${output_video1.innerText}\n${i+1}. ${files.item(i).name}`;
     console.log(output_video1.innerHTML)
     let mode = files.item(i).type.split("/")[0];
-    if (mode == "image") {
-        image_files[i] = files.item(i).path;
-    }else if(mode  == "video"){
-        video_files[i] = files.item(i).path; 
+    if (mode == "image" || mode == "video") {
+        visual_files1[i] = files.item(i).path;
     }else{
         ok_files = false;
     }
@@ -85,18 +95,17 @@ function logFilenames_Video1(){
         for (let i = fileListLength; i < number_sistems; i++) {
             let value_default = "image_default.png";
             output_video1.innerText = `${output_video1.innerText}\n${i+1}. ${value_default}`;
-            image_files[i] = "images/image_default.png";
-            video_files[i] = null;
+            visual_files1[i] = "images/image_default.png";
         }
     }
-  let status_element = document.getElementById("status_video");
+  let status_element = document.getElementById("status_video1");
   if (ok_files) {
     status_element.src = "images/ok.png";
   }else{
     status_element.src = "images/no.png";
   }
-  console.log("Archivos de Video: "+video_files);
-  console.log("Archivos de Imagen: "+image_files);
+  console.log("Archivos Visuales: " + visual_files1);
+
 }
 
 function logFilenames_Video2(){
@@ -116,10 +125,8 @@ function logFilenames_Video2(){
       output_video2.innerText = `${output_video2.innerText}\n${i+1}. ${files.item(i).name}`;
       console.log(output_video2.innerHTML)
       let mode = files.item(i).type.split("/")[0];
-      if (mode == "image") {
-          image_files[i] = files.item(i).path;
-      }else if(mode  == "video"){
-          video_files[i] = files.item(i).path; 
+      if (mode == "image" || mode == "video") {
+          visual_files2[i] = files.item(i).path;
       }else{
           ok_files = false;
       }
@@ -130,18 +137,16 @@ function logFilenames_Video2(){
           for (let i = fileListLength; i < number_sistems; i++) {
               let value_default = "image_default.png";
               output_video2.innerText = `${output_video2.innerText}\n${i+1}. ${value_default}`;
-              image_files[i] = "images/image_default.png";
-              video_files[i] = null;
+              visual_files2[i] = "images/image_default.png";
           }
       }
-    let status_element = document.getElementById("status_video");
+    let status_element = document.getElementById("status_video2");
     if (ok_files) {
       status_element.src = "images/ok.png";
     }else{
       status_element.src = "images/no.png";
     }
-    console.log("Archivos de Video: "+video_files);
-    console.log("Archivos de Imagen: "+image_files);
+    console.log("Archivos Visuales: " + visual_files2);
 }
 
 function logFilenames_Video3(){
@@ -161,10 +166,8 @@ function logFilenames_Video3(){
       output_video3.innerText = `${output_video3.innerText}\n${i+1}. ${files.item(i).name}`;
       console.log(output_video2.innerHTML)
       let mode = files.item(i).type.split("/")[0];
-      if (mode == "image") {
-          image_files[i] = files.item(i).path;
-      }else if(mode  == "video"){
-          video_files[i] = files.item(i).path; 
+      if (mode == "image" || mode == "video") {
+          visual_files3[i] = files.item(i).path;
       }else{
           ok_files = false;
       }
@@ -175,18 +178,16 @@ function logFilenames_Video3(){
           for (let i = fileListLength; i < number_sistems; i++) {
               let value_default = "image_default.png";
               output_video3.innerText = `${output_video3.innerText}\n${i+1}. ${value_default}`;
-              image_files[i] = "images/image_default.png";
-              video_files[i] = null;
+              visual_files3[i] = "images/image_default.png";
           }
       }
-    let status_element = document.getElementById("status_video");
+    let status_element = document.getElementById("status_video3");
     if (ok_files) {
       status_element.src = "images/ok.png";
     }else{
       status_element.src = "images/no.png";
     }
-    console.log("Archivos de Video: "+video_files);
-    console.log("Archivos de Imagen: "+image_files);
+    console.log("Archivos Visuales: "+visual_files3);
 }
 
 function logFilenamesAudio1() {
@@ -203,18 +204,19 @@ function logFilenamesAudio1() {
             output_Audio1.innerText = `${output_Audio1.innerText}\n${i+1}. ${files_Audio1.item(i).name}`;
             let mode = files_Audio1.item(i).type.split("/")[0];
             if (mode == "audio") {
-                audio_files[i] = files_Audio1.item(i).path;
+                audio_files1[i] = files_Audio1.item(i).path;
             }else{
                 ok_files = false;
             }
           }
-          let status_element = document.getElementById("status_audio");
+          let status_element = document.getElementById("status_audio1");
           if (ok_files) {
             status_element.src = "images/ok.png";
+            get_files1 = true;
           }else{
             status_element.src = "images/no.png";
           }
-          console.log("Archivos de Audio: " + audio_files);
+          console.log("Archivos de Audio: " + audio_files1);
     }else if (number < 0) {
         output_Audio1.innerHTML = "Faltan " + (number*(-1)) + " audios.";
     }else if(number > 0){
@@ -237,18 +239,19 @@ function logFilenamesAudio2() {
            output_Audio2.innerText = `${output_Audio2.innerText}\n${i+1}. ${files_Audio2.item(i).name}`;
            let mode = files_Audio2.item(i).type.split("/")[0];
            if (mode == "audio") {
-               audio_files[i] = files_Audio2.item(i).path;
+               audio_files2[i] = files_Audio2.item(i).path;
            }else{
                ok_files = false;
            }
          }
-         let status_element = document.getElementById("status_audio");
+         let status_element = document.getElementById("status_audio2");
          if (ok_files) {
            status_element.src = "images/ok.png";
+           get_files2 = true;
          }else{
            status_element.src = "images/no.png";
          }
-         console.log("Archivos de Audio: " + audio_files);
+         console.log("Archivos de Audio: " + audio_files2);
    }else if (number < 0) {
        output_Audio2.innerHTML = "Faltan " + (number*(-1)) + " audios.";
    }else if(number > 0){
@@ -271,18 +274,19 @@ function logFilenamesAudio3() {
            output_Audio3.innerText = `${output_Audio3.innerText}\n${i+1}. ${files_Audio3.item(i).name}`;
            let mode = files_Audio3.item(i).type.split("/")[0];
            if (mode == "audio") {
-               audio_files[i] = files_Audio3.item(i).path;
+               audio_files3[i] = files_Audio3.item(i).path;
            }else{
                ok_files = false;
            }
          }
-         let status_element = document.getElementById("status_audio");
+         let status_element = document.getElementById("status_audio3");
          if (ok_files) {
            status_element.src = "images/ok.png";
+           get_files3 = true;
          }else{
            status_element.src = "images/no.png";
          }
-         console.log("Archivos de Audio: " + audio_files);
+         console.log("Archivos de Audio: " + audio_files3);
    }else if (number < 0) {
        output_Audio3.innerHTML = "Faltan " + (number*(-1)) + " audios.";
    }else if(number > 0){
@@ -300,15 +304,37 @@ myFiles_Audio1.addEventListener("change", logFilenamesAudio1)
 myFiles_Audio2.addEventListener("change", logFilenamesAudio2)
 myFiles_Audio3.addEventListener("change", logFilenamesAudio3)
 
-function select_every_checkbox (){
-
-}
-
 
 function create_quiz() {
     // Para que el número de grabaciones sea cero, el número de lugares debe ser cero.
-    if (number_examples = 0) {
-        back.innerHTML = "No has seleccionado nada."
+    switch (number_places) {
+        case 1:
+            if(get_files1){
+                get_files = true;
+            }
+            break;
+        case 2:
+            if(get_files1 && get_files2){
+                get_files = true;
+            }
+            break;
+        case 3:
+            if (get_files1 && get_files2 && get_files3) {
+                get_files = true;
+            }
+            break;
+        default:
+            get_files = false;
+            break;
+    }
+    
+    if (number_examples == 0 || !(get_files)) {
+        if (!get_files) {
+            back.innerHTML = "No has introducido los <strong>Audios</strong> mínimos, revisa otra vez tu petición.";
+        }else{
+            back.innerHTML = "No has seleccionado nada."
+        }
+       
     }else{
         var questions = functions_extras.checking_quiz();
         var name_place1 = "";
@@ -346,11 +372,68 @@ function create_quiz() {
                 // Nombre del Escenario 2
                 name_place2 = document.getElementById("name_place2").value;
                 // Nombre del Escenario 3
-                name_place2 = document.getElementById("name_place3").value;
+                name_place3 = document.getElementById("name_place3").value;
+                if (name_place1 == null || name_place1 == "") {
+                    name_place1 = "Escenario 1";
+                }
+                if (name_place2 == null || name_place2 == "") {
+                    name_place2 = "Escenario 2";
+                }
+                if (name_place3 == null || name_place3 == "") {
+                    name_place3 = "Escenario 3";
+                }
                 break;
         }
 
-        // Ahora generamos el Array que tenga TODA la información.
+        // Extraeremos un JSON de ejemplo, lo convertiremos en un array, lo rellenaremos a nuestro gusto
+        // y luego lo guardaremos para su posterior uso.
+        const PLANTILLA_JSON = "plantilla_json.json";
+        //-- Leer el fichero JSON
+        const  plantilla_json = fs.readFileSync(PLANTILLA_JSON);
+        //-- Creamos el array en el que se modificará todo.
+        var quiz_json = JSON.parse(plantilla_json);
+        //-- Extraemos de la plantilla el nombre del quiz genérico y añadimos el nuevo.
+        quiz_json["Name_Quiz"] = name_quiz;
+        quiz_json["Number_Places"] = number_places;
+        quiz_json["Number_Recordings"] = number_sistems;
+        //-- Añadimos la ruta de los ficheros multimedia al JSON
+        switch (number_places) {
+            case 1:
+                quiz_json["files"][0]["Name_Scenary"] = name_place1;
+                quiz_json["files"][0]["audio_files"] = audio_files1;
+                quiz_json["files"][0]["visual_files"] = visual_files1;
+                break;
+            case 2:
+                quiz_json["files"][0]["Name_Scenary"] = name_place1;
+                quiz_json["files"][0]["audio_files"] = audio_files1;
+                quiz_json["files"][0]["visual_files"] = visual_files1;
+
+                quiz_json["files"][1]["Name_Scenary"] = name_place2;
+                quiz_json["files"][1]["audio_files"] = audio_files2;
+                quiz_json["files"][1]["visual_files"] = visual_files2;
+                break;
+            default:
+                quiz_json["files"][0]["Name_Scenary"] = name_place1;
+                quiz_json["files"][0]["audio_files"] = audio_files1;
+                quiz_json["files"][0]["visual_files"] = visual_files1;
+
+                quiz_json["files"][1]["Name_Scenary"] = name_place2;
+                quiz_json["files"][1]["audio_files"] = audio_files2;
+                quiz_json["files"][1]["visual_files"] = visual_files2;
+
+                quiz_json["files"][2]["Name_Scenary"] = name_place3;
+                quiz_json["files"][2]["audio_files"] = audio_files3;
+                quiz_json["files"][2]["visual_files"] = visual_files3;
+                break;
+        }
+        // Ponemos en el JSON las preguntas que se eligen y las que no.
+        quiz_json["questions_bool"][0] = questions;            
+
+        // Lo segundo es añadir los ficheros.
+        //-- Convertir la variable a cadena JSON
+        let myJSON = JSON.stringify(quiz_json);
+        //-- Guardarla en el fichero destino
+        fs.writeFileSync("quiz_files/quiz1.json", myJSON);
         //electron.ipcRenderer.invoke('test',questions);
     }
 }

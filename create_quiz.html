@@ -45,14 +45,16 @@
       <!--Tabla que sirve para seleccionar cuántos lugares se van a evaluar-->
       <nav>
         <ul id="menu" style="text-align: center;">
+          <div id="class_name_quiz"><label><h4>Introducir nombre del Cuestionario: <input type="text" id="id_name_quiz"></h4></label></div>
+          <br><br>
           <li><p id="place_to_evaluate"> - ¿Cuántos lugares se van a evaluar? :</p>
-              <li><a id="zero"><button id="zero_places" value="0" onclick="select_option(0,1)">0</button></a>
-                <ul>
-                  <li><a id="one"><button id="one_places" value="1" onclick="select_option(1,1)">1</button></a></li>
-                  <li><a id="two"><button id="two_places" value="2" onclick="select_option(2,1)">2</button></a></li>
-                  <li><a id="three"><button id="three_places" value="3" onclick="select_option(3,1)">3</button></a></li>
-                </ul>  
-              </li>
+          <li><a id="zero"><button id="zero_places" value="0" onclick="select_option(0,1)">0</button></a>
+            <ul>
+              <li><a id="one"><button id="one_places" value="1" onclick="select_option(1,1)">1</button></a></li>
+              <li><a id="two"><button id="two_places" value="2" onclick="select_option(2,1)">2</button></a></li>
+              <li><a id="three"><button id="three_places" value="3" onclick="select_option(3,1)">3</button></a></li>
+            </ul>  
+          </li>
           <li><p id="sistems_recording"> |-| Sistemas de grabación por cada lugar :</p>
           <li><a id="one_option"><button id="one_places_1" value="1" onclick="select_option(1,2)">1</button></a>
             <ul>
@@ -87,6 +89,7 @@
                             <label>Audios: </label>
                             <label>Insertar </label><label id="recording_number_text_audio1"> </label>
                             <input type="file" multiple id="myfiles_audio1" class="input_file" accept="audio/*">
+                            <img src="images/no.png" id="status_audio1">
                             <div id="output_audio1" class="output"></div>
                         </span>
                     </div>
@@ -97,14 +100,15 @@
                             <label>Videos: </label>
                             <label>Insertar </label><label id="recording_number_text_video1"></label>
                             <input type="file" multiple id="myfiles_video1" class="input_file" accept="video/*, image/*" >
-                        </span>
+                            <img src="images/no.png" id="status_video1">
+                          </span>
                         <div id="output_video1" class="output"></div>
                     </div>
                 </td>
             </tr>
         </table>
       </div>
-      <div id="file_table2">
+      <div id="file_table2" style="display: none;">
         <span class="encabezado">
             <label> Nombre del Escenario 2: </label>
             <input type="text" id="name_place2">
@@ -117,6 +121,7 @@
                             <label>Audios: </label>
                             <label>Insertar </label><label id="recording_number_text_audio2"> </label>
                             <input type="file" multiple id="myfiles_audio2" class="input_file" accept="audio/*">
+                            <img src="images/no.png" id="status_audio2">
                             <div id="output_audio2" class="output"></div>
                         </span>
                     </div>
@@ -127,14 +132,15 @@
                             <label>Videos: </label>
                             <label>Insertar </label><label id="recording_number_text_video2"></label>
                             <input type="file" multiple id="myfiles_video2" class="input_file" accept="video/*, image/*" >
-                        </span>
+                            <img src="images/no.png" id="status_video2">
+                          </span>
                         <div id="output_video2" class="output"></div>
                     </div>
                 </td>
             </tr>
         </table>
       </div>
-      <div id="file_table3">
+      <div id="file_table3" style="display: none;">
         <span class="encabezado">
             <label> Nombre del Escenario 3: </label>
             <input type="text" id="name_place3">
@@ -147,6 +153,7 @@
                             <label>Audios: </label>
                             <label>Insertar </label><label id="recording_number_text_audio3"> </label>
                             <input type="file" multiple id="myfiles_audio3" class="input_file" accept="audio/*">
+                            <img src="images/no.png" id="status_audio3">
                             <div id="output_audio3" class="output"></div>
                         </span>
                     </div>
@@ -157,7 +164,8 @@
                             <label>Videos: </label>
                             <label>Insertar </label><label id="recording_number_text_video3"></label>
                             <input type="file" multiple id="myfiles_video3" class="input_file" accept="video/*, image/*" >
-                        </span>
+                            <img src="images/no.png" id="status_video3">
+                          </span>
                         <div id="output_video3" class="output"></div>
                     </div>
                 </td>
@@ -170,32 +178,43 @@
   </div>
 
   <div class="wrapper" id="wrapper1">
-    <h2>Parte 1: Identificación de la Fuente Sonora:</h2> 
-    <p><input type="checkbox" name="" id="Part1_Traffic">Traffic noise (e.g,cars, buses, trains, air planes</p>
-    <p><input type="checkbox" name="" id="Part1_Other">Other noise (e.g, sirens, construction, industry, loading of goods</p>
-    <p><input type="checkbox" name="" id="Part1_Human">Sounds from human begins (e.g., conversation, laughter, children at play, footsteps</p>
-    <p><input type="checkbox" name="" id="Part1_Natural">Natural sounds(e.g., singing birds, flowing water, wind in vegetation)</p>
+    <h2>Parte 1: Preguntas al Participante</h2> 
+    <p><input type="checkbox" name="" id="Part1_1">¿Cuántos años tienes?</p>
+    <p><input type="checkbox" name="" id="Part1_2">¿Cuál es tu género?</p>
+    <p><input type="checkbox" name="" id="Part1_3">¿Tienes problemas auditivos?</p>
   </div>
 
   <div class="wrapper" id="wrapper2">
-    <h2>Parte 2: Calidad Afectiva Percibida:</h2> 
-    <p><input type="checkbox" name="" id="Part2_Pleasant">Pleasant</p>
-    <p><input type="checkbox" name="" id="Part2_Chaotic">Chaotic</p>
-    <p><input type="checkbox" name="" id="Part2_Vibrant">Vibrant</p>
-    <p><input type="checkbox" name="" id="Part2_Uneventful">Uneventful</p>
-    <p><input type="checkbox" name="" id="Part2_Calm">Calm</p>
-    <p><input type="checkbox" name="" id="Part2_Annoying">Annoying</p>
-    <p><input type="checkbox" name="" id="Part2_Eventful">Eventful</p>
-    <p><input type="checkbox" name="" id="Part2_Monotonous">Monotonous</p>
+    <h2>Parte 2: Preguntas de Introducción al Escenario:</h2> 
+    <p><input type="checkbox" name="" id="Part2_1">¿Conoces el escenario?</p>
+    <p><input type="checkbox" name="" id="Part2_2">¿Cuál es tú frecuencia de paso por él?</p>
+    <p><input type="checkbox" name="" id="Part2_3">Cuando lo has transitado ¿Has prestado atención al sonido que te rodeaba?</p>
+    <p><input type="checkbox" name="" id="Part2_4">¿Las grabaciones se asemejan a tu recuerdo del escenario?</p>
   </div>
   <div class="wrapper" id="wrapper3">
-    <h2>Parte 3: Evaluación del espacio sonoro circundante:</h2> 
-    <p><input type="checkbox" name="" id="Part3">Overall, how would you describe the present surrounding sound environment?</p>
+    <h2>Parte 3: Preguntas Individualizadas:</h2> 
+    <p><input type="checkbox" name="" id="Part3_1">¿Buena definición?</p>
+    <p><input type="checkbox" name="" id="Part3_2">¿Qué sonidos podrías distinguir en la toma?</p>
+    <p><input type="checkbox" name="" id="Part3_3">¿Consideras ruidoso el audio del paisaje sonoro?</p>
+    <p><input type="checkbox" name="" id="Part3_4">¿Consideras buena la calidad del audio?</p>
+    <p><input type="checkbox" name="" id="Part3_5">¿Consideras realista el audio del paisaje sonoro?</p>
+    <p><input type="checkbox" name="" id="Part3_6">¿Consideras alto el volumen del audio?</p>
+    <p><input type="checkbox" name="" id="Part3_7">¿Consideras desagradable el audio del paisaje sonoro?</p>
+    <p><input type="checkbox" name="" id="Part3_8">¿Consideras definido el audio del paisaje sonoro?</p>
+    <p><input type="checkbox" name="" id="Part3_9">¿Has notado espacialidad en el audio del paisaje sonoro?</p>
+    <p><input type="checkbox" name="" id="Part3_10">¿Consideras que te ha gustado la toma?</p>
   </div>
 
   <div class="wrapper" id="wrapper4">
     <h2>Parte 4: Idoneidad del entorno sonoro circundante:</h2> 
-    <p><input type="checkbox" name="" id="Part4">Overall, how would you describe the present surrounding sound environment appropriate to the present place?</p>
+    <p><input type="checkbox" name="" id="Part4_1">De más a menos ruidosa</p>
+    <p><input type="checkbox" name="" id="Part4_2">De más calidad a menos calidad</p>
+    <p><input type="checkbox" name="" id="Part4_3">De más realista a menos realista</p>
+    <p><input type="checkbox" name="" id="Part4_4">De más desagradable a menos desagradable</p>
+    <p><input type="checkbox" name="" id="Part4_5">De más definida a menos definida</p>
+    <p><input type="checkbox" name="" id="Part4_6">De más espacial a menos espacial</p>
+    <p><input type="checkbox" name="" id="Part4_7">De más alta a menos alta</p>
+    <p><input type="checkbox" name="" id="Part4_8">De la que más te ha gustado, a la que menos</p>
   </div>
   <br>
   <br>

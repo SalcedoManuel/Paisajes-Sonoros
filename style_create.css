@@ -18,13 +18,13 @@
     text-align: center;
     background-color: rgb(0, 255, 221);
   }
-  #wrapper_audio1,#wrapper_audio2,#wrapper_audio3,#wrapper_video1,#wrapper_video2,#wrapper_video3{
+  div[id^="wrapper_audio"],div[id^="wrapper_video"]{
     border:rgb(255, 0, 0) solid 2px;
-    height:100px; width: fit-content;
+    height:100px; width: 343px;
     text-align: center;
   }
-  #file_table1,#file_table2,#file_table3{
-    width: fit-content;background-color: #fff;
+  div[id^="file_table"]{
+    width: 700px;background-color: #fff;
     text-align:center;color:black;
     padding: 1vh; margin: 1vh;border: 1vh solid gold;
   }

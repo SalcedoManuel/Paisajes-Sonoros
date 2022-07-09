@@ -56,7 +56,12 @@ button{
     transform: scaleX(1);
     transform-origin: left;
 }
-#status_audio_0{
-    min-width: 10px;
-    min-height: 10px;
+#status_audio1,#status_audio2,#status_audio3{
+    position: relative;
+    top:0.7vh;
+}
+#status_video1,#status_video2,#status_video3{
+    position: relative;
+    top:0.7vh;
+    text-align: center;
 }

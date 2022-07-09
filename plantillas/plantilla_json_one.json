@@ -1,30 +1,52 @@
 [
     {
+        "information":
+                    [
+                        {
+                            "number_scenarios":1,
+                            "number_recordings":1
+                        }
+                    ]
+    },{
         "files":
                     [
                         {
                             "name":"Nombre_Escenario1",
-                            "Audio_files":[],
-                            "Visual_files":[],
+                            "audio_files":[],
+                            "visual_files":[]
+                        },{
+                            "name":"Nombre_Escenario2",
+                            "audio_files":[],
+                            "visual_files":[]
+                        },{
+                            "name":"Nombre_Escenario3",
+                            "audio_files":[],
+                            "visual_files":[]
                         }
                     ]
 
     },{
-        "questions":
+        "participante_questions":
                     [
                         {
                             "¿Cuántos años tienes?":23,
                             "¿Cuál es tu género?":"Hombre",
                             "¿Tienes problemas auditivos?":"NO"
                         }
-                    ],[
+                    ]
+    },{
+        "Escenario_questions":
+                    [
                         {
                             "¿Conoces el escenario?":"SÍ",
                             "¿Cuál es la frecuencia de paso por él?":1,
                             "Cúando lo has transitado, ¿Has prestado atención al sonido que te rodeaba?":"NO",
                             "¿Las grabaciones se asemejan a tu recuerdo del escenario?":"SÍ"
                         }
-                    ],[
+                    ]
+    },{
+        "individual_questions":
+                    [
                         {
                             "¿Buena definición?":"Sí",
                             "¿Qué sonidos podrías distinguir en la toma?":0,
@@ -37,7 +59,10 @@
                             "¿Has notado espacialidad en el audio del paisaje sonoro?":0,
                             "¿Consideras que te ha gustado la toma?":0
                         }
-                    ],[
+                    ]
+    },{
+        "general_questions":
+                    [
                         {
                             "De más a menos ruidosa":0,
                             "De más calidad a menos calidad":0,
@@ -46,7 +71,7 @@
                             "De más definida a menos definida":0,
                             "De más espacial a menos espacial":0,
                             "De más alta a menos alta":0,
-                            "De la que más te ha gustado, a la que menos":0,
+                            "De la que más te ha gustado, a la que menos":0
                         }
                     ]
     }
