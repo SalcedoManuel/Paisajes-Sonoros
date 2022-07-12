@@ -1,5 +1,6 @@
 //-- Cargar el módulo de electron
 const electron = require('electron');
+const fs = require('fs');
 
 console.log("Arrancando electron...");
 
@@ -62,7 +63,11 @@ electron.ipcMain.handle('home', (event, msg) => {
   win.loadFile("index.html");
 });
 electron.ipcMain.handle('test', (event, msg) => {
-  console.log("-> Mensaje: " + msg);
-  questions = msg;
-  console.log(questions);
+  console.log("El nombre del quiz nuevo creado es: " + msg);
+  const MAIN_JSON = "plantillas/main_json.json";
+  var main_info = JSON.parse(MAIN_JSON);
+  //-- Guardamos el nombre del archivo para que cuando lo necesitemos usarlo.
+  main_info["Quizs_Names"].push(msg);
+  let myJSON = JSON.stringify(main_info);
+  fs.writeFileSync(MAIN_JSON,myJSON);
 });
