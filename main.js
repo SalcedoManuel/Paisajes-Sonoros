@@ -66,7 +66,7 @@ electron.ipcMain.handle('test', (event, msg) => {
   console.log("El nombre del quiz nuevo creado es: " + msg);
   const MAIN_JSON = "plantillas/main_json.json";
   var main_info = JSON.parse(MAIN_JSON);
-  //-- Guardamos el nombre del archivo para que cuando lo necesitemos usarlo.
+  //-- Guardamos el nombre del archivo para cuando lo usemos.
   main_info["Quizs_Names"].push(msg);
   let myJSON = JSON.stringify(main_info);
   fs.writeFileSync(MAIN_JSON,myJSON);
