@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="style.css">
 
     <!-- Cargar el proceso asociado a esta página -->
-    <script src="index.js" defer></script>
+    <script src="index-quiz.js" defer></script>
 
     <title>Soundscape Questionnaire</title>
 </head>
@@ -27,27 +27,28 @@
         <a href="index.html" class="nav__link" id="home">Home</a>
       </li>
       <li class="nav__item">
-        <a href="#" class="nav__link" >Contact us </a>
+        <a href="#" class="nav__link" >Contacto </a>
       </li>
       <li class="nav__item">
-        <a href="#" class="nav__link" >Languaje</a>
+        <a href="#" class="nav__link" >Idioma</a>
       </li>
       <li class="nav__item">
-        <a href="#" class="nav__link" >Help</a>
+        <a href="#" class="nav__link" >Ayuda</a>
       </li>
       <li class="nav__item">
         <a href="#" class="nav__link" ></a>
       </li>
     </ul>
   </nav>
+
   <div class="wrapper">
-    <a href="create_quiz.html" id="btn_create"><button><h3>Crear Cuestionario</h3></button></a>
-    <a href="read_file.html" id="btn_show"><button><h3>Mostrar Resultados</h3></button></a>
+    <button onclick="start_quiz()"><h3>Iniciar Recogida de Datos</h3></button>
+    <button onclick="seek_quizs()"><h3>Buscar Cuestionarios Iniciados</h3></button>
+    <a href="create_quiz.html" id="btn_create"><button><h3>Crear un Cuestionario Nuevo</h3></button></a>
   </div>
 
 
     <h1>INTERFAZ GRÁFICA</h1>
-    <img src="logo-urjc.png" alt="Logo-URJC" width=150px>
 
     <hr>
     <h2>Información:</h2>
