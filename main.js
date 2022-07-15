@@ -60,11 +60,14 @@ electron.ipcMain.handle('quizs',(event, msg) => {
 });
 
 electron.ipcMain.handle('test', (event, msg) => {
-  console.log("El nombre del quiz nuevo creado es: " + msg);
-  const MAIN_JSON = "plantillas/main_json.json";
-  var main_info = JSON.parse(MAIN_JSON);
+  console.log("El nombre del quiz nuevo creado es: " + msg.split("/")[1]);
+  const MAIN_JSON = "plantillas/main.json";
+  const  MAIN_JSON_FILE = fs.readFileSync(MAIN_JSON);
+  var main_info = JSON.parse(MAIN_JSON_FILE);
   //-- Guardamos el nombre del archivo para cuando lo usemos.
+  msg = msg.split("/")[1];
   main_info["Quizs_Names"].push(msg);
+  main_info["Number_Quizs"] += 1;
   let myJSON = JSON.stringify(main_info);
   fs.writeFileSync(MAIN_JSON,myJSON);
 });
