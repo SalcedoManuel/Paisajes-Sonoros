@@ -20,6 +20,7 @@ var user_questions = new Object;
 var places_questions = new Object;
 var recordings_questions = new Object;
 var generic_questions = new Object;
+var type_of_question_active = "";
 
 var number_type_question = 0;
 
@@ -54,6 +55,35 @@ electron.ipcRenderer.on('actual_quizs', (event, message) => {
     quiz_name_actual_file = message;
 });
 
+function show_questions() {
+    switch (type_of_question_active) {
+        case "user_questions":
+            //-- Preguntas al participante
+            //-- Cambiar Título.
+            document.getElementById("wrapper_title_question").innerHTML = "<h2>"+quiz_name_actual+"</h2>";
+            document.getElementById("wrapper_files").innerHTML = "";
+            let replys = document.getElementById("wrapper_replys");
+            replys.innerHTML = "";
+            console.log(Object.keys(user_questions).length)
+            for (let i = 0; i < Object.keys(user_questions).length; i++) {
+                let pos = i + 1;
+                replys.innerHTML += user_questions[pos] + "<br>";              
+            }            
+            break;
+        case "places_questions":
+        
+            break;
+        case "recordings_questions":
+        
+            break;
+        case "generic_questions":
+    
+            break;
+        default:
+            break;
+    }
+}
+
 function Select_Quiz(position) {
     //  Obtenemos el nombre del fichero del que vamos a realiza el Cuestioanrio.
     quiz_name_actual_file = quizs_names[position];
@@ -82,8 +112,11 @@ function Select_Quiz(position) {
 
     // Ahora toca obtener las preguntas.
     user_questions = quiz_json["questions"][0];
+    console.log(user_questions["1"])
     places_questions = quiz_json["questions"][1];
     recordings_questions = quiz_json["questions"][2];
     generic_questions = quiz_json["questions"][3];
-    console.log(generic_questions[1])
+
+    type_of_question_active = "user_questions";
+    show_questions();
 }
