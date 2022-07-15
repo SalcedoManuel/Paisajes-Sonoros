@@ -67,7 +67,7 @@ electron.ipcMain.handle('test', (event, msg) => {
   //-- Guardamos el nombre del archivo para cuando lo usemos.
   msg = msg.split("/")[1];
   main_info["Quizs_Names"].push(msg);
-  main_info["Number_Quizs"] += 1;
+  main_info["Number_Quizs"] = main_info["Quizs_Names"].length;
   let myJSON = JSON.stringify(main_info);
   fs.writeFileSync(MAIN_JSON,myJSON);
 });

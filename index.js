@@ -344,6 +344,7 @@ function create_quiz() {
         functions_extras.ocultar_wrapper();
 
         back.innerHTML = "Cuestionario creado. Vuelva al menú principal.";
+        document.getElementById("button_end_page1").style.display = "none"
         console.log(questions);
         // Switch para obtener los nombres de los escenarios.
         switch (number_places) {
