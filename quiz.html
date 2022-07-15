@@ -5,12 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Permitir sólo scripts y ficheros de la máquina local -->
-    <!-- Con esto se elimina el aviso de seguridad: Insecure Content-Security-Policy -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self';" />
-
     <!-- Hoja de estilo de la interfaz -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style_quiz.css">
 
     <!-- Cargar el proceso asociado a esta página -->
     <script src="index-quiz.js" defer></script>
@@ -24,7 +20,7 @@
     </span>
     <ul class="nav__list">
       <li class="nav__item">
-        <a href="index.html" class="nav__link" id="home">Home</a>
+        <a href="index.html" class="nav__link" id="home">Inicio</a>
       </li>
       <li class="nav__item">
         <a href="#" class="nav__link" >Contacto </a>
@@ -41,16 +37,22 @@
     </ul>
   </nav>
 
-  <div class="wrapper">
+  <div class="wrapper" id="wrapper0">
     <button onclick="start_quiz()"><h3>Iniciar Recogida de Datos</h3></button>
     <button onclick="seek_quizs()"><h3>Buscar Cuestionarios Iniciados</h3></button>
     <a href="create_quiz.html" id="btn_create"><button><h3>Crear un Cuestionario Nuevo</h3></button></a>
   </div>
-
-
-    <h1>INTERFAZ GRÁFICA</h1>
-
-    <hr>
+  <!--Este contenedor sirve para Informar si hay cuestionarios iniciados o
+     dar información sobre el cuestionario. -->
+  <div class="wrapper" id="wrapper1">
+    <span id="wrapper_text"></span>
+  </div>
+  
+  <!-- En este contenedor se mostrarán los audios y vídeos con sus respuestas.-->
+  <div class="wrapper" id="wrapper2">
+    <div id="wrapper_files"></div>
+    <div id="wrapper_replys"></div>
+  </div >
     <h2>Información:</h2>
     <ul>
         <li>Arquitectura: <span id="info1" class="blue"></span> </li>

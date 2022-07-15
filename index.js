@@ -384,7 +384,6 @@ function create_quiz() {
                 }
                 break;
         }
-
         // Extraeremos un JSON de ejemplo, lo convertiremos en un array, lo rellenaremos a nuestro gusto
         // y luego lo guardaremos para su posterior uso.
         const PLANTILLA_JSON = "plantilla_json.json";

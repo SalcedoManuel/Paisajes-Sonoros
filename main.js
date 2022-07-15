@@ -46,22 +46,19 @@ electron.app.on('ready', () => {
 
 //-- Esperar a recibir los mensajes de botón apretado (Test) del proceso de 
 //-- renderizado. Al recibirlos se escribe una cadena en la consola
-electron.ipcMain.handle('create', (event, msg) => {
-  console.log("-> Mensaje: " + msg);
-  win.loadFile("create_quiz.html");
+
+electron.ipcMain.handle('quizs',(event, msg) => {
+  console.log("Nos piden los nombres de los quizs ya creados: " + msg);
+  const MAIN_JSON = "plantillas/main.json";
+  const  MAIN_JSON_FILE = fs.readFileSync(MAIN_JSON);
+  var main_info = JSON.parse(MAIN_JSON_FILE);
+  //-- Guardamos el nombre del archivo para cuando lo usemos.
+  let quizs_names = main_info["Quizs_Names"];
+  console.log("Enviamos: " + quizs_names)
+  win.webContents.send('quizs', quizs_names);
+
 });
-electron.ipcMain.handle('quiz', (event, msg) => {
-  console.log("-> Mensaje: " + msg);
-  win.loadFile("quiz.html");
-});
-electron.ipcMain.handle('show', (event, msg) => {
-  console.log("-> Mensaje: " + msg);
-  win.loadFile("read_file.html");
-});
-electron.ipcMain.handle('home', (event, msg) => {
-  console.log("-> Mensaje: " + msg);
-  win.loadFile("index.html");
-});
+
 electron.ipcMain.handle('test', (event, msg) => {
   console.log("El nombre del quiz nuevo creado es: " + msg);
   const MAIN_JSON = "plantillas/main_json.json";
