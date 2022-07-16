@@ -1,6 +1,8 @@
 const electron = require('electron');
 const fs = require('fs');
 
+const functions_quiz = require('./functions_quiz');
+
 var quizs_names = [];
 var quiz_name_actual_file = "";
 var quiz_name_actual = "";
@@ -67,7 +69,7 @@ function show_questions() {
             console.log(Object.keys(user_questions).length)
             for (let i = 0; i < Object.keys(user_questions).length; i++) {
                 let pos = i + 1;
-                replys.innerHTML += user_questions[pos] + "<br>";              
+                replys.innerHTML += user_questions[pos];    
             }            
             break;
         case "places_questions":
