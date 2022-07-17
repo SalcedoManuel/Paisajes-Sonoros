@@ -24,6 +24,8 @@ var recordings_questions = new Object;
 var generic_questions = new Object;
 var type_of_question_active = "";
 
+var generic_value = ["A","A","A","A","A"]
+
 var number_type_question = 0;
 
 function seek_quizs() {
@@ -58,28 +60,57 @@ electron.ipcRenderer.on('actual_quizs', (event, message) => {
 });
 
 function show_questions() {
+    let replys = document.getElementById("wrapper_replys");
     switch (type_of_question_active) {
         case "user_questions":
             //-- Preguntas al participante
             //-- Cambiar Título.
             document.getElementById("wrapper_title_question").innerHTML = "<h2>"+quiz_name_actual+"</h2>";
             document.getElementById("wrapper_files").innerHTML = "";
-            let replys = document.getElementById("wrapper_replys");
+
             replys.innerHTML = "";
             console.log(Object.keys(user_questions).length)
             for (let i = 0; i < Object.keys(user_questions).length; i++) {
                 let pos = i + 1;
-                replys.innerHTML += user_questions[pos];    
-            }            
+                replys.innerHTML += functions_quiz.add_user_questions(pos);    
+            }
+            document.getElementById("wrapper_next").innerHTML = '<button onclick="functions_quiz.next_option(0)">Siguiente</button>';            
             break;
         case "places_questions":
-        
+            //-- Preguntas al participante
+            //-- Cambiar Título.
+            document.getElementById("wrapper_title_question").innerHTML = "<h2>"+quiz_name_actual+"</h2>";
+            document.getElementById("wrapper_files").innerHTML = "";
+            replys.innerHTML = "";
+            console.log(Object.keys(places_questions).length)
+            for (let i = 0; i < Object.keys(places_questions).length; i++) {
+                let pos = i + 1;
+                replys.innerHTML += functions_quiz.add_places_questions(pos);    
+            }
+            document.getElementById("wrapper_next").innerHTML = '<button onclick="functions_quiz.next_option(1)">Siguiente</button>';
             break;
         case "recordings_questions":
-        
+            document.getElementById("wrapper_title_question").innerHTML = "<h2>"+quiz_name_actual+"</h2>";
+            document.getElementById("wrapper_files").innerHTML = "";
+            replys.innerHTML = "";
+            console.log(Object.keys(recordings_questions).length)
+            for (let i = 0; i < Object.keys(recordings_questions).length; i++) {
+                let pos = i + 1;
+                replys.innerHTML += functions_quiz.add_recordings_questions(pos);    
+            }
+            document.getElementById("wrapper_next").innerHTML = '<button onclick="functions_quiz.next_option(2)">Siguiente</button>';
             break;
         case "generic_questions":
-    
+            document.getElementById("wrapper_title_question").innerHTML = "<h2>"+quiz_name_actual+"</h2>";
+            document.getElementById("wrapper_files").innerHTML = "";
+            replys.innerHTML = "";
+            console.log(Object.keys(generic_questions).length)
+            e = places_questions * recordings_questions;
+            for (let i = 0; i < Object.keys(generic_questions).length; i++) {
+                let pos = i + 1;
+                replys.innerHTML += functions_quiz.add_generic_questions(pos,e);    
+            }
+            document.getElementById("wrapper_next").innerHTML = '<button onclick="functions_quiz.end_quiz()">Finalizar</button>';
             break;
         default:
             break;
@@ -114,7 +145,6 @@ function Select_Quiz(position) {
 
     // Ahora toca obtener las preguntas.
     user_questions = quiz_json["questions"][0];
-    console.log(user_questions["1"])
     places_questions = quiz_json["questions"][1];
     recordings_questions = quiz_json["questions"][2];
     generic_questions = quiz_json["questions"][3];
