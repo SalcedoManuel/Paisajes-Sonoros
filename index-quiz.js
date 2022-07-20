@@ -24,7 +24,10 @@ var recordings_questions = new Object;
 var generic_questions = new Object;
 var type_of_question_active = "";
 
-var generic_value = ["A","A","A","A","A"]
+// Respuestas del cuestionario.
+var edad = 0;
+var genero = "";
+
 
 var number_type_question = 0;
 
@@ -108,7 +111,7 @@ function show_questions() {
             e = places_questions * recordings_questions;
             for (let i = 0; i < Object.keys(generic_questions).length; i++) {
                 let pos = i + 1;
-                replys.innerHTML += functions_quiz.add_generic_questions(pos,e);    
+                replys.innerHTML += functions_quiz.add_generic_questions(pos,i);    
             }
             document.getElementById("wrapper_next").innerHTML = '<button onclick="functions_quiz.end_quiz()">Finalizar</button>';
             break;

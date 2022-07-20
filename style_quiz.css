@@ -42,3 +42,38 @@ body{
     transform: scaleX(1);
     transform-origin: left;
 }
+
+button[id^="option"]{
+    color: white;
+    background-color: black;
+}
+button[id^="option_"]{
+    border-color: white;
+}
+button[id^="option_first"]{
+    border-color: gold;
+}
+button[id^="option_second"]{
+    border-color: silver;
+}
+button[id^="option_third"]{
+    border-color: rgb(165, 87, 42);
+}
+button[id^="option_fourth"]{
+    border-color: blue;
+}
+button[id^="option_fifth"]{
+    border-color: red;
+}
+button[id^="option_sixth"]{
+    border-color: green;
+}
+button[id^="option_seventh"]{
+    border-color: violet;
+}
+button[id^="option_eighth"]{
+    border-color: magenta;
+}
+button[id^="option_ninth"]{
+    border-color: black;
+}
