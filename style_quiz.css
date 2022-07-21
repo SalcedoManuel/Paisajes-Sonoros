@@ -2,6 +2,34 @@ body{
     background-color: rgb(0, 255, 242);
     min-width: fit-content;
 }
+img[id^="file_image"]{
+    width: 250px;
+    height: 250px;
+    display:block;
+    margin:auto;
+}
+video[id^="file_video"]{
+    width: 250px;
+    height: 250px;
+    display:block;
+    margin:auto;
+}
+audio{
+    display:block;
+    margin:auto;
+}
+div[id^="wrapper0"],div[id^="wrapper1"],div[id^="wrapper2"]{
+    display: flex;
+    justify-content: center
+}
+button[id^="btn_center"]{
+    margin-right: 10px;
+}
+button[id^="btn_special"]{
+    margin-right: 10px;
+    width: 100px;
+    height: min-content;
+}
 .nav{
     display: flex;
     align-items: center;
@@ -41,39 +69,4 @@ body{
 .nav__link:hover::after{
     transform: scaleX(1);
     transform-origin: left;
-}
-
-button[id^="option"]{
-    color: white;
-    background-color: black;
-}
-button[id^="option_"]{
-    border-color: white;
-}
-button[id^="option_first"]{
-    border-color: gold;
-}
-button[id^="option_second"]{
-    border-color: silver;
-}
-button[id^="option_third"]{
-    border-color: rgb(165, 87, 42);
-}
-button[id^="option_fourth"]{
-    border-color: blue;
-}
-button[id^="option_fifth"]{
-    border-color: red;
-}
-button[id^="option_sixth"]{
-    border-color: green;
-}
-button[id^="option_seventh"]{
-    border-color: violet;
-}
-button[id^="option_eighth"]{
-    border-color: magenta;
-}
-button[id^="option_ninth"]{
-    border-color: black;
 }

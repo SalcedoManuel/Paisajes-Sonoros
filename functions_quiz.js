@@ -1,17 +1,17 @@
 function add_user_questions(pos) {
     let reply = "";
     if (user_questions[pos] == "¿Cuántos años tienes?") {
-        reply += pos +". <strong>"+user_questions[pos] + "</strong>: ";
+        reply += pos +". <strong>"+user_questions[pos] + "</strong>:";
         reply += '<input type="number" id="age" min="16" max="120" value="18" style="width:40px">'
     }
     if (user_questions[pos] == "¿Cuál es tu género?") {
-        reply += pos + ". <strong>" + user_questions[pos] + "</strong>: ";
+        reply += pos + ". <strong>" + user_questions[pos] + "</strong>:";
         reply += 'Hombre <input type="radio" name="gender" value="man" id="man_user_question" checked></input> ';
         reply += 'Mujer <input type="radio" name="gender" value="woman" id="woman_user_question"></input> ';
         reply += 'Otro <input type="radio" name="gender" value="other" id="other_user_question"></input> ';
     }
     if (user_questions[pos] == "¿Tienes problemas auditivos?") {
-        reply += pos + ". <strong>" + user_questions[pos] + "</strong>: ";
+        reply += pos + ". <strong>" + user_questions[pos] + "</strong>:";
         reply += 'Sí <input type="radio" name="auditive_problem" value="yes" id="yes_user_option" checked></input>';
         reply += 'No <input type="radio" name="auditive_problem" value="no" id="no_user_option"></input>';
     }
@@ -22,27 +22,27 @@ function add_user_questions(pos) {
 function add_places_questions(pos) {
     let reply = "";
     if (places_questions[pos] == "¿Conoces el escenario?") {
-        reply += pos + ". <strong>" + places_questions[pos] + "</strong>: ";
-        reply += 'Sí <input type="radio" name="places1" value="yes" id="yes1_place_option"></input>';
-        reply += 'No <input type="radio" name="places1" value="no" id="no1_place_option"></input>';
+        reply += pos + ". <strong>" + places_questions[pos] + "</strong>:";
+        reply += 'Sí <input type="radio" name="places0" value="yes" id="yes1_place_option" checked></input>';
+        reply += 'No <input type="radio" name="places0" value="no" id="no1_place_option"></input>';
     }
     if (places_questions[pos] == "¿Cuál es la frecuencia de paso por él?") {
-        reply += pos + ". <strong>" + places_questions[pos] + "</strong>: ";
-        reply += 'Ninguna <input type="radio" name="ninguna" id="ninguna_place_option"></input>';
-        reply += 'Poca <input type="radio" name="poca" id="poca_place_option"></input>';
-        reply += 'A veces <input type="radio" name="aveces" id="aveces_place_option"></input>';
-        reply += 'Frecuentemente <input type="radio" name="frecuentemente" id="frecuentemente_place_option"></input>';
-        reply += 'Diariamente <input type="radio" name="diariamente" id="diariamente_place_option"></input>';
+        reply += pos + ". <strong>" + places_questions[pos] + "</strong>:";
+        reply += 'Ninguna <input type="radio" name="places1" value="ninguna" id="ninguna_place_option" checked></input>';
+        reply += 'Poca <input type="radio" name="places1" value="poca" id="poca_place_option"></input>';
+        reply += 'A veces <input type="radio" name="places1" value="aveces" id="aveces_place_option"></input>';
+        reply += 'Frecuentemente <input type="radio" name="places1" value="frecuentemente" id="frecuentemente_place_option"></input>';
+        reply += 'Diariamente <input type="radio" name="places1" value="diariamente" id="diariamente_place_option"></input>';
     }
     if (places_questions[pos] == "Cuando lo has transitado, ¿Has prestado atención al sonido que te rodeaba?") {
-        reply += pos + ". <strong>" + places_questions[pos] + "</strong>: ";
-        reply += 'Sí <input type="radio" name="" id="yes2_place_option"></input>';
-        reply += 'No <input type="radio" name="" id="no2_place_option"></input>';
+        reply += pos + ". <strong>" + places_questions[pos] + "</strong>:";
+        reply += ' Sí <input type="radio" name="places2" value="yes" id="yes2_place_option" checked></input>';
+        reply += ' No <input type="radio" name="places2" value="no" id="no2_place_option"></input>';
     }
     if (places_questions[pos] == "¿Las grabaciones se asemejan a tu recuerdo del escenario?") {
-        reply += pos + ". <strong>" + places_questions[pos] + "</strong>: ";
-        reply += 'Sí <input type="radio" name="" id="yes3_place_option"></input>';
-        reply += 'No <input type="radio" name="" id="no3_place_option"></input>';
+        reply += pos + ". <strong>" + places_questions[pos] + "</strong>:";
+        reply += ' Sí <input type="radio" name="places3" value="yes" id="yes3_place_option" checked></input>';
+        reply += ' No <input type="radio" name="places3" value="no" id="no3_place_option"></input>';
     }
     reply += "<br>";
     return reply;
@@ -155,46 +155,11 @@ function select_option(question, value) {
             
         }
     }
-    switch (question) {
-        case 0:
-            // De más a menos ruidosa
-            break;
-        case 1:
-            //De más calidad a menos calidad
-            
-            break;
-        case 2:
-            //De más realista a menos realista
-            
-            break;
-        case 3:
-            //De más desagradable a menos desagradable
-            
-            break;
-        case 4:
-            //De más definida a menos definida
-            
-            break;
-        case 5:
-            //De más espacial a menos espacial
-            
-            break;
-        case 6:
-            //De más alta a menos alta
-            
-            break;  
-        case 7:
-            //De la que más te ha gustado, a la que menos
-            
-            break;         
-        default:
-            console.log("Error");
-            break;
-    }
 }
 
 function next_option(type) {
     switch (type) {
+        // Case 0, sacar datos del las PREGUNTAS DE USUARIO.
         case 0:
             edad = document.getElementById("age").value;
             let gender_list = document.getElementsByName("gender");
@@ -216,17 +181,57 @@ function next_option(type) {
                 document.getElementById("wrapper_next").innerHTML = "";
             }else{
                 type_of_question_active = "places_questions";
+                number_places_questions_replied = 0;
+                number_recordings_questions_replied = 1;
                 // Ahora se mostrarán las preguntas del lugar.
                 show_questions();
             }
 
             break;
+        // Case 1, sacar información de las preguntas del lugar.
         case 1:
+            let places = [];
+            var places_replies = new Object;
+            for (let i = 0; i < Object.keys(places_questions).length; i++) {
+                let id_text = "places"+i;
+                let places_list = document.getElementsByName(id_text);
+                    for (let e = 0; e < places_list.length; e++) {
+                        if (places_list[e].checked) {
+                            places[i] = places_list[e].value;
+                        }                
+                    }
+                places_replies[places_questions[i+1]] =  places[i];   
+            }
+            console.log(places_replies);
+            // Añadimos las respuestas de este apartado al respuestas general.
+            all_places_replies.push(places_replies);
             type_of_question_active = "recordings_questions";
             show_questions();
             break;
+        // Case 2, sacar información por sistema de grabación.
         case 2:
-            type_of_question_active = "generic_questions";
+            number_recordings_questions_replied += 1;
+            // Si el número de páginas con respuestas a los sistemas de grabación
+            // es superior al número de sistemas de grabación se cambia el tipo de pregunta.
+            // Si no, se mantiene el tipo.
+            if (number_recordings_questions_replied > number_recordings) {
+                // El número de preguntas del lugar respondidas aumenta en uno.
+                number_places_questions_replied += 1;
+                number_recordings_questions_replied = 1;
+                // Si ya se han respondido las preguntas de todos los lugares, se pasa automáticamente a las genéricas.
+                // Si no se han respondido se pasa automáticamente a las preguntas sobre lugares.
+                if (number_places_questions_replied == number_places) {
+                    type_of_question_active = "generic_questions";
+                }else{
+                    type_of_question_active = "places_questions";
+                }
+            }else{
+                // Si estamos aquí es porque no se han respondido a todas las preguntas sobre los sistemas de grabación.
+                // Extraemos primero la información.
+                type_of_question_active = "recordings_question";
+
+            }
+            
             show_questions();
             break;    
         default:
@@ -234,11 +239,34 @@ function next_option(type) {
     }
 }
 
-function end_quiz(params) {
-    document.getElementById("wrapper_title_question").innerHTML = "<strong>Cuestionario Finalizado</strong>";
-    document.getElementById("wrapper_files").innerHTML = "";
-    document.getElementById("wrapper_replys").innerHTML = "";
-    document.getElementById("wrapper_next").innerHTML = "";
+function end_quiz() {
+    // En esta función lo primero que tenemos que hacer es asegurarnos de que el usuario ha ordenado todas las tomas
+    let ok_output_replys = true;
+    let number_output_error = "";
+    for (let i = 0; i < Object.keys(generic_questions).length; i++) {
+        let id_text = "output"+i;
+        let output = document.getElementById(id_text);
+        let output_text = output.innerHTML;
+        const number_elements = number_places * number_recordings;
+        if (output_text.length != (number_elements)) {
+            ok_output_replys = false;
+            if (number_output_error.length > 0) {
+                number_output_error += ", " + (i+1);
+            }else{
+                number_output_error += i+1;
+            }
+
+        }        
+    }
+    if (ok_output_replys) {
+        document.getElementById("wrapper_title_question").innerHTML = "<strong>Cuestionario Finalizado</strong>";
+        document.getElementById("wrapper_files").innerHTML = "";
+        document.getElementById("wrapper_replys").innerHTML = "";
+        document.getElementById("wrapper_next").innerHTML = "";
+    }else{
+        window.alert("Errores en la elección en los siguientes apartados ->" + number_output_error);
+    }
+
 }
 
 module.exports = {
