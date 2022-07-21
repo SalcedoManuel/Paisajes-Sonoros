@@ -351,7 +351,7 @@ function create_quiz() {
             case 1:
                 // Nombre del Escenario 1
                 name_place1 = document.getElementById("name_place1").value;
-                if (name_place1 = null) {
+                if (name_place1 == null) {
                     name_place1 = "Escenario 1";
                 }
                 break;
@@ -360,10 +360,10 @@ function create_quiz() {
                 name_place1 = document.getElementById("name_place1").value;
                 // Nombre del Escenario 2
                 name_place2 = document.getElementById("name_place2").value;
-                if (name_place1 = null) {
+                if (name_place1 == null) {
                     name_place1 = "Escenario 1";
                 }
-                if (name_place2 = null) {
+                if (name_place2 == null) {
                     name_place2 = "Escenario 2";
                 }
                 break

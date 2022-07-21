@@ -66,8 +66,14 @@ electron.ipcMain.handle('test', (event, msg) => {
   var main_info = JSON.parse(MAIN_JSON_FILE);
   //-- Guardamos el nombre del archivo para cuando lo usemos.
   msg = msg.split("/")[1];
-  main_info["Quizs_Names"].push(msg);
-  main_info["Number_Quizs"] = main_info["Quizs_Names"].length;
+  //-- Buscamos en el array de nombres si está en la lista
+  if (main_info["Quizs_Names"].includes(msg) == false) {
+    // Si entra aquí es que el valor NO está en la lista y por tanto se guarda.
+    main_info["Quizs_Names"].push(msg);
+    main_info["Number_Quizs"] = main_info["Quizs_Names"].length;
+  }else{
+    console.log("El archivo ya existía")
+  }
   let myJSON = JSON.stringify(main_info);
   fs.writeFileSync(MAIN_JSON,myJSON);
 });
