@@ -72,7 +72,7 @@ electron.ipcMain.handle('test', (event, msg) => {
     main_info["Quizs_Names"].push(msg);
     main_info["Number_Quizs"] = main_info["Quizs_Names"].length;
   }else{
-    console.log("El archivo ya existía")
+    console.log("El archivo ya existía");
   }
   let myJSON = JSON.stringify(main_info);
   fs.writeFileSync(MAIN_JSON,myJSON);
