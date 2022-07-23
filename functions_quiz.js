@@ -180,6 +180,13 @@ function next_option(type) {
                 document.getElementById("wrapper_replys").innerHTML = "";
                 document.getElementById("wrapper_next").innerHTML = "";
             }else{
+                // Después de obtener los valores los guardamos.
+                // Creamos un objeto que contenga la el nombre de la pregunta y la respuesta.
+                                
+                user_object[user_questions[1]] = edad;
+                user_object[user_questions[2]] = gender;
+                user_object[user_questions[3]] = auditive_problem;
+
                 type_of_question_active = "places_questions";
                 number_places_questions_replied = 0;
                 number_recordings_questions_replied = 1;
@@ -210,6 +217,20 @@ function next_option(type) {
             break;
         // Case 2, sacar información por sistema de grabación.
         case 2:
+            // Extraemos la información.
+            let recordings = [];
+            var recordings_replies = new Object;
+            for (let i = 0; i < Object.keys(recordings_questions).length; i++) {
+                let id_text = "question"+i;
+                let recordings_list = document.getElementsByName(id_text);
+                    for (let e = 0; e < recordings_list.length; e++) {
+                        if (recordings_list[e].checked) {
+                            recordings[i] = recordings_list[e].value;
+                        }                
+                    }
+                recordings_replies[recordings_questions[i+1]] =  recordings[i];   
+            }
+            all_recordings_replies[number_places_questions_replied] = recordings_replies;
             number_recordings_questions_replied += 1;
             // Si el número de páginas con respuestas a los sistemas de grabación
             // es superior al número de sistemas de grabación se cambia el tipo de pregunta.
@@ -231,7 +252,6 @@ function next_option(type) {
                 type_of_question_active = "recordings_question";
 
             }
-            
             show_questions();
             break;    
         default:
@@ -259,6 +279,20 @@ function end_quiz() {
         }        
     }
     if (ok_output_replys) {
+        // Si se ha introducido todos los valores correctamente se procede a guardar lo mostrado en el quiz.
+        
+        for (let i = 0; i < Object.keys(generic_questions).length; i++) {
+            let id_text = "output"+i;
+            let output = document.getElementById(id_text);
+            generic_object[generic_questions[i+1]] = output.innerHTML;            
+        }
+        completed_quiz = new Object;
+        completed_quiz[0] = user_object;
+        completed_quiz[1] = all_places_replies;
+        completed_quiz[2] = all_recordings_replies;
+        completed_quiz[3] = generic_object;
+        console.log(completed_quiz)
+        electron.ipcRenderer.invoke('completed_quiz', completed_quiz);
         document.getElementById("wrapper_title_question").innerHTML = "<strong>Cuestionario Finalizado</strong>";
         document.getElementById("wrapper_files").innerHTML = "";
         document.getElementById("wrapper_replys").innerHTML = "";

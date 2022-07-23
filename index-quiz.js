@@ -29,8 +29,10 @@ var type_of_question_active = "";
 // Respuestas del cuestionario.
 var edad = 0;
 var genero = "";
+var user_object = new Object;
 var all_places_replies = [];
 var all_recordings_replies = [];
+var generic_object = new Object;
 
 function seek_quizs() {
     // Pedimos al proceso Main que nos mande los quizs ya creados.
@@ -55,7 +57,7 @@ electron.ipcRenderer.on('quizs', (event, message) => {
 });
 
 function start_quiz() {
-    // Pedimos al proceso Main que nos mande los quizs ya creados.
+    // Pedimos al proceso Main que nos mande el Quiz Actual.
     electron.ipcRenderer.invoke('actual_quizs', "Quiz actual");
 }
 
@@ -156,6 +158,8 @@ function Select_Quiz(position) {
 
     // Extraemos primero la información genérica.
     quiz_name_actual = quiz_json["Name_Quiz"];
+    console.log("El nombre del quiz actual es: "+quiz_name_actual_file)
+    electron.ipcRenderer.invoke('refresh_quiz_actual_name', quiz_name_actual_file);
     number_places = quiz_json["Number_Places"];
     number_recordings = quiz_json["Number_Recordings"];
 

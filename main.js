@@ -8,7 +8,13 @@ console.log("Arrancando electron...");
 //-- Se pone aquí para que sea global al módulo principal
 let win = null;
 
+var quiz_name_actual = "";
+//--Posición en el Array "Number_Completed_Quiz".
+// Sirve para modificar el número de cuestionarios completados.
+var position_number_completed_quiz = 0;
+
 var questions = [true,true,true,true,true,true,true,true,true,true,true,true,true,true]
+
 
 //-- Punto de entrada. En cuanto electron está listo,
 //-- ejecuta esta función
@@ -59,6 +65,11 @@ electron.ipcMain.handle('quizs',(event, msg) => {
 
 });
 
+electron.ipcMain.handle('refresh_quiz_actual_name',(event, msg) => {
+  quiz_name_actual = msg;
+  console.log("El nombre del Quiz actualizado es: " + quiz_name_actual);
+});
+
 electron.ipcMain.handle('test', (event, msg) => {
   console.log("El nombre del quiz nuevo creado es: " + msg.split("/")[1]);
   const MAIN_JSON = "plantillas/main.json";
@@ -70,10 +81,79 @@ electron.ipcMain.handle('test', (event, msg) => {
   if (main_info["Quizs_Names"].includes(msg) == false) {
     // Si entra aquí es que el valor NO está en la lista y por tanto se guarda.
     main_info["Quizs_Names"].push(msg);
+    main_info["Number_Completed_Quiz"].push(0);
     main_info["Number_Quizs"] = main_info["Quizs_Names"].length;
   }else{
+    // Si existe se va a resetear lo que tenga, por tanto se resetea el número de quiz realizados.
+    for (let i = 0; i < main_info["Number_Completed_Quiz"].length; i++) {
+      // Como se ha cambiado el nombre del Cuestionario se actualiza el nombre.
+      if (main_info["Quiz_Names"][i] == quiz_name_actual) {
+         position_number_completed_quiz = i;
+      } 
+    }
+    main_info["Number_Completed_Quiz"][position_number_completed_quiz] = 0;
     console.log("El archivo ya existía");
   }
   let myJSON = JSON.stringify(main_info);
+  fs.writeFileSync(MAIN_JSON,myJSON);
+});
+
+
+
+electron.ipcMain.handle('completed_quiz', (event, msg) => {
+  console.log("Cuestionario Terminado, se procede a guardarlo");
+  // Lo primero es modificar el nombre del nombre del Quiz Actual en el JSON.
+  console.log("Cargamos el main.json");
+  const MAIN_JSON = "plantillas/main.json";
+  const  MAIN_JSON_FILE = fs.readFileSync(MAIN_JSON);
+  var main_info = JSON.parse(MAIN_JSON_FILE);
+  console.log("El nombre del quiz actual para la APP es: '" + quiz_name_actual + "'");
+  console.log("El nombre del quiz actual para el main.json es: '" + main_info["Quiz_actual"] + "'");
+  //-- Si el nombre recibido es igual al que tiene el main ya se suma uno el valor.
+  if (quiz_name_actual == main_info["Quiz_actual"]) {
+    for (let i = 0; i < main_info["Number_Quizs"]; i++) {
+      // Como se ha cambiado el nombre del Cuestionario se actualiza el nombre.
+      console.log("El nombre a comparar es:"+main_info["Quizs_Names"][i]);
+      console.log("El nombre del quiz actual es: "+quiz_name_actual)
+      if (main_info["Quizs_Names"][i] == quiz_name_actual) {
+         position_number_completed_quiz = i;
+      } 
+    }
+    main_info["Number_Completed_Quiz"][position_number_completed_quiz] += 1;
+    
+  }else{
+    // Si el usuario ha cambiado el nombre se cambiará el nombre del Quiz operativo actual.
+    for (let i = 0; i < main_info["Number_Quiz"]; i++) {
+      // Si el nombre actual encaja con el nombre de que tiene la posición del array se guarda esa posición.
+           if (main_info["Quiz_Names"][i] == quiz_name_actual) {
+              position_number_completed_quiz = i;
+              // Sumamos uno al número de quiz completados puesto que se ha cerrado el custionario. 
+              main_info["Number_Completed_Quiz"][i] += 1;
+           } 
+    }
+  }
+  console.log("El numero de Quiz Completados es: " + main_info["Number_Completed_Quiz"][position_number_completed_quiz])
+  //-- Ahora guardaremos en un fichero los resultados del cuestionario.
+  //-- Lo primero que tenemos que saber es si existe o no el fichero de guardado general.
+  //-- Para saberlo miraremos si el número de cuestionarios creados es 1 o es mayor. 
+  // Si es 1 implica que es el primero y hay que crear el archivo.
+  // Si es mayor de 1 implica que ya hay un archivo creado y por tanto se puede leer y escribir en el.
+  var save_file;
+  if (main_info["Number_Completed_Quiz"][position_number_completed_quiz] == 1) {
+    // Creamos el fichero.
+    save_file = [];
+    save_file[0] = msg;
+  }else{
+    const SAVE_JSON = "quiz_savings/"+ quiz_name_actual;
+    const  SAVE_JSON_FILE = fs.readFileSync(SAVE_JSON);
+    save_file = JSON.parse(SAVE_JSON_FILE);
+    save_file.push(msg);
+
+  }
+  const SAVE_JSON = "quiz_savings/"+ quiz_name_actual;
+  let myJSON = JSON.stringify(save_file);
+  fs.writeFileSync(SAVE_JSON,myJSON);
+  //-- Guardamos en el JSON Principal la información.
+  myJSON = JSON.stringify(main_info);
   fs.writeFileSync(MAIN_JSON,myJSON);
 });
