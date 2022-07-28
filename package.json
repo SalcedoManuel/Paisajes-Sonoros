@@ -1,12 +1,18 @@
 {
     "name": "soundscape",
     "description": "Aplicación de escritorio de Cuestionarios de paisajes sonoros",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "main": "main.js",
+    "author": {
+        "name": "Manuel Salcedo",
+        "email": "m.salcedoa.2016@alumnos.urjc.es",
+        "url": "https://github.com/SalcedoManuel"
+    },
     "scripts": {
         "start": "electron ."
     },
     "dependencies": {
-        "electron": "^19.0.6"
+        "electron": "^19.0.6",
+        "sweetalert": "^2.1.2"
     }
 }

@@ -1,0 +1,42 @@
+.swal-overlay {
+    background-color: rgba(0, 195, 255, 0.45);
+}
+.swal-modal {
+    background-color: rgba(63, 249, 255, 0.69);
+    border: 3px solid white;
+}
+.swal-title {
+    margin: 0px;
+    font-size:xx-large;
+    background-color: rgba(193, 253, 255, 0.7);
+    box-shadow: 0px 1px 1px rgba(0, 0, 0);
+    margin-bottom: 28px;
+}
+.swal-text {
+    padding: 17px;
+    margin-left: 12%;
+    color: black;
+    text-align: center;
+    font-size:x-large;
+    display: flex;
+    width:fit-content;
+    justify-content: center;
+}
+.swal-footer {
+    background-color: rgb(245, 248, 250);
+    margin-top: 32px;
+    border-top: 1px solid #E9EEF1;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+.swal-button {
+    padding: 7px 19px;
+    border-radius: 2px;
+    background-color: #4962B3;
+    font-size: 12px;
+    border: 1px solid #3e549a;
+    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3);
+    width: 120px;
+    height: 80px;
+}

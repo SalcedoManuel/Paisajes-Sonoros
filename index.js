@@ -1,6 +1,7 @@
 const electron = require('electron');
 const fs = require('fs');
 
+const nav_extras = require('./nav_extras');
 const functions_extras = require('./functions');
 
 console.log("Hola desde el proceso de la web...");
