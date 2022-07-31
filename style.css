@@ -65,3 +65,32 @@ button{
     top:0.7vh;
     text-align: center;
 }
+.wrapper_table{
+    width: 600px; 
+    height: 300px;
+    background-color: antiquewhite;
+    overflow: scroll;
+    display:block;
+    margin:auto;
+}
+.top_cell{
+    border: 1rem;
+    border-color: black;
+    margin: 1vmin;
+    background-color: aquamarine;
+}
+#number_quiz{
+    width: 100px;
+}
+#date_quiz{
+    width: 300px;
+}
+#age_quiz{
+    width:100px;
+}
+#gener_quiz{
+    width: 100px;
+}
+#table_value{
+    border-radius: 2px;
+}

@@ -182,7 +182,8 @@ function next_option(type) {
             }else{
                 // Después de obtener los valores los guardamos.
                 // Creamos un objeto que contenga la el nombre de la pregunta y la respuesta.
-                                
+                date = Date().split(" (")[0];
+                user_object["Date"] = date;                
                 user_object[user_questions[1]] = edad;
                 user_object[user_questions[2]] = gender;
                 user_object[user_questions[3]] = auditive_problem;

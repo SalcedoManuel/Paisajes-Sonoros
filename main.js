@@ -99,7 +99,7 @@ electron.ipcMain.handle('test', (event, msg) => {
 });
 
 
-
+//-- Guarda los Cuestionarios rellenados por el cliente.
 electron.ipcMain.handle('completed_quiz', (event, msg) => {
   console.log("Cuestionario Terminado, se procede a guardarlo");
   // Lo primero es modificar el nombre del nombre del Quiz Actual en el JSON.
@@ -147,6 +147,7 @@ electron.ipcMain.handle('completed_quiz', (event, msg) => {
     const SAVE_JSON = "quiz_savings/"+ quiz_name_actual;
     const  SAVE_JSON_FILE = fs.readFileSync(SAVE_JSON);
     save_file = JSON.parse(SAVE_JSON_FILE);
+    // Se añade el último cuestionario realizado a la lista.
     save_file.push(msg);
 
   }
@@ -157,3 +158,35 @@ electron.ipcMain.handle('completed_quiz', (event, msg) => {
   myJSON = JSON.stringify(main_info);
   fs.writeFileSync(MAIN_JSON,myJSON);
 });
+
+//-- Envía al cliente la lista de cuestionarios que poseen resultados.
+electron.ipcMain.handle('load_quizs_opened',(event, msg) => {
+  console.log("Nos piden los nombres de los quizs que se han usado: " + msg);
+  const MAIN_JSON = "plantillas/main.json";
+  const  MAIN_JSON_FILE = fs.readFileSync(MAIN_JSON);
+  var main_info = JSON.parse(MAIN_JSON_FILE);
+  //-- Para saber si el cuestionario se ha realizado al menos una vez es necesario ver 
+  // la variable "Number_Completed_Quiz".
+  let number_completed_quiz = main_info["Number_Completed_Quiz"];
+  for (let i = 0; i < number_completed_quiz.length; i++) {
+    //-- Si es distinto de cero es porque se ha usado al menos una vez.
+    if (number_completed_quiz[i] != 0) {
+      //-- Nos quedamos con el nombre del Cuestionario que fue usado al menos una vez.
+      msg.push(main_info["Quizs_Names"][i]);
+    }    
+  }
+  
+  console.log("Enviamos los nombres de los quizs buenos: " + msg)
+  win.webContents.send('load_quizs_opened', msg);
+});
+
+//-- Envía todos los resultados del Cuestionario con el nombre del mensaje.
+electron.ipcMain.handle('quizs_summary',(event, msg) => {
+  console.log("Nos piden los resultados del cuestionario con nombre: " + msg);
+  const SUMMARY_JSON = "quiz_savings/" + msg;
+  const  SUMMARY_JSON_FILE = fs.readFileSync(SUMMARY_JSON);
+  var summary_info = JSON.parse(SUMMARY_JSON_FILE);
+  console.log("Enviamos los resultados de ese Quiz: " + summary_info)
+  win.webContents.send('quizs_summary', summary_info);
+});
+
