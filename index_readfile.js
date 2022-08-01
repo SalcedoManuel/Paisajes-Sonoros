@@ -8,8 +8,8 @@ var load_quizs_opened = [];
 var name_quiz = "";
 var quiz_info = [];
 
-user_result = document.getElementById("user_results");
-info_table = document.getElementById("info_table");
+var info_table = document.getElementById("info_table");
+var global_results = document.getElementById("global_quiz_results");
 
 function load_results() {
     electron.ipcRenderer.invoke('load_quizs_opened', load_quizs_opened);
@@ -44,15 +44,116 @@ electron.ipcRenderer.on('quizs_summary', (event, message) => {
     '<th id="gener_quiz">Género</th>'+
     '</tr>';
     for (let i = 0; i < quiz_info.length; i++) {
+        let gender = "";
+        if (quiz_info[i][0]["¿Cuál es tu género?"] == "man") {
+            gender = "Masculino";
+        }else if (quiz_info[i][0]["¿Cuál es tu género?"] == "woman") {
+            gender = "Femenino";
+        }else{
+            gender = "Otro";
+        }
         info_table.innerHTML += '<tr id="table_value">'+
         '<th id="number_quiz">'+(i+1)+'</th>'+
         '<th id="date_quiz">' + quiz_info[i][0]["Date"] + '</th>'+
         '<th id="age_quiz">'+quiz_info[i][0]["¿Cuántos años tienes?"]+'</th>'+
-        '<th id="gener_quiz">'+quiz_info[i][0]["¿Cuál es tu género?"]+'</th>'+
+        '<th id="gener_quiz">'+gender+'</th>'+
         +'</tr>';
-        
     }
     info_table.innerHTML = info_table.innerHTML.split("NaN").join('');
-    console.log(info_table.innerHTML)
+    // Cargamos ahora los resultados globales.
+    //-- Mostaremos ahora la franja de edad.
+    //-- Guardamos en un array cuanta gente hay con esa edad.
+    // Los rangos son 7:
+    // <18 años, de 18 a 25, de 26 a 35, de 36 a 45, de 46 a 55, de 56 a 65 y 65<.
+    let age_array_results = [0,0,0,0,0,0,0];
+    let age_array_porcentaje = [0,0,0,0,0,0,0];
+    for (let i = 0; i < quiz_info.length; i++) {
+        if (quiz_info[i][0]["¿Cuántos años tienes?"] < 18) {
+            number = 0;
+        }else if (quiz_info[i][0]["¿Cuántos años tienes?"] < 26) {
+            number = 1;
+        }else if (quiz_info[i][0]["¿Cuántos años tienes?"] < 36) {
+            number = 2;
+        }else if (quiz_info[i][0]["¿Cuántos años tienes?"] < 46) {
+            number = 3;
+        }else if (quiz_info[i][0]["¿Cuántos años tienes?"] < 56) {
+            number = 4;
+        }else if (quiz_info[i][0]["¿Cuántos años tienes?"] < 66) {
+            number = 5;
+        }else{
+            number = 6;
+        }
+        age_array_results[number] += 1;     
+    }
+    //-- Calculamos los porcentajes.
+    for (let i = 0; i < age_array_porcentaje.length; i++) {
+        //-- Dividimos la edad de ese intervalo con el número de participantes.
+        age_array_porcentaje[i]=(age_array_results[i]/quiz_info.length)*100 + "%";        
+    }
+    global_results.innerHTML = "<h3>Edades de los Participantes:</h3><br>"
+    //-- Bucle que sirve para colocar en la APP la información de las edades.
+    for (let i = 0; i < age_array_results.length; i++) {
+        switch (i) {
+            case 0:
+                global_results.innerHTML += "<b> <18 Años: </b>";
+                break;
+            case 1:
+                global_results.innerHTML += "<b> 18-25 Años: </b>";
+            break;
+            case 2:
+                global_results.innerHTML += "<b> 26-35 Años: </b>";
+            break;
+            case 3:
+                global_results.innerHTML += "<b> 36-46 Años: </b>";
+            break;
+            case 4:
+                global_results.innerHTML += "<b> 46-55 Años: </b>";
+            break;
+            case 5:
+                global_results.innerHTML += "<b> 55-65 Años: </b>";
+            break;
+            default:
+                global_results.innerHTML += "<b> 65< Años: </b>";
+                break;
+        }
+        global_results.innerHTML += age_array_results[i] + "--><b>"+age_array_porcentaje[i]+"</b><br>";
+    }
+
+    //-- Después de mostrar la edad se tiene que mostrar el género de los participantes.
+    //-- En este caso la cantidad de géneros humanos está marcada en 3. 
+    //-- Masculino, Femenino y Otro.
+    let gender_array_results = [0,0,0];
+    let gender_array_porcentaje = [0,0,0];
+    for (let i = 0; i < quiz_info.length; i++) {
+        if (quiz_info[i][0]["¿Cuál es tu género?"] == "man") {
+            number = 0;
+        }else if (quiz_info[i][0]["¿Cuál es tu género?"] == "woman") {
+            number = 1;
+        }else{
+            number = 2;
+        }
+        gender_array_results[number] += 1;     
+    }
+    //-- Calculamos los porcentajes.
+    for (let i = 0; i < gender_array_porcentaje.length; i++) {
+        //-- Dividimos la edad de ese intervalo con el número de participantes.
+        gender_array_porcentaje[i]=(gender_array_results[i]/quiz_info.length)*100 + "%";        
+    }
+    global_results.innerHTML += "<h3>Géneros de los Participantes:</h3><br>"
+    //-- Bucle que sirve para colocar en la APP la información de las edades.
+    for (let i = 0; i < gender_array_results.length; i++) {
+        switch (i) {
+            case 0:
+                global_results.innerHTML += "<b> Masculino: </b>";
+                break;
+            case 1:
+                global_results.innerHTML += "<b> Femenino: </b>";
+            break;
+            default:
+                global_results.innerHTML += "<b> Otro: </b>";
+                break;
+        }
+        global_results.innerHTML += gender_array_results[i] + "--><b>"+gender_array_porcentaje[i]+"</b><br>";
+    }
     
 });
