@@ -205,7 +205,11 @@ electron.ipcRenderer.on('quizs_summary', (event, message) => {
         /* El segundo bucle for sirve para leer todas las respuestas que nos interesan.*/
         for (let e = 0; e < quiz_info[i][2].length; e++) {
             if (quiz_info[i][2][e]["¿Consideras ruidoso el audio del paisaje sonoro?"] == "yes") {
-                annoying[e] += 1;
+                if (annoying[e] != undefined) {
+                    annoying[e] += 1;
+                }else{
+                    annoying[e] = 1;
+                }
             }else if (quiz_info[i][2][e]["¿Consideras ruidoso el audio del paisaje sonoro?"] == "no") {
                 pleasant[e] += 1;
             }
@@ -234,11 +238,11 @@ electron.ipcRenderer.on('quizs_summary', (event, message) => {
     annoying[0] = annoying[0]/number_people;
     annoying[1] = annoying[1]/number_people;
     annoying[2] = annoying[2]/number_people;
-
+    console.log(annoying)
     pleasant[0] = pleasant[0]/number_people;
     pleasant[1] = pleasant[1]/number_people;
     pleasant[2] = pleasant[2]/number_people;
-
+    console.log(pleasant)
     eventful[0] = eventful[0]/number_people;
     eventful[1] = eventful[1]/number_people;
     eventful[2] = eventful[2]/number_people;
@@ -290,8 +294,18 @@ function draw() {
     let number_recordings = quiz_info[0][2].length/number_places;
     if (canvas1.getContext) {
       const ctx = canvas1.getContext('2d');
-      canvas_draw_hex(ctx);
       
+
+        point_x = (pleasant[0]-annoying[0]);
+        console.log(point_x)
+        point_x = point_x*116;
+
+        point_y = (eventful[0]-uneventful[0])+Math.cos(Math.PI/4)*(chaotic[0]-calm[0])+Math.cos(Math.PI/4)*(vibrant[0]-monotonous[0]);
+        point_y = point_y*116;
+
+        console.log(point_x,point_y)
+        canvas_draw_hex(ctx,point_x,point_y);
+
       //-- Dibujar los puntos del Diagrama.
       //-- Hay que crear un diagrama por cada lugar y por cada toma hay que seleccionar un color.
       // Al haber solo la posibilidad de 3 tomas, se seleccionan 3 colores. Qué serán rojo, verde y azul.
@@ -314,9 +328,11 @@ function draw() {
         /* Estos colores son colores que son fáciles de distinguir entre ellos de forma que al usuario no le cueste identificar cada toma.*/
     }
 }
-function canvas_draw_hex(ctx) {
+function canvas_draw_hex(ctx,point_x,point_y) {
     ctx.drawImage(img,0,0);
     ctx.beginPath();
+    ctx.arc(point_x,point_y,15,0,2*Math.PI,false);
+    ctx.stroke();
     //-- Circunferencia exterior.
     ctx.moveTo(198,34);
     ctx.lineTo(281,69);
