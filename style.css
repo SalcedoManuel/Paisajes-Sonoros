@@ -94,3 +94,7 @@ button{
 #table_value{
     border-radius: 2px;
 }
+canvas{
+    border: 1px solid black;
+    margin-left: 25%;
+}

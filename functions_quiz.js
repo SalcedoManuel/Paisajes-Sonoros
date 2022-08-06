@@ -200,6 +200,7 @@ function next_option(type) {
         case 1:
             let places = [];
             var places_replies = new Object;
+            places_replies["Name_Scenary"] = name_actual_scenary;
             for (let i = 0; i < Object.keys(places_questions).length; i++) {
                 let id_text = "places"+i;
                 let places_list = document.getElementsByName(id_text);

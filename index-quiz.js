@@ -16,6 +16,7 @@ var number_recordings_questions_replied = 1;
 // Variables que guardan los PATH a los archivos.
 // Cada Array interno guarda la info de cada lugar max. 3.
 var name_scenary = [[],[],[]];
+var name_actual_scenary = "";
 var audio_files = [[],[],[]];
 var visual_files = [[],[],[]];
 
@@ -98,6 +99,7 @@ function show_questions() {
             document.getElementById("wrapper_files").innerHTML = "";
             replys.innerHTML = "";
             console.log(Object.keys(places_questions).length)
+            name_actual_scenary = name_scenary[number_places_questions_replied];
             replys.innerHTML += "<strong>"+ name_scenary[number_places_questions_replied] + "</strong> <br><br>";
             for (let i = 0; i < Object.keys(places_questions).length; i++) {
                 let pos = i + 1;

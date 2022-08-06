@@ -10,6 +10,17 @@ var quiz_info = [];
 
 var info_table = document.getElementById("info_table");
 var global_results = document.getElementById("global_quiz_results");
+var diagram_examples = document.getElementById("diagram_examples");
+
+
+var annoying = [];
+var calm= [];
+var chaotic = [];
+var eventful = [];
+var monotonous = [];
+var pleasant = [];
+var uneventful = [];
+var vibrant = [];
 
 function load_results() {
     electron.ipcRenderer.invoke('load_quizs_opened', load_quizs_opened);
@@ -120,6 +131,7 @@ electron.ipcRenderer.on('quizs_summary', (event, message) => {
     }
 
     //-- Después de mostrar la edad se tiene que mostrar el género de los participantes.
+    // Guardaremos en dos array la información al respecto.
     //-- En este caso la cantidad de géneros humanos está marcada en 3. 
     //-- Masculino, Femenino y Otro.
     let gender_array_results = [0,0,0];
@@ -155,5 +167,173 @@ electron.ipcRenderer.on('quizs_summary', (event, message) => {
         }
         global_results.innerHTML += gender_array_results[i] + "--><b>"+gender_array_porcentaje[i]+"</b><br>";
     }
-    
+    //-- Resumen de las preguntas sobre el escenario.
+    //-- Lo primero es saber cuántos escenarios hay. Para saberlo miramos la longitud del array.
+    let number_places = quiz_info[0][1].length;
+    let number_recordings = quiz_info[0][2].length / number_places;
+
+
+    let questions_places= Object.keys(quiz_info[0][1][0]);
+    let questions_recordings = Object.keys(quiz_info[0][2][0]);
+    let questions_generic = Object.keys(quiz_info[0][3])
+
+    console.log("Preguntas sobre el Escenario: " + quiz_info[0][1][0]["Name_Scenary"])
+    // Recorremos el listado de preguntas.
+    for (let i = 0; i < number_places; i++) {
+        global_results.innerHTML += "<h4>Preguntas sobre el Escenario: " + quiz_info[0][1][i]["Name_Scenary"]+"</h4><br>";
+        for (let e = 1; e < questions_places.length; e++) {
+            global_results.innerHTML += e + ". "+questions_places[e] + "<br>";
+        }
+        global_results.innerHTML += "<h5>Preguntas sobre el Sistema de Grabación:</h5>";
+        for (let e = 0; e < questions_recordings.length; e++) {
+            global_results.innerHTML += questions_recordings[e] + "<br>";            
+        }
+    }
+    global_results.innerHTML += "<h4>Preguntas Genéricas</h4>"
+    for (let i = 0; i < questions_generic.length; i++) {
+        global_results.innerHTML += "Pregunta Genérica Número"+(i+1) + ": " +questions_generic[i]+"<br>";        
+    }
+/* Extraemos de la información del Quiz los valores que necesitamos para dibujar.
+    Lo primero es crear la constante que marque el número de participantes en el custionario.*/
+    const number_people = quiz_info.length;
+    number_places = quiz_info[0][1].length;
+    /*Número de grabaciones por sistema */
+    number_recordings = quiz_info[0][2].length/number_places;
+    /* Después creamos un bucle el cuál busca en todas las preguntas útiles las respuestas para sumar.
+    */
+    for (let i = 0; i < number_people; i++) {
+        /* El segundo bucle for sirve para leer todas las respuestas que nos interesan.*/
+        for (let e = 0; e < quiz_info[i][2].length; e++) {
+            if (quiz_info[i][2][e]["¿Consideras ruidoso el audio del paisaje sonoro?"] == "yes") {
+                annoying[e] += 1;
+            }else if (quiz_info[i][2][e]["¿Consideras ruidoso el audio del paisaje sonoro?"] == "no") {
+                pleasant[e] += 1;
+            }
+            
+            if (quiz_info[i][2][e]["¿Qué sonidos podrías distinguir en la toma?"] == "urban") {
+                eventful[e] +=1;
+            }else if (quiz_info[i][2][e]["¿Qué sonidos podrías distinguir en la toma?"] == "nature") {
+                uneventful[e] += 1;
+            }
+
+            if (quiz_info[i][2][e]["¿Consideras desagradable el audio del paisaje sonoro?"] == "yes") {
+                chaotic[e] +=1;
+            }else if (quiz_info[i][2][e]["¿Consideras desagradable el audio del paisaje sonoro?"] == "no") {
+                calm[e] += 1;
+            }
+
+            if (quiz_info[i][2][e]["¿Consideras definido el audio del paisaje sonoro?"] == "yes") {
+                monotonous[e] +=1;
+            }else if (quiz_info[i][2][e]["¿Consideras definido el audio del paisaje sonoro?"] == "no") {
+                vibrant[e] += 1;
+            }
+        }
+
+
+    }
+    annoying[0] = annoying[0]/number_people;
+    annoying[1] = annoying[1]/number_people;
+    annoying[2] = annoying[2]/number_people;
+
+    pleasant[0] = pleasant[0]/number_people;
+    pleasant[1] = pleasant[1]/number_people;
+    pleasant[2] = pleasant[2]/number_people;
+
+    eventful[0] = eventful[0]/number_people;
+    eventful[1] = eventful[1]/number_people;
+    eventful[2] = eventful[2]/number_people;
+
+    uneventful[0] = uneventful[0]/number_people;
+    uneventful[1] = uneventful[1]/number_people;
+    uneventful[2] = uneventful[2]/number_people;
+
+    chaotic[0] = chaotic[0]/number_people;
+    chaotic[1] = chaotic[1]/number_people;
+    chaotic[2] = chaotic[2]/number_people;
+
+    calm[0] = calm[0]/number_people;
+    calm[1] = calm[1]/number_people;
+    calm[2] = calm[2]/number_people;
+
+    monotonous[0] = monotonous[0]/number_people;
+    monotonous[1] = monotonous[1]/number_people;
+    monotonous[2] = monotonous[2]/number_people;
+
+    vibrant[0] = vibrant[0]/number_people;
+    vibrant[1] = vibrant[1]/number_people;
+    vibrant[2] = vibrant[2]/number_people;
+
+    diagram_examples.innerHTML = "";
+    console.log(number_places)
+    if (number_places == 1) {
+        diagram_examples.innerHTML += '<canvas id="diagram1" width="400px" height="297px"></canvas><br>';
+    }else if (number_places ==2) {
+        diagram_examples.innerHTML += '<canvas id="diagram1" width="400px" height="297px"></canvas><br>';
+        diagram_examples.innerHTML += '<canvas id="diagram2" width="400px" height="297px"></canvas><br>';
+    }else if (number_places == 3) {
+        diagram_examples.innerHTML += '<canvas id="diagram1" width="400px" height="297px"></canvas><br>';
+        diagram_examples.innerHTML += '<canvas id="diagram2" width="400px" height="297px"></canvas><br>';
+        diagram_examples.innerHTML += '<canvas id="diagram3" width="400px" height="297px"></canvas><br>';
+    }
+    console.log(diagram_examples)
+    draw();
 });
+
+var img = new Image(400,400);
+img.src = "images/diagram.png";
+
+function draw() {
+    const canvas1 = document.getElementById('diagram1');
+    const canvas2 = document.getElementById('diagram2');
+    const canvas3 = document.getElementById('diagram3');
+    let number_places = quiz_info[0][1].length;
+    let number_recordings = quiz_info[0][2].length/number_places;
+    if (canvas1.getContext) {
+      const ctx = canvas1.getContext('2d');
+      canvas_draw_hex(ctx);
+      
+      //-- Dibujar los puntos del Diagrama.
+      //-- Hay que crear un diagrama por cada lugar y por cada toma hay que seleccionar un color.
+      // Al haber solo la posibilidad de 3 tomas, se seleccionan 3 colores. Qué serán rojo, verde y azul.
+      /* Estos colores son colores que son fáciles de distinguir entre ellos de forma que al usuario no le cueste identificar cada toma.*/
+    }
+    if (canvas2.getContext) {
+        const ctx = canvas2.getContext('2d');
+        canvas_draw_hex(ctx);
+        //-- Dibujar los puntos del Diagrama.
+        //-- Hay que crear un diagrama por cada lugar y por cada toma hay que seleccionar un color.
+        // Al haber solo la posibilidad de 3 tomas, se seleccionan 3 colores. Qué serán rojo, verde y azul.
+        /* Estos colores son colores que son fáciles de distinguir entre ellos de forma que al usuario no le cueste identificar cada toma.*/
+    }
+    if (canvas3.getContext) {
+        const ctx = canvas3.getContext('2d');
+        canvas_draw_hex(ctx);
+        //-- Dibujar los puntos del Diagrama.
+        //-- Hay que crear un diagrama por cada lugar y por cada toma hay que seleccionar un color.
+        // Al haber solo la posibilidad de 3 tomas, se seleccionan 3 colores. Qué serán rojo, verde y azul.
+        /* Estos colores son colores que son fáciles de distinguir entre ellos de forma que al usuario no le cueste identificar cada toma.*/
+    }
+}
+function canvas_draw_hex(ctx) {
+    ctx.drawImage(img,0,0);
+    ctx.beginPath();
+    //-- Circunferencia exterior.
+    ctx.moveTo(198,34);
+    ctx.lineTo(281,69);
+    ctx.moveTo(281,69);
+    ctx.lineTo(314,151);
+    ctx.moveTo(314,151);
+    ctx.lineTo(281,233);
+    ctx.moveTo(281,233);
+    ctx.lineTo(198,266);
+    ctx.moveTo(198,266);
+    ctx.lineTo(115,233);
+    ctx.moveTo(115,233);
+    ctx.lineTo(82,151);
+    ctx.moveTo(82,151);
+    ctx.lineTo(115,69);
+    ctx.moveTo(115,69);
+    ctx.lineTo(198,34);
+    ctx.fill();
+    ctx.stroke();
+}
