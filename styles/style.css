@@ -2,6 +2,9 @@ body{
     background-color: rgb(0, 255, 242);
     min-width: fit-content;
 }
+h3{
+    text-align: center;
+}
 .wrapper{
     text-align: center;
     margin-top: 1%;
@@ -97,4 +100,13 @@ button{
 canvas{
     border: 1px solid black;
     margin-left: 25%;
+}
+#red{
+    color: red;
+}
+#blue{
+    color: blue;
+}
+#green{
+    color: green;
 }

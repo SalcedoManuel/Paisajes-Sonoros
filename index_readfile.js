@@ -2,6 +2,10 @@ const { table } = require('console');
 const electron = require('electron');
 const fs = require('fs');
 
+const functions_canvas = require('./functions/functions_canvas');
+const functions_tableinfo = require('./functions/functions_tableinfo')
+const functions_readfile = require('./functions/functions_readfile');
+
 var load_quizs_opened = [];
 
 // Variables sobre el Quizs a mostar.
@@ -13,14 +17,14 @@ var global_results = document.getElementById("global_quiz_results");
 var diagram_examples = document.getElementById("diagram_examples");
 
 
-var annoying = [];
-var calm= [];
-var chaotic = [];
-var eventful = [];
-var monotonous = [];
-var pleasant = [];
-var uneventful = [];
-var vibrant = [];
+var annoying_list = [];
+var calm_list= [];
+var chaotic_list = [];
+var eventful_list = [];
+var monotonous_list = [];
+var pleasant_list = [];
+var uneventful_list = [];
+var vibrant_list = [];
 
 function load_results() {
     electron.ipcRenderer.invoke('load_quizs_opened', load_quizs_opened);
@@ -44,129 +48,30 @@ function name_selected(file_number) {
 }
 electron.ipcRenderer.on('quizs_summary', (event, message) => {
     console.log("Recibido los resultados: " + message);
+    /* Se añade el nombre del Cuestionario a la página para que el Usuario de que cuestioanrio está 
+        viendo los resultados. */
     document.getElementById("option_name_quiz").innerHTML = name_quiz.split(".")[0];
+    //-- Pasamos a una variable global toda la información sobre los cuestionarios realizados.
     quiz_info = message;
     console.log("Número de cuestionarios hechos: " + quiz_info.length);
     console.log("Info " + quiz_info[0][0]["Date"])
-    info_table.innerHTML = '<tr valign="top" class="top_cell">'+
-    '<th scope="row" id="number_quiz">Número</th>'+
-    '<th id="date_quiz">Fecha de realización</th>'+
-    '<th id="age_quiz">Edad</th>'+
-    '<th id="gener_quiz">Género</th>'+
-    '</tr>';
-    for (let i = 0; i < quiz_info.length; i++) {
-        let gender = "";
-        if (quiz_info[i][0]["¿Cuál es tu género?"] == "man") {
-            gender = "Masculino";
-        }else if (quiz_info[i][0]["¿Cuál es tu género?"] == "woman") {
-            gender = "Femenino";
-        }else{
-            gender = "Otro";
-        }
-        info_table.innerHTML += '<tr id="table_value">'+
-        '<th id="number_quiz">'+(i+1)+'</th>'+
-        '<th id="date_quiz">' + quiz_info[i][0]["Date"] + '</th>'+
-        '<th id="age_quiz">'+quiz_info[i][0]["¿Cuántos años tienes?"]+'</th>'+
-        '<th id="gener_quiz">'+gender+'</th>'+
-        +'</tr>';
-    }
-    info_table.innerHTML = info_table.innerHTML.split("NaN").join('');
-    // Cargamos ahora los resultados globales.
-    //-- Mostaremos ahora la franja de edad.
-    //-- Guardamos en un array cuanta gente hay con esa edad.
-    // Los rangos son 7:
-    // <18 años, de 18 a 25, de 26 a 35, de 36 a 45, de 46 a 55, de 56 a 65 y 65<.
-    let age_array_results = [0,0,0,0,0,0,0];
-    let age_array_porcentaje = [0,0,0,0,0,0,0];
-    for (let i = 0; i < quiz_info.length; i++) {
-        if (quiz_info[i][0]["¿Cuántos años tienes?"] < 18) {
-            number = 0;
-        }else if (quiz_info[i][0]["¿Cuántos años tienes?"] < 26) {
-            number = 1;
-        }else if (quiz_info[i][0]["¿Cuántos años tienes?"] < 36) {
-            number = 2;
-        }else if (quiz_info[i][0]["¿Cuántos años tienes?"] < 46) {
-            number = 3;
-        }else if (quiz_info[i][0]["¿Cuántos años tienes?"] < 56) {
-            number = 4;
-        }else if (quiz_info[i][0]["¿Cuántos años tienes?"] < 66) {
-            number = 5;
-        }else{
-            number = 6;
-        }
-        age_array_results[number] += 1;     
-    }
-    //-- Calculamos los porcentajes.
-    for (let i = 0; i < age_array_porcentaje.length; i++) {
-        //-- Dividimos la edad de ese intervalo con el número de participantes.
-        age_array_porcentaje[i]=(age_array_results[i]/quiz_info.length)*100 + "%";        
-    }
-    global_results.innerHTML = "<h3>Edades de los Participantes:</h3><br>"
-    //-- Bucle que sirve para colocar en la APP la información de las edades.
-    for (let i = 0; i < age_array_results.length; i++) {
-        switch (i) {
-            case 0:
-                global_results.innerHTML += "<b> <18 Años: </b>";
-                break;
-            case 1:
-                global_results.innerHTML += "<b> 18-25 Años: </b>";
-            break;
-            case 2:
-                global_results.innerHTML += "<b> 26-35 Años: </b>";
-            break;
-            case 3:
-                global_results.innerHTML += "<b> 36-46 Años: </b>";
-            break;
-            case 4:
-                global_results.innerHTML += "<b> 46-55 Años: </b>";
-            break;
-            case 5:
-                global_results.innerHTML += "<b> 55-65 Años: </b>";
-            break;
-            default:
-                global_results.innerHTML += "<b> 65< Años: </b>";
-                break;
-        }
-        global_results.innerHTML += age_array_results[i] + "--><b>"+age_array_porcentaje[i]+"</b><br>";
-    }
+/* Creating a table with the information of the file. */
+    // Creamos la tabla para que se introduzcan los elementos más relevantes en ella.
 
-    //-- Después de mostrar la edad se tiene que mostrar el género de los participantes.
-    // Guardaremos en dos array la información al respecto.
-    //-- En este caso la cantidad de géneros humanos está marcada en 3. 
-    //-- Masculino, Femenino y Otro.
-    let gender_array_results = [0,0,0];
-    let gender_array_porcentaje = [0,0,0];
-    for (let i = 0; i < quiz_info.length; i++) {
-        if (quiz_info[i][0]["¿Cuál es tu género?"] == "man") {
-            number = 0;
-        }else if (quiz_info[i][0]["¿Cuál es tu género?"] == "woman") {
-            number = 1;
-        }else{
-            number = 2;
-        }
-        gender_array_results[number] += 1;     
-    }
-    //-- Calculamos los porcentajes.
-    for (let i = 0; i < gender_array_porcentaje.length; i++) {
-        //-- Dividimos la edad de ese intervalo con el número de participantes.
-        gender_array_porcentaje[i]=(gender_array_results[i]/quiz_info.length)*100 + "%";        
-    }
-    global_results.innerHTML += "<h3>Géneros de los Participantes:</h3><br>"
-    //-- Bucle que sirve para colocar en la APP la información de las edades.
-    for (let i = 0; i < gender_array_results.length; i++) {
-        switch (i) {
-            case 0:
-                global_results.innerHTML += "<b> Masculino: </b>";
-                break;
-            case 1:
-                global_results.innerHTML += "<b> Femenino: </b>";
-            break;
-            default:
-                global_results.innerHTML += "<b> Otro: </b>";
-                break;
-        }
-        global_results.innerHTML += gender_array_results[i] + "--><b>"+gender_array_porcentaje[i]+"</b><br>";
-    }
+    // La tabla estará ordenada de la forma 'First-In First-Out', el primer cuestionario en rellenarse será
+    // el primero en aperecer en la lista.
+    info_table.innerHTML = functions_tableinfo.create_table_info_init_string();
+    // Añadimos los valores de cada partipante a la tabla.
+    functions_tableinfo.add_data_table_info();
+
+    // COMENZAMOS CON EL DESARROLLO Y MUESTRA DE LOS VALORES GLOBALES
+
+    // Cargamos ahora los resultados globales.
+    // Comenzamos con la información de la edad.
+    functions_tableinfo.age_global_results();
+    // Continuamos con la información del género.
+    functions_tableinfo.gender_global_results();
+
     //-- Resumen de las preguntas sobre el escenario.
     //-- Lo primero es saber cuántos escenarios hay. Para saberlo miramos la longitud del array.
     let number_places = quiz_info[0][1].length;
@@ -175,12 +80,65 @@ electron.ipcRenderer.on('quizs_summary', (event, message) => {
 
     let questions_places= Object.keys(quiz_info[0][1][0]);
     let questions_recordings = Object.keys(quiz_info[0][2][0]);
-    let questions_generic = Object.keys(quiz_info[0][3])
 
-    console.log("Preguntas sobre el Escenario: " + quiz_info[0][1][0]["Name_Scenary"])
+    // Recogemos en un array las respuestas y su probabilidad de aparición. 
+    let places_array = [[[],[]],[[],[],[],[],[]],[[],[]],[[],[]]];
+    let places_array_porcentaje = [[[],[]],[[],[],[],[],[]],[[],[]],[[],[]]];
+
+    let places_object = new Object();
+    if (number_places == 1) {
+        places_object.place1 = places_array;
+    }
+    if (number_places == 2) {
+        places_object.place1 = places_array;
+        places_object.place2 = places_array;
+    }
+    if (number_places == 3) {
+        places_object.place1 = places_array;
+        places_object.place2 = places_array;
+        places_object.place3 = places_array;
+    }
+
+    let places_object_porcentaje = new Object();
+    if (number_places == 1) {
+        places_object_porcentaje.place1 = places_array_porcentaje;
+    }
+    if (number_places == 2) {
+        places_object_porcentaje.place1 = places_array_porcentaje;
+        places_object_porcentaje.place2 = places_array_porcentaje;
+    }
+    if (number_places == 3) {
+        places_object_porcentaje.place1 = places_array_porcentaje;
+        places_object_porcentaje.place2 = places_array_porcentaje;
+        places_object_porcentaje.place3 = places_array_porcentaje;
+    }
+    for (let e = 0; e < Object.keys(places_object).length; e++) {
+        for (let i = 0; i < quiz_info.length; i++) {
+            if (quiz_info[i][1][e]["¿Conoces el escenario?"] == "yes") {
+                if (places_object[e][0][0] == undefined) {
+                    places_object[e][0][0] = 1;
+                    places_object[e][0][1] = 0;
+                }else{
+                    places_object[e][0][0] += 1;
+                    places_object[e][0][1] += 0;
+                } 
+            }else{
+                if (places_object[e][0][1] == undefined) {
+                    places_object[e][0][1] = 1;
+                    places_object[e][0][0] = 0;
+                }else{
+                    places_object[e][0][1] += 1;
+                    places_object[e][0][0] += 0;
+                } 
+            }
+            
+        }        
+    }
+
+
     // Recorremos el listado de preguntas.
     for (let i = 0; i < number_places; i++) {
-        global_results.innerHTML += "<h4>Preguntas sobre el Escenario: " + quiz_info[0][1][i]["Name_Scenary"]+"</h4><br>";
+        global_results.innerHTML += "<h4>Preguntas sobre el Escenario: " + quiz_info[0][1][i]["Name_Scenary"]+"</h4>";
         for (let e = 1; e < questions_places.length; e++) {
             global_results.innerHTML += e + ". "+questions_places[e] + "<br>";
         }
@@ -189,6 +147,8 @@ electron.ipcRenderer.on('quizs_summary', (event, message) => {
             global_results.innerHTML += questions_recordings[e] + "<br>";            
         }
     }
+
+    let questions_generic = Object.keys(quiz_info[0][3])
     global_results.innerHTML += "<h4>Preguntas Genéricas</h4>"
     for (let i = 0; i < questions_generic.length; i++) {
         global_results.innerHTML += "Pregunta Genérica Número"+(i+1) + ": " +questions_generic[i]+"<br>";        
@@ -199,85 +159,217 @@ electron.ipcRenderer.on('quizs_summary', (event, message) => {
     number_places = quiz_info[0][1].length;
     /*Número de grabaciones por sistema */
     number_recordings = quiz_info[0][2].length/number_places;
-    /* Después creamos un bucle el cuál busca en todas las preguntas útiles las respuestas para sumar.
-    */
+    /* Después creamos un bucle el cuál busca en todas las preguntas útiles las respuestas para sumar.*/
+    var annoying = [];
+    var calm= [];
+    var chaotic = [];
+    var eventful = [];
+    var monotonous = [];
+    var pleasant = [];
+    var uneventful = [];
+    var vibrant = [];
     for (let i = 0; i < number_people; i++) {
         /* El segundo bucle for sirve para leer todas las respuestas que nos interesan.*/
         for (let e = 0; e < quiz_info[i][2].length; e++) {
             if (quiz_info[i][2][e]["¿Consideras ruidoso el audio del paisaje sonoro?"] == "yes") {
                 if (annoying[e] != undefined) {
                     annoying[e] += 1;
+                    pleasant[e] += 0;
                 }else{
                     annoying[e] = 1;
+                    pleasant[e] = 0;
                 }
             }else if (quiz_info[i][2][e]["¿Consideras ruidoso el audio del paisaje sonoro?"] == "no") {
-                pleasant[e] += 1;
+                if (pleasant[e] != undefined) {
+                    annoying[e] += 0;
+                    pleasant[e] += 1;
+                }else{
+                    annoying[e] = 0;
+                    pleasant[e] = 1;
+                }
             }
             
             if (quiz_info[i][2][e]["¿Qué sonidos podrías distinguir en la toma?"] == "urban") {
-                eventful[e] +=1;
+                if (eventful[e] != undefined) {
+                    eventful[e] += 1;
+                    uneventful[e] += 0;
+                }else{
+                    eventful[e] = 1;
+                    uneventful[e] = 0;
+                }
             }else if (quiz_info[i][2][e]["¿Qué sonidos podrías distinguir en la toma?"] == "nature") {
-                uneventful[e] += 1;
+                if (uneventful[e] != undefined) {
+                    eventful[e] += 0;
+                    uneventful[e] += 1;
+                }else{
+                    eventful[e] = 0;
+                    uneventful[e] = 1;
+                }
             }
 
             if (quiz_info[i][2][e]["¿Consideras desagradable el audio del paisaje sonoro?"] == "yes") {
-                chaotic[e] +=1;
+
+                if (chaotic[e] != undefined) {
+                    chaotic[e] += 1;
+                    calm[e] += 0;
+                }else{
+                    chaotic[e] = 1;
+                    calm[e] = 0;
+
+                }
             }else if (quiz_info[i][2][e]["¿Consideras desagradable el audio del paisaje sonoro?"] == "no") {
                 calm[e] += 1;
+                if (calm[e] != undefined) {
+                    calm[e] += 1;
+                    chaotic[e] = 0;
+                }else{
+                    calm[e] = 1;
+                    chaotic[e] = 0;
+                }
             }
 
             if (quiz_info[i][2][e]["¿Consideras definido el audio del paisaje sonoro?"] == "yes") {
-                monotonous[e] +=1;
+
+                if (monotonous[e] != undefined) {
+                    monotonous[e] += 1;
+                    vibrant[e] += 0;
+                }else{
+                    monotonous[e] = 1;
+                    vibrant[e] = 0;
+                }
             }else if (quiz_info[i][2][e]["¿Consideras definido el audio del paisaje sonoro?"] == "no") {
-                vibrant[e] += 1;
+
+                if (vibrant[e] != undefined) {
+                    vibrant[e] += 1;
+                    monotonous[e] += 0;
+                }else{
+                    vibrant[e] = 1;
+                    monotonous[e] = 0;
+                }
             }
         }
-
-
     }
-    annoying[0] = annoying[0]/number_people;
-    annoying[1] = annoying[1]/number_people;
-    annoying[2] = annoying[2]/number_people;
-    console.log(annoying)
-    pleasant[0] = pleasant[0]/number_people;
-    pleasant[1] = pleasant[1]/number_people;
-    pleasant[2] = pleasant[2]/number_people;
-    console.log(pleasant)
-    eventful[0] = eventful[0]/number_people;
-    eventful[1] = eventful[1]/number_people;
-    eventful[2] = eventful[2]/number_people;
 
-    uneventful[0] = uneventful[0]/number_people;
-    uneventful[1] = uneventful[1]/number_people;
-    uneventful[2] = uneventful[2]/number_people;
+    console.log("Annoying"+annoying);
+    console.log("Eventful"+eventful);
+    console.log("Chaotic"+chaotic);
+    console.log("Monotonous"+monotonous);
 
-    chaotic[0] = chaotic[0]/number_people;
-    chaotic[1] = chaotic[1]/number_people;
-    chaotic[2] = chaotic[2]/number_people;
+    /*Dividimos el array principal en subarrays los cuáles corresponden con cada lugar.
+    Para ello lo primero que hacemos es normalizar las variables. */
+    annoying = functions_readfile.normalize(annoying,number_people);
+    calm = functions_readfile.normalize(calm,number_people);
+    chaotic = functions_readfile.normalize(chaotic,number_people);
+    eventful = functions_readfile.normalize(annoying,number_people);
+    monotonous = functions_readfile.normalize(annoying,number_people);
+    pleasant = functions_readfile.normalize(annoying,number_people);
+    uneventful = functions_readfile.normalize(annoying,number_people);
+    vibrant = functions_readfile.normalize(annoying,number_people);
 
-    calm[0] = calm[0]/number_people;
-    calm[1] = calm[1]/number_people;
-    calm[2] = calm[2]/number_people;
+    const recordings_system = annoying.length/number_places;
 
-    monotonous[0] = monotonous[0]/number_people;
-    monotonous[1] = monotonous[1]/number_people;
-    monotonous[2] = monotonous[2]/number_people;
+    annoying_list = functions_readfile.split_lists(annoying,recordings_system,number_places);
+    pleasant_list = functions_readfile.split_lists(pleasant,recordings_system,number_places);
+    eventful_list = functions_readfile.split_lists(eventful,recordings_system,number_places);
+    uneventful_list = functions_readfile.split_lists(uneventful,recordings_system,number_places);
+    chaotic_list = functions_readfile.split_lists(chaotic,recordings_system,number_places);
+    calm_list = functions_readfile.split_lists(calm,recordings_system,number_places);
+    vibrant_list = functions_readfile.split_lists(vibrant,recordings_system,number_places);
+    monotonous_list = functions_readfile.split_lists(monotonous,recordings_system,number_places);
 
-    vibrant[0] = vibrant[0]/number_people;
-    vibrant[1] = vibrant[1]/number_people;
-    vibrant[2] = vibrant[2]/number_people;
 
     diagram_examples.innerHTML = "";
     console.log(number_places)
     if (number_places == 1) {
+        diagram_examples.innerHTML += '<h3>'+quiz_info[0][1][0]["Name_Scenary"]+'</h3>';
         diagram_examples.innerHTML += '<canvas id="diagram1" width="400px" height="297px"></canvas><br>';
+        diagram_examples.innerHTML += '<h5>';          
+        for (let i = 0; i < recordings_system; i++) {
+            diagram_examples.innerHTML += 'Toma ' + (i+1) + " de color ";
+            if (i == 0) {
+                diagram_examples.innerHTML += '<b id="blue">AZUL<b>.';
+            }else if (i==1) {
+                diagram_examples.innerHTML += '<b id="red">ROJO<b>'; 
+            }else{
+                diagram_examples.innerHTML += '<b id="green">VERDE<b>';
+            }       
+        }
+        diagram_examples.innerHTML += '</h5>';
     }else if (number_places ==2) {
+        diagram_examples.innerHTML += '<h3>'+quiz_info[0][1][0]["Name_Scenary"]+'</h3><br>';
         diagram_examples.innerHTML += '<canvas id="diagram1" width="400px" height="297px"></canvas><br>';
+        diagram_examples.innerHTML += '<h5>';          
+        for (let i = 0; i < recordings_system; i++) {
+            diagram_examples.innerHTML += 'Toma ' + (i+1) + " de color ";
+            if (i == 0) {
+                diagram_examples.innerHTML += '<b id="blue">AZUL<b>.';
+            }else if (i==1) {
+                diagram_examples.innerHTML += '<b id="red">ROJO<b>'; 
+            }else{
+                diagram_examples.innerHTML += '<b id="green">VERDE<b>';
+            }           
+        }
+        diagram_examples.innerHTML += '</h5>';
+
+        diagram_examples.innerHTML += '<h3>'+quiz_info[0][1][1]["Name_Scenary"]+'</h3><br>';
         diagram_examples.innerHTML += '<canvas id="diagram2" width="400px" height="297px"></canvas><br>';
+        diagram_examples.innerHTML += '<h5>';          
+        for (let i = 0; i < recordings_system; i++) {
+            diagram_examples.innerHTML += 'Toma ' + (i+1) + " de color ";
+            if (i == 0) {
+                diagram_examples.innerHTML += '<b id="blue">AZUL<b>.';
+            }else if (i==1) {
+                diagram_examples.innerHTML += '<b id="red">ROJO<b>'; 
+            }else{
+                diagram_examples.innerHTML += '<b id="green">VERDE<b>';
+            }          
+        }
+        diagram_examples.innerHTML += '</h5>';
     }else if (number_places == 3) {
+        diagram_examples.innerHTML += '<h3>'+quiz_info[0][1][0]["Name_Scenary"]+'</h3><br>';
         diagram_examples.innerHTML += '<canvas id="diagram1" width="400px" height="297px"></canvas><br>';
+        diagram_examples.innerHTML += '<h5>';          
+        for (let i = 0; i < recordings_system; i++) {
+            diagram_examples.innerHTML += 'Toma ' + (i+1) + " de color ";
+            if (i == 0) {
+                diagram_examples.innerHTML += '<b id="blue">AZUL<b>.';
+            }else if (i==1) {
+                diagram_examples.innerHTML += '<b id="red">ROJO<b>'; 
+            }else{
+                diagram_examples.innerHTML += '<b id="green">VERDE<b>';
+            }           
+        }
+        diagram_examples.innerHTML += '</h5>';
+
+        diagram_examples.innerHTML += '<h3>'+quiz_info[0][1][1]["Name_Scenary"]+'</h3><br>';
         diagram_examples.innerHTML += '<canvas id="diagram2" width="400px" height="297px"></canvas><br>';
+        diagram_examples.innerHTML += '<h5>';          
+        for (let i = 0; i < recordings_system; i++) {
+            diagram_examples.innerHTML += 'Toma ' + (i+1) + " de color ";
+            if (i == 0) {
+                diagram_examples.innerHTML += '<b id="blue">AZUL<b>.';
+            }else if (i==1) {
+                diagram_examples.innerHTML += '<b id="red">ROJO<b>'; 
+            }else{
+                diagram_examples.innerHTML += '<b id="green">VERDE<b>';
+            }      
+        }
+        diagram_examples.innerHTML += '</h5>';
+
+        diagram_examples.innerHTML += '<h3>'+quiz_info[0][1][2]["Name_Scenary"]+'</h3><br>';
         diagram_examples.innerHTML += '<canvas id="diagram3" width="400px" height="297px"></canvas><br>';
+        diagram_examples.innerHTML += '<h5>';          
+        for (let i = 0; i < recordings_system; i++) {
+            diagram_examples.innerHTML += 'Toma ' + (i+1) + " de color ";
+            if (i == 0) {
+                diagram_examples.innerHTML += '<b id="blue">AZUL<b>.';
+            }else if (i==1) {
+                diagram_examples.innerHTML += '<b id="red">ROJO<b>'; 
+            }else{
+                diagram_examples.innerHTML += '<b id="green">VERDE<b>';
+            }           
+        }
+        diagram_examples.innerHTML += '</h5>';
     }
     console.log(diagram_examples)
     draw();
@@ -290,66 +382,17 @@ function draw() {
     const canvas1 = document.getElementById('diagram1');
     const canvas2 = document.getElementById('diagram2');
     const canvas3 = document.getElementById('diagram3');
-    let number_places = quiz_info[0][1].length;
-    let number_recordings = quiz_info[0][2].length/number_places;
+
     if (canvas1.getContext) {
       const ctx = canvas1.getContext('2d');
-      
-
-        point_x = (pleasant[0]-annoying[0]);
-        console.log(point_x)
-        point_x = point_x*116;
-
-        point_y = (eventful[0]-uneventful[0])+Math.cos(Math.PI/4)*(chaotic[0]-calm[0])+Math.cos(Math.PI/4)*(vibrant[0]-monotonous[0]);
-        point_y = point_y*116;
-
-        console.log(point_x,point_y)
-        canvas_draw_hex(ctx,point_x,point_y);
-
-      //-- Dibujar los puntos del Diagrama.
-      //-- Hay que crear un diagrama por cada lugar y por cada toma hay que seleccionar un color.
-      // Al haber solo la posibilidad de 3 tomas, se seleccionan 3 colores. Qué serán rojo, verde y azul.
-      /* Estos colores son colores que son fáciles de distinguir entre ellos de forma que al usuario no le cueste identificar cada toma.*/
+      functions_canvas.canvas_create_position_and_draw(ctx,0);
     }
     if (canvas2.getContext) {
         const ctx = canvas2.getContext('2d');
-        canvas_draw_hex(ctx);
-        //-- Dibujar los puntos del Diagrama.
-        //-- Hay que crear un diagrama por cada lugar y por cada toma hay que seleccionar un color.
-        // Al haber solo la posibilidad de 3 tomas, se seleccionan 3 colores. Qué serán rojo, verde y azul.
-        /* Estos colores son colores que son fáciles de distinguir entre ellos de forma que al usuario no le cueste identificar cada toma.*/
+        functions_canvas.canvas_create_position_and_draw(ctx,1);
     }
     if (canvas3.getContext) {
         const ctx = canvas3.getContext('2d');
-        canvas_draw_hex(ctx);
-        //-- Dibujar los puntos del Diagrama.
-        //-- Hay que crear un diagrama por cada lugar y por cada toma hay que seleccionar un color.
-        // Al haber solo la posibilidad de 3 tomas, se seleccionan 3 colores. Qué serán rojo, verde y azul.
-        /* Estos colores son colores que son fáciles de distinguir entre ellos de forma que al usuario no le cueste identificar cada toma.*/
+        functions_canvas.canvas_create_position_and_draw(ctx,2);
     }
-}
-function canvas_draw_hex(ctx,point_x,point_y) {
-    ctx.drawImage(img,0,0);
-    ctx.beginPath();
-    ctx.arc(point_x,point_y,15,0,2*Math.PI,false);
-    ctx.stroke();
-    //-- Circunferencia exterior.
-    ctx.moveTo(198,34);
-    ctx.lineTo(281,69);
-    ctx.moveTo(281,69);
-    ctx.lineTo(314,151);
-    ctx.moveTo(314,151);
-    ctx.lineTo(281,233);
-    ctx.moveTo(281,233);
-    ctx.lineTo(198,266);
-    ctx.moveTo(198,266);
-    ctx.lineTo(115,233);
-    ctx.moveTo(115,233);
-    ctx.lineTo(82,151);
-    ctx.moveTo(82,151);
-    ctx.lineTo(115,69);
-    ctx.moveTo(115,69);
-    ctx.lineTo(198,34);
-    ctx.fill();
-    ctx.stroke();
 }
