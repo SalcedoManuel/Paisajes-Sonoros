@@ -88,6 +88,7 @@ var img = new Image(400,400);
 img.src = "images/diagram.png";
 
 function draw() {
+
     const canvas1 = document.getElementById('diagram1');
     const canvas2 = document.getElementById('diagram2');
     const canvas3 = document.getElementById('diagram3');

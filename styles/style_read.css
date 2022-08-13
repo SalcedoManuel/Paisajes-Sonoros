@@ -19,3 +19,6 @@
     text-align: center;
     background-color: white;
 }
+#diagram1,#diagram2,#diagram3{
+    margin:auto;
+}

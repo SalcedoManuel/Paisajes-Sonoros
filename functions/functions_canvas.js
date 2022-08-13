@@ -7,12 +7,26 @@ function canvas_create_position_and_draw(ctx,number_canvas) {
     let coordenada_x = [];
     let coordenada_y = [];
     for (let i = 0; i < pleasant_list[0].length; i++) {
-      x = (pleasant_list[number_canvas][0]-annoying_list[number_canvas][0])+Math.cos(Math.PI/4)*(calm_list[number_canvas][0]-chaotic_list[number_canvas][0])+Math.cos(Math.PI/4)*(vibrant_list[number_canvas][0]-monotonous_list[number_canvas][0]);
+      x = (pleasant_list[number_canvas][i]-annoying_list[number_canvas][i])+Math.cos(Math.PI/4)*(calm_list[number_canvas][i]-chaotic_list[number_canvas][i])+Math.cos(Math.PI/4)*(vibrant_list[number_canvas][i]-monotonous_list[number_canvas][i]);
       x = x / max_value;
-      point_x = center_x+radius*x;
-      y = (eventful_list[number_canvas][0]-uneventful_list[number_canvas][0])+Math.cos(Math.PI/4)*(chaotic_list[number_canvas][0]-calm_list[number_canvas][0])+Math.cos(Math.PI/4)*(vibrant_list[number_canvas][0]-monotonous_list[number_canvas][0]);
+      point_x = radius*x;
+
+      y = (eventful_list[number_canvas][i]-uneventful_list[number_canvas][i])+Math.cos(Math.PI/4)*(chaotic_list[number_canvas][i]-calm_list[number_canvas][i])+Math.cos(Math.PI/4)*(vibrant_list[number_canvas][i]-monotonous_list[number_canvas][i]);
       y = y / max_value;
-      point_y = center_y+radius*y;
+      point_y = radius*y;
+      
+      let angulo = Math.atan(point_x/point_y);
+      if (point_x < 0) {
+        point_x = (-Math.sin(angulo)*radius)+center_x;
+      }else{
+        point_x = (Math.sin(angulo)*radius)+center_x;
+      }
+
+      if (point_y < 0) {
+        point_y = (Math.cos(angulo)*radius)+center_y;
+      }else{
+        point_y = -(Math.cos(angulo)*radius)+center_y;
+      }  
 
       coordenada_x[i] = point_x;
       coordenada_y[i] = point_y;
@@ -24,24 +38,7 @@ function canvas_create_position_and_draw(ctx,number_canvas) {
 function canvas_draw_hex(ctx) {
     ctx.drawImage(img,0,0);
     ctx.beginPath();
-    //-- Circunferencia exterior.
-    ctx.moveTo(198,34);
-    ctx.lineTo(280,70);
-    ctx.moveTo(280,70);
-    ctx.lineTo(314,151);
-    ctx.moveTo(314,151);
-    ctx.lineTo(280,233);
-    ctx.moveTo(280,233);
-    ctx.lineTo(198,266);
-    ctx.moveTo(198,266);
-    ctx.lineTo(115,233);
-    ctx.moveTo(115,233);
-    ctx.lineTo(82,151);
-    ctx.moveTo(82,151);
-    ctx.lineTo(115,70);
-    ctx.moveTo(115,70);
-    ctx.lineTo(198,34);
-    ctx.fill();
+    ctx.arc(center_x,center_y,radius+1,0,2*Math.PI,false);
     ctx.stroke();
 }
 function canvas_draw_points(ctx,coordenada_x,coordenada_y){

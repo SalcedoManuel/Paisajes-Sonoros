@@ -59,6 +59,39 @@ function table_global_results_string(params,i) {
     return string;
 }
 
+function get_features_diagram(number_place,number_toma) {
+    // Analizando las listas con las características nos quedamos con las 3 características más influyentes.
+    var str = "";
+    var eventful = false;
+    var pleasant = false;
+    console.log(eventful_list[number_place])
+    console.log(uneventful_list[number_place])
+    if (eventful_list[number_place][number_toma] >= uneventful_list[number_place][number_toma]) {
+        str += "Eventful, ";
+        eventful = true;
+    }else{
+        str += "Uneventful, ";
+    }
+    
+    if (pleasant_list[number_place][number_toma] >= annoying_list[number_place][number_toma]) {
+        str += "Pleasant, ";
+        pleasant = true;
+    }else{
+        str += "Annoying, ";
+    }
+
+    if (eventful && pleasant) {
+        str += "and Vibrant.";
+    }else if (eventful && !pleasant) {
+        str += "and Chaotic.";
+    }else if (!eventful && pleasant) {
+        str += "and Calm.";
+    }else if (!eventful && !pleasant) {
+        str += "and Monotonous.";
+    }
+
+    return str;
+}
 
 /* FUNCIONES  DEL APARATADO de RESULTADOS GLOBALES*/
 
@@ -172,7 +205,6 @@ function places_global_results() {
     const number_people = quiz_info.length;
     const number_places = quiz_info[0][1].length;
     var string = "";
-    console.log("IN")
     function create_map(pos) {
         let new_map = new Map();
         new_map.set("Escenario",quiz_info[0][1][pos]["Name_Scenary"])
@@ -292,106 +324,52 @@ function recordings_global_results() {
     number_recordings = quiz_info[0][2].length/number_places;
     /* Después creamos un bucle el cuál busca en todas las preguntas útiles las respuestas para sumar.*/
     var annoying = [];
+    functions_readfile.create_Array(annoying);
     var calm= [];
+    functions_readfile.create_Array(calm);
     var chaotic = [];
+    functions_readfile.create_Array(chaotic);
     var eventful = [];
+    functions_readfile.create_Array(eventful);
     var monotonous = [];
+    functions_readfile.create_Array(monotonous);
     var pleasant = [];
+    functions_readfile.create_Array(pleasant);
     var uneventful = [];
+    functions_readfile.create_Array(uneventful);
     var vibrant = [];
+    functions_readfile.create_Array(vibrant);
 
-
+    const VALUE = 1/number_people;
     for (let i = 0; i < number_people; i++) {
-        /* El segundo bucle for sirve para leer todas las respuestas que nos interesan.*/
         for (let e = 0; e < quiz_info[i][2].length; e++) {
             if (quiz_info[i][2][e]["¿Consideras ruidoso el audio del paisaje sonoro?"] == "yes") {
-                if (annoying[e] != undefined) {
-                    annoying[e] += 1;
-                    pleasant[e] += 0;
-                }else{
-                    annoying[e] = 1;
-                    pleasant[e] = 0;
-                }
+                annoying[e] += VALUE;
             }else if (quiz_info[i][2][e]["¿Consideras ruidoso el audio del paisaje sonoro?"] == "no") {
-                if (pleasant[e] != undefined) {
-                    annoying[e] += 0;
-                    pleasant[e] += 1;
-                }else{
-                    annoying[e] = 0;
-                    pleasant[e] = 1;
-                }
+                pleasant[e] += VALUE;
             }
             
             if (quiz_info[i][2][e]["¿Qué sonidos podrías distinguir en la toma?"] == "urban") {
-                if (eventful[e] != undefined) {
-                    eventful[e] += 1;
-                    uneventful[e] += 0;
-                }else{
-                    eventful[e] = 1;
-                    uneventful[e] = 0;
-                }
+                eventful[e] += VALUE;
             }else if (quiz_info[i][2][e]["¿Qué sonidos podrías distinguir en la toma?"] == "nature") {
-                if (uneventful[e] != undefined) {
-                    eventful[e] += 0;
-                    uneventful[e] += 1;
-                }else{
-                    eventful[e] = 0;
-                    uneventful[e] = 1;
-                }
+                uneventful[e] += VALUE;
             }
-
+    
             if (quiz_info[i][2][e]["¿Consideras desagradable el audio del paisaje sonoro?"] == "yes") {
-
-                if (chaotic[e] != undefined) {
-                    chaotic[e] += 1;
-                    calm[e] += 0;
-                }else{
-                    chaotic[e] = 1;
-                    calm[e] = 0;
-
-                }
+                chaotic[e] += VALUE;
             }else if (quiz_info[i][2][e]["¿Consideras desagradable el audio del paisaje sonoro?"] == "no") {
-                calm[e] += 1;
-                if (calm[e] != undefined) {
-                    calm[e] += 1;
-                    chaotic[e] = 0;
-                }else{
-                    calm[e] = 1;
-                    chaotic[e] = 0;
-                }
+                calm[e] += VALUE;
             }
-
+    
             if (quiz_info[i][2][e]["¿Consideras definido el audio del paisaje sonoro?"] == "yes") {
-
-                if (monotonous[e] != undefined) {
-                    monotonous[e] += 1;
-                    vibrant[e] += 0;
-                }else{
-                    monotonous[e] = 1;
-                    vibrant[e] = 0;
-                }
+                monotonous[e] += VALUE;
             }else if (quiz_info[i][2][e]["¿Consideras definido el audio del paisaje sonoro?"] == "no") {
-
-                if (vibrant[e] != undefined) {
-                    vibrant[e] += 1;
-                    monotonous[e] += 0;
-                }else{
-                    vibrant[e] = 1;
-                    monotonous[e] = 0;
-                }
+                vibrant[e] += VALUE;
             }
-        }
+    
+        }        
     }
-        /*Dividimos el array principal en subarrays los cuáles corresponden con cada lugar.
-    Para ello lo primero que hacemos es normalizar las variables. */
-    annoying = functions_readfile.normalize(annoying,number_people);
-    calm = functions_readfile.normalize(calm,number_people);
-    chaotic = functions_readfile.normalize(chaotic,number_people);
-    eventful = functions_readfile.normalize(annoying,number_people);
-    monotonous = functions_readfile.normalize(annoying,number_people);
-    pleasant = functions_readfile.normalize(annoying,number_people);
-    uneventful = functions_readfile.normalize(annoying,number_people);
-    vibrant = functions_readfile.normalize(annoying,number_people);
+        /*Dividimos el array principal en subarrays los cuáles corresponden con cada lugar.*/
 
     const recordings_system = annoying.length/number_places;
 
@@ -404,98 +382,36 @@ function recordings_global_results() {
     vibrant_list = functions_readfile.split_lists(vibrant,recordings_system,number_places);
     monotonous_list = functions_readfile.split_lists(monotonous,recordings_system,number_places);
     diagram_examples.innerHTML = "";
-
-    if (number_places == 1) {
-        diagram_examples.innerHTML += '<h3>'+quiz_info[0][1][0]["Name_Scenary"]+'</h3>';
-        diagram_examples.innerHTML += '<canvas id="diagram1" width="400px" height="297px"></canvas><br>';
-        diagram_examples.innerHTML += '<h5>';          
-        for (let i = 0; i < recordings_system; i++) {
-            diagram_examples.innerHTML += 'Toma ' + (i+1) + " de color ";
-            if (i == 0) {
-                diagram_examples.innerHTML += '<b id="blue">AZUL<b>.';
-            }else if (i==1) {
-                diagram_examples.innerHTML += '<b id="red">ROJO<b>'; 
-            }else{
-                diagram_examples.innerHTML += '<b id="green">VERDE<b>';
-            }       
+    var string = "";
+    
+    for (let i = 0; i < number_places; i++) {
+        string += '<table class="table_global_results">';
+        string += '<caption id="caption_table"><h2>'+quiz_info[0][1][i]["Name_Scenary"]+'</h2></caption>';
+        string += '<tr style="font-size: large;">';
+        string += '<th colspan="3">'+'<canvas id="diagram'+(i+1)+'" width="400px" height="297px"></canvas>'+'</th>';
+        string += '</tr>';
+        string += '<tr><th>Número de Toma</th><th>Color en el diagrama</td><th >Características de la Toma</td></tr>';
+        for (let e = 0; e < recordings_system; e++) {
+            string += "<tr>";
+            string += '<th> Toma Nº: '+ (e+1) + '</th>';
+            string += '<td id="value_table">Color: ';
+            switch (e) {
+                case 0:
+                    string += '<b id="blue">AZUL<b></td>';
+                    break;
+                case 1:
+                    string += '<b id="red">ROJO<b></td>';
+                    break;
+                default:
+                    string += '<b id="green">VERDE<b></td>';
+                    break;
+            }
+            string += '<td id="value_table">'+get_features_diagram(i,e)+'</td>'
+            string += '</tr>';
         }
-        diagram_examples.innerHTML += '</h5>';
-    }else if (number_places ==2) {
-        diagram_examples.innerHTML += '<h3>'+quiz_info[0][1][0]["Name_Scenary"]+'</h3><br>';
-        diagram_examples.innerHTML += '<canvas id="diagram1" width="400px" height="297px"></canvas><br>';
-        diagram_examples.innerHTML += '<h5>';          
-        for (let i = 0; i < recordings_system; i++) {
-            diagram_examples.innerHTML += 'Toma ' + (i+1) + " de color ";
-            if (i == 0) {
-                diagram_examples.innerHTML += '<b id="blue">AZUL<b>.';
-            }else if (i==1) {
-                diagram_examples.innerHTML += '<b id="red">ROJO<b>'; 
-            }else{
-                diagram_examples.innerHTML += '<b id="green">VERDE<b>';
-            }           
-        }
-        diagram_examples.innerHTML += '</h5>';
-
-        diagram_examples.innerHTML += '<h3>'+quiz_info[0][1][1]["Name_Scenary"]+'</h3><br>';
-        diagram_examples.innerHTML += '<canvas id="diagram2" width="400px" height="297px"></canvas><br>';
-        diagram_examples.innerHTML += '<h5>';          
-        for (let i = 0; i < recordings_system; i++) {
-            diagram_examples.innerHTML += 'Toma ' + (i+1) + " de color ";
-            if (i == 0) {
-                diagram_examples.innerHTML += '<b id="blue">AZUL<b>.';
-            }else if (i==1) {
-                diagram_examples.innerHTML += '<b id="red">ROJO<b>'; 
-            }else{
-                diagram_examples.innerHTML += '<b id="green">VERDE<b>';
-            }          
-        }
-        diagram_examples.innerHTML += '</h5>';
-    }else if (number_places == 3) {
-        diagram_examples.innerHTML += '<h3>'+quiz_info[0][1][0]["Name_Scenary"]+'</h3><br>';
-        diagram_examples.innerHTML += '<canvas id="diagram1" width="400px" height="297px"></canvas><br>';
-        diagram_examples.innerHTML += '<h5>';          
-        for (let i = 0; i < recordings_system; i++) {
-            diagram_examples.innerHTML += 'Toma ' + (i+1) + " de color ";
-            if (i == 0) {
-                diagram_examples.innerHTML += '<b id="blue">AZUL<b>.';
-            }else if (i==1) {
-                diagram_examples.innerHTML += '<b id="red">ROJO<b>'; 
-            }else{
-                diagram_examples.innerHTML += '<b id="green">VERDE<b>';
-            }           
-        }
-        diagram_examples.innerHTML += '</h5>';
-
-        diagram_examples.innerHTML += '<h3>'+quiz_info[0][1][1]["Name_Scenary"]+'</h3><br>';
-        diagram_examples.innerHTML += '<canvas id="diagram2" width="400px" height="297px"></canvas><br>';
-        diagram_examples.innerHTML += '<h5>';          
-        for (let i = 0; i < recordings_system; i++) {
-            diagram_examples.innerHTML += 'Toma ' + (i+1) + " de color ";
-            if (i == 0) {
-                diagram_examples.innerHTML += '<b id="blue">AZUL<b>.';
-            }else if (i==1) {
-                diagram_examples.innerHTML += '<b id="red">ROJO<b>'; 
-            }else{
-                diagram_examples.innerHTML += '<b id="green">VERDE<b>';
-            }      
-        }
-        diagram_examples.innerHTML += '</h5>';
-
-        diagram_examples.innerHTML += '<h3>'+quiz_info[0][1][2]["Name_Scenary"]+'</h3><br>';
-        diagram_examples.innerHTML += '<canvas id="diagram3" width="400px" height="297px"></canvas><br>';
-        diagram_examples.innerHTML += '<h5>';          
-        for (let i = 0; i < recordings_system; i++) {
-            diagram_examples.innerHTML += 'Toma ' + (i+1) + " de color ";
-            if (i == 0) {
-                diagram_examples.innerHTML += '<b id="blue">AZUL<b>.';
-            }else if (i==1) {
-                diagram_examples.innerHTML += '<b id="red">ROJO<b>'; 
-            }else{
-                diagram_examples.innerHTML += '<b id="green">VERDE<b>';
-            }           
-        }
-        diagram_examples.innerHTML += '</h5>';
+        string += '</table><br>';
     }
+    diagram_examples.innerHTML = string;
 }
 
 function generic_global_results() {
@@ -552,6 +468,7 @@ function generic_global_results() {
     global_results.innerHTML += string;
 
 }
+
 
 module.exports = {
     create_table_info_init_string,

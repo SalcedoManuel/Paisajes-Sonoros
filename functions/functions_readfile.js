@@ -19,7 +19,14 @@ function split_lists(array,recordings_system,number_places) {
    return array_list;
 }
 
+function create_Array(array) {
+    for (let i = 0; i < quiz_info[0][2].length; i++) {
+        array.push(0)
+    }
+}
+
 module.exports = {
     normalize,
-    split_lists
+    split_lists,
+    create_Array
 }
