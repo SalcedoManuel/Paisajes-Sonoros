@@ -25,7 +25,7 @@ electron.app.on('ready', () => {
     win = new electron.BrowserWindow({
         width: 800,   //-- Anchura 
         height: 600,  //-- Altura
-
+        icon: __dirname + '/images/logo3.ico',
         //-- Permitir que la ventana tenga ACCESO AL SISTEMA
         webPreferences: {
           nodeIntegration: true,
