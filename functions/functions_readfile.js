@@ -25,8 +25,27 @@ function create_Array(array) {
     }
 }
 
+function get_names_places() {
+    let array = [];
+    for (let i = 0; i < quiz_info[0][1].length; i++) {
+        array.push(quiz_info[0][1][i]["Name_Scenary"])        
+    }
+    return array;
+}
+
+function create_map() {
+    let new_map = new Map();
+    new_map.set("¿Conoces el escenario?",[0,0]);
+    new_map.set("¿Cuál es la frecuencia de paso por él?",[0,0,0,0,0]);
+    new_map.set("Cuando lo has transitado, ¿Has prestado atención al sonido que te rodeaba?",[0,0]);
+    new_map.set("¿Las grabaciones se asemejan a tu recuerdo del escenario?",[0,0]);
+    return new_map;
+}
+
 module.exports = {
     normalize,
     split_lists,
-    create_Array
+    create_Array,
+    get_names_places,
+    create_map
 }

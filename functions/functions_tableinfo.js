@@ -204,113 +204,155 @@ function gender_global_results() {
 function places_global_results() {
     const number_people = quiz_info.length;
     const number_places = quiz_info[0][1].length;
+    const VALUE = 1/number_people;
+
+    const name_Scenaries = functions_readfile.get_names_places();
+
+    
+
     var string = "";
-    function create_map(pos) {
-        let new_map = new Map();
-        new_map.set("Escenario",quiz_info[0][1][pos]["Name_Scenary"])
-        new_map.set("¿Conoces el escenario?",[0,0]);
-        new_map.set("¿Cuál es la frecuencia de paso por él?",[0,0,0,0,0]);
-        new_map.set("Cuando lo has transitado, ¿Has prestado atención al sonido que te rodeaba?",[0,0]);
-        new_map.set("¿Las grabaciones se asemejan a tu recuerdo del escenario?",[0,0]);
-        return new_map;
-    }
+
     /* Crearemos un array que contendrá las partes de las preguntas.*/
 
     var array = new Array()
     if (number_places == 1) {
-        array.push(create_map(0))
+        array.push(functions_readfile.create_map())
     }
     if (number_places == 2) {
-        array.push(create_map(0))
-        array.push(create_map(1))
+        array.push(functions_readfile.create_map())
+        array.push(functions_readfile.create_map())
     }
     if (number_places == 3) {
-        array.push(create_map(0))    
-        array.push(create_map(1))    
-        array.push(create_map(2))
+        array.push(functions_readfile.create_map())    
+        array.push(functions_readfile.create_map())    
+        array.push(functions_readfile.create_map())
     }
 
     for (let e = 0; e < number_places; e++) {
-    for (let i = 0; i < number_people; i++) {
-    if (quiz_info[i][1][e]['¿Conoces el escenario?'] == "yes") {
-        let value = array[e].get("¿Conoces el escenario?")
-        value[0] += 1/number_people;
-    }else{
-        let value = array[e].get("¿Conoces el escenario?")
-        value[1] += 1/number_people;
-    }
+        for (let i = 0; i < number_people; i++) {
+        if (quiz_info[i][1][e]['¿Conoces el escenario?'] == "yes") {
+            let value = array[e].get("¿Conoces el escenario?")
+            value[0] += 1/number_people;
+        }else{
+            let value = array[e].get("¿Conoces el escenario?")
+            value[1] += 1/number_people;
+        }
 
-    if (quiz_info[i][1][e]['¿Cuál es la frecuencia de paso por él?'] == "ninguna") {
-        let value = array[e].get('¿Cuál es la frecuencia de paso por él?')
-        value[0] += 1/number_people;
-    }else if (quiz_info[i][1][e]['¿Cuál es la frecuencia de paso por él?'] == "poca") {
-        let value = array[e].get('¿Cuál es la frecuencia de paso por él?')
-        value[1] += 1/number_people;
-    }else if (quiz_info[i][1][e]['¿Cuál es la frecuencia de paso por él?'] == "aveces") {
-        let value = array[e].get('¿Cuál es la frecuencia de paso por él?')
-        value[2] += 1/number_people;
-        
-    }else if (quiz_info[i][1][e]['¿Cuál es la frecuencia de paso por él?'] == "frecuentemente") {
-        let value = array[e].get('¿Cuál es la frecuencia de paso por él?')
-        value[3] += 1/number_people;
-    }else{
-        let value = array[e].get('¿Cuál es la frecuencia de paso por él?')
-        value[4] += 1/number_people;
-    }
+        if (quiz_info[i][1][e]['¿Cuál es la frecuencia de paso por él?'] == "ninguna") {
+            let value = array[e].get('¿Cuál es la frecuencia de paso por él?')
+            value[0] += 1/number_people;
+        }else if (quiz_info[i][1][e]['¿Cuál es la frecuencia de paso por él?'] == "poca") {
+            let value = array[e].get('¿Cuál es la frecuencia de paso por él?')
+            value[1] += 1/number_people;
+        }else if (quiz_info[i][1][e]['¿Cuál es la frecuencia de paso por él?'] == "aveces") {
+            let value = array[e].get('¿Cuál es la frecuencia de paso por él?')
+            value[2] += 1/number_people;
+            
+        }else if (quiz_info[i][1][e]['¿Cuál es la frecuencia de paso por él?'] == "frecuentemente") {
+            let value = array[e].get('¿Cuál es la frecuencia de paso por él?')
+            value[3] += 1/number_people;
+        }else{
+            let value = array[e].get('¿Cuál es la frecuencia de paso por él?')
+            value[4] += 1/number_people;
+        }
 
-    if (quiz_info[i][1][e]['Cuando lo has transitado, ¿Has prestado atención al sonido que te rodeaba?'] == "yes") {
-        let value = array[e].get('Cuando lo has transitado, ¿Has prestado atención al sonido que te rodeaba?')
-        value[0] += 1/number_people;
-    }else{
-        let value = array[e].get('Cuando lo has transitado, ¿Has prestado atención al sonido que te rodeaba?')
-        value[1] += 1/number_people;
-    }
+        if (quiz_info[i][1][e]['Cuando lo has transitado, ¿Has prestado atención al sonido que te rodeaba?'] == "yes") {
+            let value = array[e].get('Cuando lo has transitado, ¿Has prestado atención al sonido que te rodeaba?')
+            value[0] += 1/number_people;
+        }else{
+            let value = array[e].get('Cuando lo has transitado, ¿Has prestado atención al sonido que te rodeaba?')
+            value[1] += 1/number_people;
+        }
 
-    if (quiz_info[i][1][e]['¿Las grabaciones se asemejan a tu recuerdo del escenario?'] == "yes") {
-        let value = array[e].get('¿Las grabaciones se asemejan a tu recuerdo del escenario?')
-        value[0] += 1/number_people;
-    }else{
-        let value = array[e].get('¿Las grabaciones se asemejan a tu recuerdo del escenario?')
-        value[1] += 1/number_people;
-    }
+        if (quiz_info[i][1][e]['¿Las grabaciones se asemejan a tu recuerdo del escenario?'] == "yes") {
+            let value = array[e].get('¿Las grabaciones se asemejan a tu recuerdo del escenario?')
+            value[0] += 1/number_people;
+        }else{
+            let value = array[e].get('¿Las grabaciones se asemejan a tu recuerdo del escenario?')
+            value[1] += 1/number_people;
+        }
 
-    }
+        }
     }
     string += "<h3> Preguntas sobre los Escenarios </h3>"
-    for (let i = 0; i < array.length; i++) {
-        let preguntas = array[i].keys()
-        string += "<h2>" + preguntas.next().value + " " + array[i].get('Escenario') + "</h4>";
-        // Creamos ahora la tabla que contendrá la pregunta.
-        string += '<table class="table_global_results"><caption id="caption_table"><h2>' + preguntas.next().value + "</h2></caption>";
-        // Creamos la primera fila, aún no hay valores del quiz.
-        string += '<tr style="font-size:large;"><th scope="col"></th><th>Número</th><th>Porcentaje</th></tr>';        
-        string += '<tr><th>Sí</th><td id="value_table">' + array[i].get('¿Conoces el escenario?')[0]*number_people + '</td><td id="value_table">' + array[i].get('¿Conoces el escenario?')[0]*100+"%</td><tr>";
-        string += '<tr><th>No</th><td id="value_table">' + array[i].get('¿Conoces el escenario?')[1]*number_people + '</td><td id="value_table">' + array[i].get('¿Conoces el escenario?')[1]*100+"%</td><tr>";
-        string += "<table>";
-        // Creamos una nueva tabla
-        string += '<table class="table_global_results"><caption id="caption_table"><h2>' + preguntas.next().value + "</h2></caption>";
-        // Creamos de nuevo los valores del quiz.
-        string += '<tr style="font-size:large;"><th scope="col"></th><th>Número</th><th>Porcentaje</th></tr>';
-        string += '<tr><th>Ninguna</th><td id="value_table">'+ array[i].get('¿Cuál es la frecuencia de paso por él?')[0]*number_people+ '</td><td id="value_table">' + array[i].get('¿Cuál es la frecuencia de paso por él?')[0]*100+"%</td><tr>";
-        string += '<tr><th>Poca</th><td id="value_table">'+ array[i].get('¿Cuál es la frecuencia de paso por él?')[1]*number_people+ '</td><td id="value_table">' + array[i].get('¿Cuál es la frecuencia de paso por él?')[1]*100+"%</td><tr>";
-        string += '<tr><th>A veces</th><td id="value_table">'+ array[i].get('¿Cuál es la frecuencia de paso por él?')[2]*number_people+ '</td><td id="value_table">' + array[i].get('¿Cuál es la frecuencia de paso por él?')[2]*100+"%</td><tr>"
-        string += '<tr><th>Frecuentemente</th><td id="value_table">'+ array[i].get('¿Cuál es la frecuencia de paso por él?')[3]*number_people+ '</td><td id="value_table">' + array[i].get('¿Cuál es la frecuencia de paso por él?')[3]*100+"%</td><tr>"
-        string += '<tr><th>Diariamente</th><td id="value_table">'+ array[i].get('¿Cuál es la frecuencia de paso por él?')[4]*number_people+ '</td><td id="value_table">' + array[i].get('¿Cuál es la frecuencia de paso por él?')[4]*100+"%</td><tr>"
-        string += "</table>";
-        // Volvemos a crear una tabla nueva.
-        string += '<table class="table_global_results"><caption id="caption_table"><h2>' + preguntas.next().value + "</h2></caption>";
-        // Creamos de nuevo los valores del quiz.
-        string += '<tr style="font-size:large;"><th scope="col"></th><th>Número</th><th>Porcentaje</th></tr>';
-        string += '<tr><th>Sí</th><td id="value_table">'+ array[i].get('Cuando lo has transitado, ¿Has prestado atención al sonido que te rodeaba?')[0]*number_people+ '</td><td id="value_table">' + array[i].get('Cuando lo has transitado, ¿Has prestado atención al sonido que te rodeaba?')[0]*100+"%</td><tr>";
-        string += '<tr><th>No</th><td id="value_table">'+ array[i].get('Cuando lo has transitado, ¿Has prestado atención al sonido que te rodeaba?')[1]*number_people+ '</td><td id="value_table">' + array[i].get('Cuando lo has transitado, ¿Has prestado atención al sonido que te rodeaba?')[1]*100+"%</td><tr>";
-        string += "</table>";
-        // Creamos la tabla de la última pregunta.
-        string += '<table class="table_global_results"><caption id="caption_table"><h2>' + preguntas.next().value + "</h2></caption>";
-        // Creamos de nuevo los valores del quiz.
-        string += '<tr style="font-size:large;"><th scope="col"></th><th>Número</th><th>Porcentaje</th></tr>';
-        string += '<tr><th>Sí</th><td id="value_table">'+ array[i].get('¿Las grabaciones se asemejan a tu recuerdo del escenario?')[0]*number_people+ '</td><td id="value_table">' + array[i].get('¿Las grabaciones se asemejan a tu recuerdo del escenario?')[0]*100+"%</td><tr>";
-        string += '<tr><th>No</th><td id="value_table">'+ array[i].get('¿Las grabaciones se asemejan a tu recuerdo del escenario?')[1]*number_people+ '</td><td id="value_table">' + array[i].get('¿Las grabaciones se asemejan a tu recuerdo del escenario?')[1]*100+"%</td><tr>";
-        string += '</table><br><br>';
+    var preguntas = array[0].keys();
+    // Crearemos tantas tablas como preguntas 
+    for (let i = 0; i < array[0].size; i++) {
+        string +='<table class="table_global_results">';
+        let pregunta_actual = preguntas.next().value
+        string += '<caption id="caption_table"><h3>'+pregunta_actual+'</h3></caption>\n';
+        string += '<tr><th scope="col" rowspan="2">Posibles Respuestas</th>';
+        for (let e = 0; e < name_Scenaries.length; e++) {
+            string += '<th colspan="2" style="font-size:large;">'+name_Scenaries[e] +'</th>';        
+        }
+        string += '</tr>';
+        string += '<tr>\n';
+        for (let e = 0; e < name_Scenaries.length; e++) {
+            string += '<th>Número</th><th>Porcentaje</th>';
+        }
+        string += '</tr>';
+
+        if (pregunta_actual == "¿Cuál es la frecuencia de paso por él?") {
+            string += '<tr>';
+            string +='<th>Ninguna</th>'
+            for (let index = 0; index < number_places; index++) {
+                let number = array[index].get('¿Cuál es la frecuencia de paso por él?')[0]
+                console.log(number)
+                string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
+            }
+            string += '</tr>';
+
+            string +='<th>Poca</th>'
+            for (let index = 0; index < number_places; index++) {
+                let number = array[index].get('¿Cuál es la frecuencia de paso por él?')[1]
+                console.log(number)
+                string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
+            }
+            string += '</tr>';
+
+            string +='<th>A veces</th>'
+            for (let index = 0; index < number_places; index++) {
+                let number = array[index].get('¿Cuál es la frecuencia de paso por él?')[2]
+                console.log(number)
+                string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
+            }
+            string += '</tr>';
+
+            string +='<th>Frecuentemente</th>'
+            for (let index = 0; index < number_places; index++) {
+                let number = array[index].get('¿Cuál es la frecuencia de paso por él?')[3]
+                console.log(number)
+                string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
+            }
+            string += '</tr>';
+
+            string +='<th>Diariamente</th>'
+            for (let index = 0; index < number_places; index++) {
+                let number = array[index].get('¿Cuál es la frecuencia de paso por él?')[4]
+                console.log(number)
+                string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
+            }
+            string += '</tr>';
+        }else{
+            string += '<tr>';
+            string +='<th>Sí</th>'
+            for (let index = 0; index < number_places; index++) {
+                let number = array[index].get(pregunta_actual)[0]
+                console.log(number)
+                string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
+            }
+            string += '</tr>';
+
+            string += '<tr>';
+            string +='<th>No</th>'
+            for (let index = 0; index < number_places; index++) {
+                let number = array[index].get(pregunta_actual)[1]
+                console.log(number)
+                string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
+            }
+            string += '</tr>';
+        }
+        string +='</table>\n\n';    
     }
     global_results.innerHTML += string;
 }
