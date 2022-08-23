@@ -26,7 +26,8 @@
   div[id^="file_table"]{
     width: 700px;background-color: #fff;
     text-align:center;color:black;
-    padding: 1vh; margin: 1vh;border: 1vh solid gold;
+    padding: 1vh; margin: auto;
+    border: 2px solid #000;
   }
   #wrapper_file,#wrapper_file0,#wrapper_file1,#wrapper_file2{
     background-color: beige;
@@ -68,4 +69,7 @@
 }
 .encabezado{
   width: fit-content;text-align: left; margin-left: 1vh;
+}
+#scenary_title{
+  padding-right: 2%;
 }

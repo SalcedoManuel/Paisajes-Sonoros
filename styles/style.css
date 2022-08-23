@@ -4,8 +4,9 @@ body{
     background-attachment: fixed;
     background-size: cover;
     background-attachment: scroll;
-    
+    color: #ffffff;
     background-blend-mode: darken;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 h1{
     color: white;
@@ -156,12 +157,70 @@ canvas{
     border: 1px solid black;
     margin-left: 25%;
 }
-#red{
-    color: red;
+button[class^="select_button"]{
+    background-color: transparent;
+    color: #ffffff;
+    border: 0px;
+    border-bottom: 1px #ffffff solid;
+    border-radius: 20%;
+    margin-left: 5px;
 }
-#blue{
-    color: blue;
+button[class^="select_button"]:hover{
+    cursor: pointer;
+    animation: neon 5s infinite;
 }
-#green{
-    color: green;
+button[id^="button_start_creation"]{
+    background-color: transparent;
+    color: #ffffff;
+    font-size: xx-large;
+    border: 2px #ffffff solid;
+    height: fit-content;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    cursor: pointer;
+    padding: 5px;
+}
+input[id^="id_name_quiz"]{
+    font-style: bold;
+}
+button[id^="end_create"]{
+    width: 170px;
+    height: fit-content;
+    background-color: transparent;
+    color: #ffffff;
+    padding: 3px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: x-large;
+    border: #ffffff 1px solid;
+}
+button[id="retry"]{
+    width: 170px;
+    height: fit-content;
+    background-color: transparent;
+    color: #ffffff;
+    padding: 3px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: x-large;
+    border: #ffffff 1px solid;
+}
+button[id="retry"]:hover{
+    animation: neon 5s infinite;
+    cursor: pointer;
+}
+button[id^="end_create"]:hover{
+    animation: neon 5s infinite;
+    cursor: pointer;
+}
+button[id^="button_start_creation"]:hover{
+    animation: neon 5s infinite;
+    cursor: pointer;
+}
+button[id^="modify_button"]{
+    width: 170px;
+    height: fit-content;
+    background-color: transparent;
+    color: #ffffff;
+    padding: 3px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: x-large;
+    border: #ffffff 1px solid;
 }

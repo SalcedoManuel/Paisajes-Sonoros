@@ -1,8 +1,8 @@
 const electron = require('electron');
 const fs = require('fs');
 
-const nav_extras = require('./nav_extras');
-const functions_extras = require('./functions');
+const nav_extras = require('./functions/nav_extras');
+const functions_extras = require('./functions/functions_create');
 
 console.log("Hola desde el proceso de la web...");
 
@@ -503,40 +503,40 @@ function select_option(value,mode){
     console.log(mode)
     if (mode == '1') {
         if (zero_places.value == value) {
-            zero.innerHTML = '<button id="zero_places" value="0" onclick="select_option(0,1)">0</button>';
-            one.innerHTML = '<button id="one_places" value="1" onclick="select_option(1,1)">1</button>';
-            two.innerHTML = '<button id="two_places" value="2" onclick="select_option(2,1)">2</button>';
-            three.innerHTML = '<button id="three_places" value="3" onclick="select_option(3,1)">3</button>';
+            zero.innerHTML = '<button class="select_button" id="zero_places" value="0" onclick="select_option(0,1)">0</button>';
+            one.innerHTML = '<button class="select_button" id="one_places" value="1" onclick="select_option(1,1)">1</button>';
+            two.innerHTML = '<button class="select_button"  id="two_places" value="2" onclick="select_option(2,1)">2</button>';
+            three.innerHTML = '<button class="select_button"  id="three_places" value="3" onclick="select_option(3,1)">3</button>';
       }else if(one_places.value == value){
-            zero.innerHTML = '<button id="one_places" value="1" onclick="select_option(1,1)">1</button>';
-            one.innerHTML = '<button id="zero_places" value="0" onclick="select_option(0,1)">0</button>';
-            two.innerHTML = '<button id="two_places" value="2" onclick="select_option(2,1)">2</button>';
-            three.innerHTML = '<button id="three_places" value="3" onclick="select_option(3,1)">3</button>';
+            zero.innerHTML = '<button class="select_button" id="one_places" value="1" onclick="select_option(1,1)">1</button>';
+            one.innerHTML = '<button class="select_button" id="zero_places" value="0" onclick="select_option(0,1)">0</button>';
+            two.innerHTML = '<button class="select_button" id="two_places" value="2" onclick="select_option(2,1)">2</button>';
+            three.innerHTML = '<button class="select_button" id="three_places" value="3" onclick="select_option(3,1)">3</button>';
       }else if(two_places.value == value){
-            zero.innerHTML = '<button id="two_places" value="2" onclick="select_option(2,1)">2</button>';
-            one.innerHTML = '<button id="zero_places" value="0" onclick="select_option(0,1)">0</button>';
-            two.innerHTML = '<button id="one_places" value="1" onclick="select_option(1,1)">1</button>';
-            three.innerHTML = '<button id="three_places" value="3" onclick="select_option(3,1)">3</button>';
+            zero.innerHTML = '<button class="select_button" id="two_places" value="2" onclick="select_option(2,1)">2</button>';
+            one.innerHTML = '<button class="select_button" id="zero_places" value="0" onclick="select_option(0,1)">0</button>';
+            two.innerHTML = '<button class="select_button" id="one_places" value="1" onclick="select_option(1,1)">1</button>';
+            three.innerHTML = '<button class="select_button" id="three_places" value="3" onclick="select_option(3,1)">3</button>';
       }else if(three_places.value == value){
-            zero.innerHTML = '<button id="three_places" value="3" onclick="select_option(3,1)">3</button>';
-            one.innerHTML = '<button id="zero_places" value="0" onclick="select_option(0,1)">0</button>';
-            two.innerHTML = '<button id="one_places" value="1" onclick="select_option(1,1)">1</button>';
-            three.innerHTML = '<button id="two_places" value="2" onclick="select_option(2,1)">2</button>';
+            zero.innerHTML = '<button class="select_button" id="three_places" value="3" onclick="select_option(3,1)">3</button>';
+            one.innerHTML = '<button class="select_button" id="zero_places" value="0" onclick="select_option(0,1)">0</button>';
+            two.innerHTML = '<button class="select_button" id="one_places" value="1" onclick="select_option(1,1)">1</button>';
+            three.innerHTML = '<button class="select_button" id="two_places" value="2" onclick="select_option(2,1)">2</button>';
       }
       number_places = value;
     }else{
         if (one_places_1.value == value) {
-            one_option.innerHTML = '<button id="one_places_1" value="1" onclick="select_option(1,2)">1</button>';
-            two_option.innerHTML = '<button id="two_places_1" value="2" onclick="select_option(2,2)">2</button>';
-            three_option.innerHTML = '<button id="three_places_1" value="3" onclick="select_option(3,2)">3</button>';
+            one_option.innerHTML = '<button class="select_button" id="one_places_1" value="1" onclick="select_option(1,2)">1</button>';
+            two_option.innerHTML = '<button class="select_button" id="two_places_1" value="2" onclick="select_option(2,2)">2</button>';
+            three_option.innerHTML = '<button class="select_button" id="three_places_1" value="3" onclick="select_option(3,2)">3</button>';
         }else if (two_places_1.value ==  value) {
-            one_option.innerHTML = '<button id="two_places_1" value="2" onclick="select_option(2,2)">2</button>';
-            two_option.innerHTML = '<button id="one_places_1" value="1" onclick="select_option(1,2)">1</button>';
-            three_option.innerHTML = '<button id="three_places_1" value="3" onclick="select_option(3,2)">3</button>';
+            one_option.innerHTML = '<button class="select_button" id="two_places_1" value="2" onclick="select_option(2,2)">2</button>';
+            two_option.innerHTML = '<button class="select_button" id="one_places_1" value="1" onclick="select_option(1,2)">1</button>';
+            three_option.innerHTML = '<button class="select_button" id="three_places_1" value="3" onclick="select_option(3,2)">3</button>';
         }else if (three_places_1.value ==  value) {
-            one_option.innerHTML = '<button id="three_places_1" value="3" onclick="select_option(3,2)">3</button>';
-            two_option.innerHTML = '<button id="one_places_1" value="1" onclick="select_option(1,2)">1</button>';
-            three_option.innerHTML = '<button id="two_places_1" value="2" onclick="select_option(2,2)">2</button>';
+            one_option.innerHTML = '<button class="select_button" id="three_places_1" value="3" onclick="select_option(3,2)">3</button>';
+            two_option.innerHTML = '<button class="select_button" id="one_places_1" value="1" onclick="select_option(1,2)">1</button>';
+            three_option.innerHTML = '<button class="select_button" id="two_places_1" value="2" onclick="select_option(2,2)">2</button>';
         }
         number_sistems = value;
     }

@@ -38,13 +38,13 @@ function start_creation() {
         document.getElementById("one_option").style.display = "none";
         // Ponemos en los siguientes elemntos las variables que antes tenían que rellenar.
         name_quiz = document.getElementById("id_name_quiz").value;
-        document.getElementById("class_name_quiz").innerHTML = "<label><h4>El nombre del Cuestionario es: <strong>"+name_quiz+"</strong></h4></label>"  
+        document.getElementById("class_name_quiz").innerHTML = "<label><h3>El nombre del Cuestionario es: <strong>"+name_quiz+"</strong></h3></label>"  
         document.getElementById("place_to_evaluate").innerHTML += " <strong>" + number_places + "</strong>  .";
-        document.getElementById("sistems_recording").innerHTML += " <strong>" + number_sistems + "</strong>"; 
-        let message = '<button onclick="functions_extras.restart_creation()" style="width:fit-content">Modificar número de audios</button>'     
+        document.getElementById("sistems_recording").innerHTML += " <strong>" + number_sistems + "</strong> ."; 
+        let message = '<button id="modify_button" onclick="functions_extras.restart_creation()" style="width:fit-content">Modificar número de audios</button>'     
         document.getElementById("button_start_creation").innerHTML = message;
-        document.getElementById("space_buttons_creation").innerHTML = "<br><br>";
         // Activamos que aparezcan el resto de opciones.
+        console.log(number_places)
         switch (number_places) {
             case 1:
                 document.getElementById("file_table1").style.display = "block";
