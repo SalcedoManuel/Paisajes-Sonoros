@@ -13,12 +13,12 @@
     margin-bottom: 28px;
 }
 .swal-text {
-    padding: 17px;
-    margin-left: 12%;
+    text-align: center;
     color: black;
     text-align: center;
     font-size:x-large;
-    display: flex;
+    display:block;
+    margin:auto;
     width:fit-content;
     justify-content: center;
 }

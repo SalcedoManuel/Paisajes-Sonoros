@@ -543,6 +543,22 @@ function select_option(value,mode){
     number_examples = number_places * number_sistems;
 }
 
+function root_mode_activated() {
+    const MAIN_JSON = "plantillas/main.json";
+    const  MAIN_JSON_FILE = fs.readFileSync(MAIN_JSON);
+    var main_info = JSON.parse(MAIN_JSON_FILE);
+    if (main_info["root_mode"]) {
+        document.getElementById("wrapper_create").style.display = "none";
+        document.getElementById("wrapper_show").style.display = "none";
+    }else{
+        document.getElementById("wrapper_create").style.display = "block";
+        document.getElementById("wrapper_show").style.display = "block";
+    }
+    console.log("Root")   
+    let myJSON = JSON.stringify(main_info);
+    fs.writeFileSync(MAIN_JSON,myJSON);
+}
+
 //-- Mensaje recibido del proceso MAIN
 electron.ipcRenderer.on('print', (event, message) => {
     console.log("Recibido: " + message);

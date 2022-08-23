@@ -58,13 +58,18 @@ function help_click(params) {
 
 }
 
+
 function settings() {
-    let title = "¿Qué ajuste quieres hacer?"
+    let title = "¿Qué ajuste quieres hacer?";
     swal(title, {
         buttons: {
           reseat: {
             text: "Resetear información",
             value: "reseat"
+          },
+          root: {
+            text: "Modo Root",
+            value: "root"
           },
           cancel: true
         },
@@ -81,6 +86,22 @@ function settings() {
             fs.writeFileSync(MAIN_FILE,myJSON);
             msg = "Configuración Reseteada";
             swal(title,msg);
+            break;
+          case "root":
+            const MAIN_JSON = "plantillas/main.json";
+            const  MAIN_JSON_FILE = fs.readFileSync(MAIN_JSON);
+            var info = JSON.parse(MAIN_JSON_FILE);
+            if (info["root_mode"] == true) {
+              info["root_mode"] = false;
+              msg = "Modo Root Desactivado";
+            }else{
+              info["root_mode"] = true;
+              msg = "Modo Root Activado";
+            }
+            console.log(info["root_mode"])
+            fs.writeFileSync(MAIN_JSON,JSON.stringify(info));
+            root_mode_activated();
+            swal(msg);
             break;
           default:
             console.log("Exit!!")
