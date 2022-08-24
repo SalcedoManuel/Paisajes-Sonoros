@@ -30,17 +30,20 @@ h3{
     display:none;
 }
 #btn_create,#btn_quiz,#btn_show{
-    border: rgb(255, 255, 255) 1px solid;
+    border: rgb(255, 255, 255) 2px solid;
     background: transparent;
+    border-style: outset;
     width: 120px;
     height: fit-content;
-    color: rgb(255, 255, 255);
+    color: rgb(250,250,250);
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: large;
 }
 button[id^="btn_"]:hover{
     animation: neon 5s infinite;
     cursor: pointer;
+    background: rgb(50,50,50);
+    border-style: inset;
 }
 @keyframes neon {
     0%, 39%, 41%, 59%, 61%, 100% {
