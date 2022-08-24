@@ -1,7 +1,7 @@
 const electron = require('electron');
 const fs = require('fs');
 
-const functions_quiz = require('./functions_quiz');
+const functions_quiz = require('./functions/functions_quiz');
 
 var quizs_names = [];
 var quiz_name_actual_file = "";
@@ -65,6 +65,17 @@ function start_quiz() {
 electron.ipcRenderer.on('actual_quizs', (event, message) => {
     console.log("Recibido: " + message);
     quiz_name_actual_file = message;
+    // Obtenemos el nombre de los archivos.
+    const MAIN_JSON = "plantillas/main.json";
+    const  MAIN_JSON_FILE = fs.readFileSync(MAIN_JSON);
+    var main_info = JSON.parse(MAIN_JSON_FILE);
+    quizs_names = main_info["Quizs_Names"]
+    position = quizs_names.indexOf(quiz_name_actual_file);
+    if (position != -1) {
+        Select_Quiz(position)
+    }else{
+        document.getElementById("wrapper_text").innerHTML = '<h3 style="text-align:center;">No se ha hecho antes un Cuestionario de los de la lista.</h3>';
+    }    
 });
 
 function show_questions() {

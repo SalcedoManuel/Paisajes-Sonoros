@@ -332,21 +332,21 @@ function create_quiz() {
     if (number_examples == 0 || !(get_files)) {
         if (!get_files) {
             back.innerHTML = "No has introducido los <strong>Audios</strong> mínimos, revisa otra vez tu petición.";
+            window.alert("No has introducido los Audios mínimos, revisa otra vez tu petición.")
         }else{
             back.innerHTML = "No has seleccionado nada."
         }
        
     }else{
-        var questions = functions_extras.checking_quiz();
+        /*var questions = functions_extras.checking_quiz();*/
         var name_place1 = "";
         var name_place2 = "";
         var name_place3 = "";
 
         functions_extras.ocultar_wrapper();
 
-        back.innerHTML = "Cuestionario creado. Vuelva al menú principal.";
-        document.getElementById("button_end_page1").style.display = "none"
-        console.log(questions);
+        back.innerHTML = '<h3 style:"text-align: center;">Cuestionario creado. Vuelva al menú principal.</h3>';
+        document.getElementById("button_end_page1").style.display = "none";
         // Switch para obtener los nombres de los escenarios.
         switch (number_places) {
             case 1:
@@ -428,7 +428,7 @@ function create_quiz() {
                 break;
         }
         // Ponemos en el JSON las preguntas que se eligen y las que no.
-        quiz_json["questions_bool"][0] = questions;            
+        quiz_json["questions_bool"][0] = [,,,,,,,,,,,,];            
 
         // Lo segundo es añadir los ficheros.
         //-- Convertir la variable a cadena JSON

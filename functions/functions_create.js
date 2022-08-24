@@ -89,7 +89,7 @@ function start_creation() {
                 break;
         }
     }else{
-        back.innerHTML = "El número de lugares seleccionados es cero, cosa imposible.";
+        back.innerHTML = '<h2 style="text-align:center;">El número de lugares seleccionados es cero, cosa imposible.</h2>';
         file_table.style.display = "none";
         ocultar_wrapper();
         end_boton.style.display = "none";

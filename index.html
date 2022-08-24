@@ -52,12 +52,15 @@
                   <td>
                       <div id="info_option">
                           <span style="padding: 2vh;">
+                            <span style="text-align: left;">
                               <p>Esta función sirve para generar un cuestionario introduciendo archivos de audio
-                                 y si es necesario, también se puede introducir archivos multimedia.</p>
-                              <p>• Se deben introducir los nombres de los lugares además de ponerle un nombre al Cuestionario,
-                                 esto se hace para facilitar la tarea de rellenar los cuestionarios a los encuestados.</p>
-                              <p>• El sistema de creación de los cuestionarios es muy sencillo, se selecciona el número de lugares
-                                 y el número de sistemas de grabación o grabaciones distintas por lugar.</p>
+                                y si es necesario, también se puede introducir archivos multimedia.</p>
+                             <p>• Se deben introducir los nombres de los lugares además de ponerle un nombre al Cuestionario,
+                                esto se hace para facilitar la tarea de rellenar los cuestionarios a los encuestados.</p>
+                             <p>• El sistema de creación de los cuestionarios es muy sencillo, se selecciona el número de lugares
+                                y el número de sistemas de grabación o grabaciones distintas por lugar.</p>
+                            </span>
+
                               <div>
                                 <a href="create_quiz.html" ><button id="btn_create"><h3>Crear</h3></button></a>
                               </div>
@@ -91,15 +94,28 @@
                   <td>
                       <div id="info_option">
                           <span style="padding: 2vh;">
-                              <p>Esta función sirve para generar un cuestionario introduciendo archivos de audio
-                                 y si es necesario, también se puede introducir archivos multimedia.</p>
-                              <p>• Se deben introducir los nombres de los lugares además de ponerle un nombre al Cuestionario,
-                                 esto se hace para facilitar la tarea de rellenar los cuestionarios a los encuestados.</p>
-                              <p>• El sistema de creación de los cuestionarios es muy sencillo, se selecciona el número de lugares
-                                 y el número de sistemas de grabación o grabaciones distintas por lugar.</p>
-                              <div>
-                                <a href="quiz.html"><button id="btn_quiz"><h3>Empezar</h3></button></a>
-                              </div>
+                            <span style="text-align: left;">
+                             <p>Después de crear los cuestionarios se pueden estos rellenar por parte de los partipantes. Los cuestionarios que muestra esta aplicación son <b>"Cuestionarios de Paisajes Sonoros".</b></p>
+                             <p><b>Un cuestionario sonoro es una lista de preguntas con el fin de evaluar el entorno acústico de un lugar tal y como es percibido, experimentado o entendido por las personas.</b></p>
+                             <p>Todos los cuestionarios creados a través de esta aplicación siguen la siguiente estructura:</p>
+                             <p><b>• Preguntas Generales al Participante</b></p>
+                             <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-- En esta parte se le pregunta al usuario cosas sobre si mismo tales como la edad, el género o si tiene problemas auditivos.</p>
+                             <p><b>Las personas con problemas auditivos no pueden rellenar este cuestionario al distorsionar los resultados finales.</b></p>
+                             <p><b>• Preguntas de Introducción al Escenario</b></p>
+                             <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-- En esta parte se le pregunta al usuario sobre la ubicación donde se han realizado las grabaciones tales como si conoce el lugar o su frecuencia de paso.
+                               El usuario tendrá que responder esta parte tantas veces como lugares a examinar tenga.
+                             </p>
+                             <p><b>• Preguntas Individualizadas</b></p>
+                             <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-- En esta parte se le pregunta al usuario características que tendrán las grabaciones de cada lugar.</p>
+                             <p>Por cada lugar al menos debe haber una grabación. Estas preguntas aparecerán cada vez que el Participante escuche una grabación.</p>
+                             <p><b>• Preguntas sobe la Idoneidad del Entorno Sonoro Circundante</b></p>
+                             <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-- En esta parte se le pide al usuario que después de haber escuchado todas las grabaciones <b>ordene</b> de más a menos cada toma.</p>
+                             <p>Algunas características que se preguntan son <b>"De más a menos ruidosa"</b> o <b>"De más desagradable a menos desagradable"</b>.</p>
+                             <h3>Luego de acabar con la parte de la última parte se da por terminado el cuestionario.</h3>
+                            </span>
+                            <div>
+                              <a href="quiz.html"><button id="btn_quiz"><h3>Empezar</h3></button></a>
+                            </div>
                           </span>
                       </div>
                   </td>
@@ -113,7 +129,7 @@
     </div>
 
   </div>
-  <!-- Contenedors Mostrar Resultados-->
+  <!-- Contenedor Mostrar Resultados-->
   <div class="wrapper" id="wrapper_show">
     <div>
       <span>

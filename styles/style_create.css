@@ -20,7 +20,8 @@
   }
   div[id^="wrapper_audio"],div[id^="wrapper_video"]{
     border:rgb(255, 0, 0) solid 2px;
-    height:100px; width: 343px;
+    height:fit-content; width: 343px;
+    min-height: 150px;
     text-align: center;
   }
   div[id^="file_table"]{
@@ -28,6 +29,7 @@
     text-align:center;color:black;
     padding: 1vh; margin: auto;
     border: 2px solid #000;
+    display: none;
   }
   #wrapper_file,#wrapper_file0,#wrapper_file1,#wrapper_file2{
     background-color: beige;

@@ -50,6 +50,19 @@ electron.app.on('ready', () => {
 });
 
 
+electron.ipcMain.handle('actual_quizs',(event, msg) => {
+  console.log("Nos piden el nombre del Quiz actual: " + msg);
+  const MAIN_JSON = "plantillas/main.json";
+  const  MAIN_JSON_FILE = fs.readFileSync(MAIN_JSON);
+  var main_info = JSON.parse(MAIN_JSON_FILE);
+  //-- Guardamos el nombre del archivo para cuando lo usemos.
+  let quizs_names = main_info["Quiz_actual"];
+  console.log("Enviamos: " + quizs_names)
+  win.webContents.send('actual_quizs', quizs_names);
+
+});
+
+
 //-- Esperar a recibir los mensajes de botón apretado (Test) del proceso de 
 //-- renderizado. Al recibirlos se escribe una cadena en la consola
 
