@@ -65,12 +65,15 @@ function start_quiz() {
 electron.ipcRenderer.on('actual_quizs', (event, message) => {
     console.log("Recibido: " + message);
     quiz_name_actual_file = message;
+    quiz_name_actual = quiz_name_actual_file.split(".json")[0];
     // Obtenemos el nombre de los archivos.
     const MAIN_JSON = "plantillas/main.json";
     const  MAIN_JSON_FILE = fs.readFileSync(MAIN_JSON);
     var main_info = JSON.parse(MAIN_JSON_FILE);
     quizs_names = main_info["Quizs_Names"]
     position = quizs_names.indexOf(quiz_name_actual_file);
+    // Ocultamos los botones de "Iniciar Recogida de Datos" y "Buscar Cuestionarios Creados".
+    document.getElementById("wrapper0").style.display = 'none';
     if (position != -1) {
         Select_Quiz(position)
     }else{
@@ -83,50 +86,68 @@ function show_questions() {
     switch (type_of_question_active) {
         case "user_questions":
             //-- Preguntas al participante
+            var table_user_questions = '<table><caption><div id="wrapper_title_question"><h2>Cuestionario: '+quiz_name_actual_file.split('.')[0]+'</h2></div></caption>'+
+            '<tr><th><h3>Resumen General:</h3></th><th><h3>Preguntas Generales al Participante</h3></th></tr>'+
+            '<tr><td rowspan="2" style="border-right: 2px white solid"><div id="wrapper_files" style="margin-right:10px;"></div></td><td><div id="wrapper_replys" style="margin-left: 5px;"></div></td></tr>'+
+            '<tr><th><div id="wrapper_next"></div></th></tr></table>';               
+            document.getElementById("wrapper2").innerHTML = table_user_questions;
             //-- Cambiar Título.
-            document.getElementById("wrapper_title_question").innerHTML = "<h2>"+quiz_name_actual+"</h2>";
             let info = document.getElementById("wrapper_files");
             for (let i = 0; i < number_places; i++) {
                 info.innerHTML += "Nombre del Escenario: " + name_scenary[i] + "<br>"
                 for (let e = 0; e < number_recordings; e++) {
-                   info.innerHTML += "Nombre de la toma: " +  (e+1) + "<br>";                    
+                   info.innerHTML += "Número de tomas: " +  (e+1) + "<br>";                    
                 }
-                info.innerHTML += "<br><br>";
+                info.innerHTML += "<br>"
             }
-            
+            replys = document.getElementById("wrapper_replys")
             replys.innerHTML = "";
-            console.log(Object.keys(user_questions).length)
             for (let i = 0; i < Object.keys(user_questions).length; i++) {
                 let pos = i + 1;
                 replys.innerHTML += functions_quiz.add_user_questions(pos);    
             }
-            document.getElementById("wrapper_next").innerHTML = '<button onclick="functions_quiz.next_option(0)">Siguiente</button>';            
+            replys.innerHTML += "<br>"
+            document.getElementById("wrapper_next").innerHTML = '<button id="button_next" onclick="functions_quiz.next_option(0)">Siguiente</button>';            
             break;
         case "places_questions":
+            var table_places_questions = '<table><caption><div id="wrapper_title_question"><h2>Cuestionario: '+quiz_name_actual_file.split('.')[0]+'</h2></div></caption>'+
+            '<tr><th><h3>Nombre Escenario:</h3></th><th><h3>Preguntas sobre el Escenario</h3></th></tr>'+
+            '<tr><td rowspan="2" style="border-right: 2px white solid"><div id="wrapper_files" style="margin-right:10px;"></div></td><td><div id="wrapper_replys" style="margin-left: 5px;"></div></td></tr>'+
+            '<tr><th><div id="wrapper_next"></div></th></tr></table>';
+            document.getElementById("wrapper2").innerHTML = table_places_questions;
+            console.log(document.getElementById("wrapper2").innerHTML)
             //-- Preguntas al participante
-            //-- Cambiar Título.
-            document.getElementById("wrapper_title_question").innerHTML = "<h2>"+quiz_name_actual+"</h2>";
-            //-- En esta no se añade contenido.
-            document.getElementById("wrapper_files").innerHTML = "";
+            //-- Se modifica el Nombre del Escenario.
+            document.getElementById("wrapper_files").innerHTML = '<h2>'+name_scenary[number_places_questions_replied]+'</h2>';
+            // Se vacian los replys.
+            replys = document.getElementById("wrapper_replys");
             replys.innerHTML = "";
             console.log(Object.keys(places_questions).length)
             name_actual_scenary = name_scenary[number_places_questions_replied];
-            replys.innerHTML += "<strong>"+ name_scenary[number_places_questions_replied] + "</strong> <br><br>";
             for (let i = 0; i < Object.keys(places_questions).length; i++) {
                 let pos = i + 1;
                 replys.innerHTML += functions_quiz.add_places_questions(pos);    
             }
             document.getElementById("wrapper_next").innerHTML = '<button onclick="functions_quiz.next_option(1)">Siguiente</button>';
+            console.log(document.getElementById("wrapper2").innerHTML)
             break;
         case "recordings_questions":
-            document.getElementById("wrapper_title_question").innerHTML = "<h2>"+quiz_name_actual+"</h2>";
+            var table_recordings_questions = '<table><caption><div id="wrapper_title_question"><h2>Cuestionario: '+quiz_name_actual_file.split('.')[0]+'</h2></div></caption>'+
+            '<tr><th><h3>Nombre Escenario:</h3></th><th><h3>Preguntas sobre el Escenario</h3></th></tr>'+
+            '<tr><td rowspan="2" style="border-right: 2px white solid"><div id="wrapper_files" style="margin-right:10px;"></div></td><td><div id="wrapper_replys" style="margin-left: 5px;"></div></td></tr>'+
+            '<tr><th><div id="wrapper_next"></div></th></tr></table>';
+            document.getElementById("wrapper2").innerHTML = table_recordings_questions;
             
             aux_visual = visual_files[number_places_questions_replied][number_recordings_questions_replied-1].split(".");
             aux_visual_length = aux_visual.length;
             console.log(aux_visual[aux_visual_length-1])
-            if (aux_visual[aux_visual_length-1] == 'jpg') {
+            format_visual = aux_visual[aux_visual_length-1];
+            if (format_visual == 'jpg' || format_visual == 'jiff' || format_visual == 'png' ) {
                 document.getElementById("wrapper_files").innerHTML += '<img id="file_image" src="'+visual_files[number_places_questions_replied][number_recordings_questions_replied-1]+'" alt=""></img><br>';
+            }else if (format_visual == 'mp4' || format_visual == 'ogg' || format_visual == 'webm') {
+                document.getElementById("wrapper_files").innerHTML += '<video id="file_video" src="'+visual_files[number_places_questions_replied][number_recordings_questions_replied-1]+'" autoplay muted></video><br>';
             }
+            
 
             document.getElementById("wrapper_files").innerHTML += '<audio controls><source src="' +
              audio_files[number_places_questions_replied][number_recordings_questions_replied-1] + '"></audio>';

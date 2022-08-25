@@ -29,8 +29,38 @@ div[id^="wrapper0"],div[id^="wrapper1"],div[id^="wrapper2"]{
     display: flex;
     justify-content: center
 }
+input[id^="yes_user_option"]{
+      /* remove standard background appearance */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* create custom radiobutton appearance */
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  /* background-color only for content */
+  background: #bbbbbb;
+  background-clip: content-box;
+  border: 1px solid #bbbbbb;
+  background-color: #e7e6e7;
+  border-radius: 50%;
+  }
+input[id^="yes_user_option"]:checked {
+    padding: 2px;
+    border: 1px solid #bbbbbb;
+    background: #bbbbbb;
+    background-color: #e61212;
+  }
 button[id^="btn_center"]{
     margin-right: 10px;
+    height: fit-content;
+    width: 300px;
+    min-width: fit-content;
+    background: rgba(0, 0, 0, 0.8);
+    color: #ffffff;
+}
+button[id^="btn_center"]:hover{
+    background: scroll;
 }
 button[id^="btn_special"]{
     margin-right: 10px;

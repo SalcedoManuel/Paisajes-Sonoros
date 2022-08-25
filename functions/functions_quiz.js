@@ -2,20 +2,28 @@ function add_user_questions(pos) {
     let reply = "";
     if (user_questions[pos] == "¿Cuántos años tienes?") {
         reply += pos +". <strong>"+user_questions[pos] + "</strong>:";
-        reply += '<input type="number" id="age" min="16" max="120" value="18" style="width:40px">'
+        reply += '&nbsp;&nbsp;';
+        reply += '<input type="number" id="age" min="16" max="120" value="18" style="width:35px;text-align:center;">';
     }
     if (user_questions[pos] == "¿Cuál es tu género?") {
         reply += pos + ". <strong>" + user_questions[pos] + "</strong>:";
-        reply += 'Hombre <input type="radio" name="gender" value="man" id="man_user_question" checked></input> ';
-        reply += 'Mujer <input type="radio" name="gender" value="woman" id="woman_user_question"></input> ';
-        reply += 'Otro <input type="radio" name="gender" value="other" id="other_user_question"></input> ';
+        reply += '&nbsp;&nbsp;';
+        reply += '<input type="radio" name="gender" value="man" id="man_user_question" checked>Hombre</input>  ';
+        reply += '&nbsp;&nbsp;';
+        reply += '<input type="radio" name="gender" value="woman" id="woman_user_question">Mujer</input>  ';
+        reply += '&nbsp;&nbsp;';
+        reply += '<input type="radio" name="gender" value="other" id="other_user_question">Otro</input> ';
+
     }
     if (user_questions[pos] == "¿Tienes problemas auditivos?") {
         reply += pos + ". <strong>" + user_questions[pos] + "</strong>:";
-        reply += 'Sí <input type="radio" name="auditive_problem" value="yes" id="yes_user_option" checked></input>';
-        reply += 'No <input type="radio" name="auditive_problem" value="no" id="no_user_option"></input>';
+        reply += '&nbsp;&nbsp;';
+        reply += '<input type="radio" name="auditive_problem" value="yes" id="yes_user_option" checked>Sí</input> ';
+        reply += '&nbsp;&nbsp;';
+        reply += '<input type="radio" name="auditive_problem" value="no" id="no_user_option">No</input> ';
+
     }
-    reply += "<br>";
+    reply += "<br><br>";
     return reply;
 }
 
@@ -23,28 +31,30 @@ function add_places_questions(pos) {
     let reply = "";
     if (places_questions[pos] == "¿Conoces el escenario?") {
         reply += pos + ". <strong>" + places_questions[pos] + "</strong>:";
-        reply += 'Sí <input type="radio" name="places0" value="yes" id="yes1_place_option" checked></input>';
-        reply += 'No <input type="radio" name="places0" value="no" id="no1_place_option"></input>';
+        reply += ' <input type="radio" name="places0" value="yes" id="yes1_place_option" checked>Sí</input>';
+        reply += '<input type="radio" name="places0" value="no" id="no1_place_option">No</input>';
     }
     if (places_questions[pos] == "¿Cuál es la frecuencia de paso por él?") {
         reply += pos + ". <strong>" + places_questions[pos] + "</strong>:";
-        reply += 'Ninguna <input type="radio" name="places1" value="ninguna" id="ninguna_place_option" checked></input>';
-        reply += 'Poca <input type="radio" name="places1" value="poca" id="poca_place_option"></input>';
-        reply += 'A veces <input type="radio" name="places1" value="aveces" id="aveces_place_option"></input>';
-        reply += 'Frecuentemente <input type="radio" name="places1" value="frecuentemente" id="frecuentemente_place_option"></input>';
-        reply += 'Diariamente <input type="radio" name="places1" value="diariamente" id="diariamente_place_option"></input>';
+        reply += "<br>";
+        reply += ' <input type="radio" name="places1" value="ninguna" id="ninguna_place_option" checked>Ninguna</input>';
+        reply += ' <input type="radio" name="places1" value="poca" id="poca_place_option">Poca</input>';
+        reply += ' <input type="radio" name="places1" value="aveces" id="aveces_place_option">A veces</input>';
+        reply += ' <input type="radio" name="places1" value="frecuentemente" id="frecuentemente_place_option">Frecuentemente</input>';
+        reply += ' <input type="radio" name="places1" value="diariamente" id="diariamente_place_option">Diariamente</input>';
     }
     if (places_questions[pos] == "Cuando lo has transitado, ¿Has prestado atención al sonido que te rodeaba?") {
         reply += pos + ". <strong>" + places_questions[pos] + "</strong>:";
-        reply += ' Sí <input type="radio" name="places2" value="yes" id="yes2_place_option" checked></input>';
-        reply += ' No <input type="radio" name="places2" value="no" id="no2_place_option"></input>';
+        reply +="<br>";
+        reply += '  <input type="radio" name="places2" value="yes" id="yes2_place_option" checked>Sí</input>';
+        reply += '  <input type="radio" name="places2" value="no" id="no2_place_option">No</input>';
     }
     if (places_questions[pos] == "¿Las grabaciones se asemejan a tu recuerdo del escenario?") {
         reply += pos + ". <strong>" + places_questions[pos] + "</strong>:";
-        reply += ' Sí <input type="radio" name="places3" value="yes" id="yes3_place_option" checked></input>';
-        reply += ' No <input type="radio" name="places3" value="no" id="no3_place_option"></input>';
+        reply += '  <input type="radio" name="places3" value="yes" id="yes3_place_option" checked>Sí</input>';
+        reply += ' <input type="radio" name="places3" value="no" id="no3_place_option"> No</input>';
     }
-    reply += "<br>";
+    reply += "<br><br>";
     return reply;
 }
 
