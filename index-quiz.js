@@ -2,6 +2,10 @@ const electron = require('electron');
 const fs = require('fs');
 
 const functions_quiz = require('./functions/functions_quiz');
+const nav_extras = require('./functions/nav_extras');
+
+// Modo root activado:
+var root_mode = false;
 
 var quizs_names = [];
 var quiz_name_actual_file = "";
@@ -221,3 +225,21 @@ function Select_Quiz(position) {
     type_of_question_active = "user_questions";
     show_questions();
 }
+
+function root_activated_mode() {
+    //Preguntamos al main si el modo root está activado. Si es así, desactivar el menú de arriba.
+    electron.ipcRenderer.invoke('root_activated_mode', root_mode);
+}
+electron.ipcRenderer.on('root_activated_mode', (event, message) => {
+    console.log("Recibido: " + message);
+    // Si lo recibido es un true, el modo root está activado y por tanto no se puede mostrar el menú del centro.
+    if (message) {
+        document.getElementById("nav_center").style.display = "none";
+        document.getElementById("home_reference").style.display = "block";
+    }else{
+        document.getElementById("nav_center").style.display = "block";
+        document.getElementById("home_reference").style.display = "none";
+    }
+    root_mode = message;
+});
+

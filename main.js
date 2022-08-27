@@ -214,3 +214,12 @@ electron.ipcMain.handle('quizs_summary',(event, msg) => {
   win.webContents.send('quizs_summary', summary_info);
 });
 
+//-- Enviamos si el modo root está activado o no.
+electron.ipcMain.handle('root_activated_mode',(event, msg) => {
+  const MAIN_JSON = "plantillas/main.json";
+  const  MAIN_JSON_FILE = fs.readFileSync(MAIN_JSON);
+  var main_info = JSON.parse(MAIN_JSON_FILE);
+  msg = main_info["root_mode"]
+  win.webContents.send('root_activated_mode', msg);
+});
+

@@ -41,4 +41,8 @@
     font-style: bold;
     background-color: rgb(34, 34, 34);
     color: #ffff;
+    margin-right: 1vh;
+}
+a[id^="home_reference"]{
+    display: none;
 }
