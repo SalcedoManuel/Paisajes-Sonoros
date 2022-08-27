@@ -155,7 +155,7 @@ button[id^="btn_"]:hover{
 }
 #table_value{
     border-radius: 2px;
-    background-color: #000555;
+    background-color: #0a0e3f;
 }
 canvas{
     border: 1px solid black;

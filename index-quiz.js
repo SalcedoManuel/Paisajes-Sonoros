@@ -37,12 +37,13 @@ var generic_object = new Object;
 
 function seek_quizs() {
     // Pedimos al proceso Main que nos mande los quizs ya creados.
+    console.log("Pedimos al main.js los nombre de los quizs")
     document.getElementById("wrapper_files").innerHTML = "";
     electron.ipcRenderer.invoke('quizs', "Quizs names");
 }
 
 electron.ipcRenderer.on('quizs', (event, message) => {
-    console.log("Recibido: " + message);
+    console.log("Recibidos los nombres: " + message);
     quizs_names = message;
     // Obtenemos el número de Cuestionarios ya creados.
     const number_quizs_created = quizs_names.length;
@@ -111,7 +112,7 @@ function show_questions() {
             break;
         case "places_questions":
             var table_places_questions = '<table><caption><div id="wrapper_title_question"><h2>Cuestionario: '+quiz_name_actual_file.split('.')[0]+'</h2></div></caption>'+
-            '<tr><th><h3>Nombre Escenario:</h3></th><th><h3>Preguntas sobre el Escenario</h3></th></tr>'+
+            '<tr><th style="padding-right: 5px;"><h3>Nombre Escenario:</h3></th><th><h3>Preguntas sobre el Escenario</h3></th></tr>'+
             '<tr><td rowspan="2" style="border-right: 2px white solid"><div id="wrapper_files" style="margin-right:10px;"></div></td><td><div id="wrapper_replys" style="margin-left: 5px;"></div></td></tr>'+
             '<tr><th><div id="wrapper_next"></div></th></tr></table>';
             document.getElementById("wrapper2").innerHTML = table_places_questions;
@@ -133,7 +134,7 @@ function show_questions() {
             break;
         case "recordings_questions":
             var table_recordings_questions = '<table><caption><div id="wrapper_title_question"><h2>Cuestionario: '+quiz_name_actual_file.split('.')[0]+'</h2></div></caption>'+
-            '<tr><th><h3>Nombre Escenario:</h3></th><th><h3>Preguntas sobre el Escenario</h3></th></tr>'+
+            '<tr><th style="padding-right: 5px;"><h3>Nombre Escenario:</h3></th><th><h3>Preguntas sobre el Escenario</h3></th></tr>'+
             '<tr><td rowspan="2" style="border-right: 2px white solid"><div id="wrapper_files" style="margin-right:10px;"></div></td><td><div id="wrapper_replys" style="margin-left: 5px;"></div></td></tr>'+
             '<tr><th><div id="wrapper_next"></div></th></tr></table>';
             document.getElementById("wrapper2").innerHTML = table_recordings_questions;
@@ -150,8 +151,8 @@ function show_questions() {
             
 
             document.getElementById("wrapper_files").innerHTML += '<audio controls><source src="' +
-             audio_files[number_places_questions_replied][number_recordings_questions_replied-1] + '"></audio>';
-
+            audio_files[number_places_questions_replied][number_recordings_questions_replied-1] + '"></audio>';
+            replys = document.getElementById("wrapper_replys");
             replys.innerHTML = "";
             console.log(Object.keys(recordings_questions).length)
             replys.innerHTML +=name_scenary[number_places_questions_replied]+ " Toma número: " + number_recordings_questions_replied + "<br>";
@@ -162,16 +163,21 @@ function show_questions() {
             document.getElementById("wrapper_next").innerHTML = '<button onclick="functions_quiz.next_option(2)">Siguiente</button>';
             break;
         case "generic_questions":
-            document.getElementById("wrapper_title_question").innerHTML = "<h2>"+quiz_name_actual+"</h2>";
-            document.getElementById("wrapper_files").innerHTML = "";
-            replys.innerHTML = "";
-            console.log(Object.keys(generic_questions).length)
-            e = places_questions * recordings_questions;
-            for (let i = 0; i < Object.keys(generic_questions).length; i++) {
-                let pos = i + 1;
-                replys.innerHTML += functions_quiz.add_generic_questions(pos,i);    
-            }
-            document.getElementById("wrapper_next").innerHTML = '<button onclick="functions_quiz.end_quiz()">Finalizar</button>';
+            var table_generic_questions = '<table><caption><div id="wrapper_title_question"><h2>Preguntas Genéricas del Cuestionario: '+quiz_name_actual+'</h2></div></caption>'+
+            '<tr><td><div id="wrapper_files"></div></td></tr>'+
+            '<tr><td><div id="wrapper_replys"></div></td></tr>'+
+            '<tr><th><div id="wrapper_next"></div></th></tr></table>';
+            document.getElementById("wrapper2").innerHTML = table_generic_questions;
+            
+            document.getElementById("wrapper_title_question").innerHTML = "<h2>Preguntas Genéricas del Cuestionario: &nbsp"+quiz_name_actual+"</h2>";
+                replys = document.getElementById("wrapper_replys");
+                console.log("Número de Preguntas Genéricas",Object.keys(generic_questions).length)
+                e = places_questions * recordings_questions;
+                for (let i = 0; i < Object.keys(generic_questions).length; i++) {
+                    let pos = i + 1;
+                    replys.innerHTML += functions_quiz.add_generic_questions(pos,i);    
+                }
+                document.getElementById("wrapper_next").innerHTML = '<button onclick="functions_quiz.end_quiz()">Finalizar</button>';
             break;
         default:
             break;
@@ -181,7 +187,7 @@ function show_questions() {
 function Select_Quiz(position) {
     //  Obtenemos el nombre del fichero del que vamos a realiza el Cuestioanrio.
     quiz_name_actual_file = quizs_names[position];
-    console.log(quiz_name_actual_file)
+    console.log("El nombre del quiz actual seleccionado:" + quiz_name_actual_file)
     // Eliminar las opciones que han aparecido.
     document.getElementById("wrapper_text").innerHTML = "";
 

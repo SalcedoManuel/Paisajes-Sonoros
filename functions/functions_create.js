@@ -6,6 +6,8 @@ function show_wrapper(){
     document.getElementById("wrapper4").style.display = "block";
 }
 function ocultar_wrapper(){
+    document.getElementById("wrapper_init").style.display = "none";
+    document.getElementById("button_start_creation").style.display = "none";
     document.getElementById("wrapper0").style.display = "none";
     document.getElementById("wrapper1").style.display = "none";
     document.getElementById("wrapper2").style.display = "none";

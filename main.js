@@ -81,6 +81,12 @@ electron.ipcMain.handle('quizs',(event, msg) => {
 electron.ipcMain.handle('refresh_quiz_actual_name',(event, msg) => {
   quiz_name_actual = msg;
   console.log("El nombre del Quiz actualizado es: " + quiz_name_actual);
+  const MAIN_JSON = "plantillas/main.json";
+  const  MAIN_JSON_FILE = fs.readFileSync(MAIN_JSON);
+  var main_info = JSON.parse(MAIN_JSON_FILE);
+  main_info["Quiz_actual"]= quiz_name_actual;
+  let myJSON = JSON.stringify(main_info);
+  fs.writeFileSync(MAIN_JSON,myJSON);
 });
 
 electron.ipcMain.handle('test', (event, msg) => {
@@ -135,10 +141,14 @@ electron.ipcMain.handle('completed_quiz', (event, msg) => {
     main_info["Number_Completed_Quiz"][position_number_completed_quiz] += 1;
     
   }else{
+    main_info["Quiz_actual"] = quiz_name_actual;
+    console.log("El Quiz actual es " + main_info["Quiz_actual"])
     // Si el usuario ha cambiado el nombre se cambiará el nombre del Quiz operativo actual.
     for (let i = 0; i < main_info["Number_Quiz"]; i++) {
       // Si el nombre actual encaja con el nombre de que tiene la posición del array se guarda esa posición.
+      console.log("Buscar hasta que salga:"+quiz_name_actual)
            if (main_info["Quiz_Names"][i] == quiz_name_actual) {
+            // La variable de abajo marca la posición en el array del número de Cuestionarios completados.
               position_number_completed_quiz = i;
               // Sumamos uno al número de quiz completados puesto que se ha cerrado el custionario. 
               main_info["Number_Completed_Quiz"][i] += 1;
@@ -152,6 +162,7 @@ electron.ipcMain.handle('completed_quiz', (event, msg) => {
   // Si es 1 implica que es el primero y hay que crear el archivo.
   // Si es mayor de 1 implica que ya hay un archivo creado y por tanto se puede leer y escribir en el.
   var save_file;
+
   if (main_info["Number_Completed_Quiz"][position_number_completed_quiz] == 1) {
     // Creamos el fichero.
     save_file = [];

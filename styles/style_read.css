@@ -31,3 +31,14 @@
 .scrollable-element {
     scrollbar-color: red yellow;
   }
+#button_select_quiz{
+    width: 100px;
+    min-width: fit-content;
+    height: 50px;
+    min-height: fit-content;
+    border: 1px #ffff solid;
+    border-radius: 5%;
+    font-style: bold;
+    background-color: rgb(34, 34, 34);
+    color: #ffff;
+}

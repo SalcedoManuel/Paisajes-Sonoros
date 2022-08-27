@@ -35,7 +35,7 @@ electron.ipcRenderer.on('load_quizs_opened', (event, message) => {
     //Abremos recibido un array de Cuestionarios Creados.
     for (let i = 0; i < message.length; i++) {
         let name_quiz = message[i].split(".")[0]
-        document.getElementById("results").innerHTML = '<button onclick="'+'name_selected('+i+')"><b>'+name_quiz+'<b></button>';        
+        document.getElementById("results").innerHTML += '<button id="button_select_quiz" onclick="'+'name_selected('+i+')"><b>'+name_quiz+'<b></button>';        
     }
 });
 
