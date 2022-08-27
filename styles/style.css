@@ -128,7 +128,7 @@ button[id^="btn_"]:hover{
     text-align: center;
 }
 .wrapper_table{
-    width: 600px; 
+    width: 650px; 
     height: 300px;
     background-color: antiquewhite;
     overflow: scroll;
@@ -139,7 +139,7 @@ button[id^="btn_"]:hover{
     border: 1rem;
     border-color: black;
     margin: 1vmin;
-    background-color: aquamarine;
+    background-color: rgb(0, 0, 0);
 }
 #number_quiz{
     width: 100px;
@@ -155,6 +155,7 @@ button[id^="btn_"]:hover{
 }
 #table_value{
     border-radius: 2px;
+    background-color: #000555;
 }
 canvas{
     border: 1px solid black;

@@ -20,7 +20,7 @@
     <span class="nav__logo">
         <img style="height: 30px;" src="images/logo_urjc.png" alt="">
     </span>
-    <ul class="nav__list">
+    <ul class="nav__list" id="nav_center">
     
       <li class="nav__item">
         <a href="index.html" class="nav__link"><b>Inicio</b></a>
@@ -51,13 +51,15 @@
       </li>
     </ul>
   </nav>
-  <div class="wrapper">
-    <a href="create_quiz.html" id="btn_create"><button><h3>Crear Cuestionario</h3></button></a>
-    <a href="quiz.html" id="btn_quiz"><button><h3>Hacer Cuestionario</h3></button></a>
-    <a href="read_file.html" id="btn_quiz"><button><h3>Rellenar Cuestionario</h3></button></a>
+
+  <div style="text-align: center;">
+    <h1>Mostrar Resultados de los Cuestionarios</h1>
+    <p>En esta página se puede observar los datos de forma generalizada, observando los porcentajes y los datos de cada pregunta en función del lugar.</p>
+    <p>Para cargar los resultados de los quizs realizados pulsa en "Cargar Resultados".</p>
   </div>
+
   <div class="wrapper">
-      <button onclick="load_results()">Cargar Resultados</button>
+      <button id="load_results" onclick="load_results()"><h4>Cargar Resultados</h4></button>
   </div>
   <div class="wrapper" id="results_button">
     <h3>Selecciona la opción que posee respuestas: </h3>

@@ -1,7 +1,7 @@
 
 .table_global_results{
     margin:auto;
-    width: 600px; 
+    width: 650px;
     height: 300px;
     border: 6px;
     border-color: red;
@@ -22,3 +22,12 @@
 #diagram1,#diagram2,#diagram3{
     margin:auto;
 }
+#load_results{
+    border: 1px #ffff solid;
+    border-radius: 5%;
+    font-style: bold;
+    height: fit-content;
+}
+.scrollable-element {
+    scrollbar-color: red yellow;
+  }
