@@ -3,16 +3,64 @@
     "description": "Aplicación de escritorio de Cuestionarios de paisajes sonoros",
     "version": "0.0.2",
     "main": "main.js",
+    "repository": {
+        "url": "https://https://github.com/SalcedoManuel/Paisajes-Sonoros"
+     },
     "author": {
         "name": "Manuel Salcedo",
         "email": "m.salcedoa.2016@alumnos.urjc.es",
         "url": "https://github.com/SalcedoManuel"
     },
     "scripts": {
-        "start": "electron ."
+        "start": "electron .",
+        "pack": "electron-builder --dir",
+        "dist": "electron-builder",
+        "postinstall": "electron-builder install-app-deps"
+    },
+    "build": {
+        "appId": "soundscape-app",
+        "productName": "Soundscape App",
+        "copyright": "Copyright © 2022 ${author}",
+        "mac": {
+            "icon": "build/logo3.ico",
+            "category": "public.app-category.utilities"
+        },
+        "win": {
+            "icon": "build/logo3.png"
+        },
+        "extraResources": [
+            {
+              "from": "./plantillas/",
+              "to": "plantillas",
+              "filter": [
+                "**/*"
+              ]
+            },
+            {
+                "from": "./quiz_files/",
+                "to": "quiz_files",
+                "filter": [
+                  "**/*"
+                ]
+            },
+            {
+                "from": "./quiz_savings/",
+                "to": "quiz_files",
+                "filter": [
+                  "**/*"
+                ]
+            }
+            
+          ],
+        "directories": {
+            "buildResources": "public"
+        }
     },
     "dependencies": {
-        "electron": "^19.0.14",
         "sweetalert": "^2.1.2"
+    },
+    "devDependencies": {
+        "electron": "^19.0.14",
+        "electron-builder": "^23.3.3"
     }
 }
