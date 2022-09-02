@@ -434,7 +434,7 @@ function create_quiz() {
         //-- Convertir la variable a cadena JSON
         let myJSON = JSON.stringify(quiz_json);
         //-- Guardarla en el fichero destino
-        let destinity = "resources/quiz_files/"+name_quiz; 
+        let destinity = "resources/quiz_files/"+name_quiz+".json"; 
         fs.writeFileSync(destinity, myJSON);
         console.log(destinity)
         electron.ipcRenderer.invoke('test',destinity);

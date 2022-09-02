@@ -196,7 +196,7 @@ function Select_Quiz(position) {
     document.getElementById("wrapper_text").innerHTML = "";
 
     // Leer el fichero JSON donde esté la información para el cuestionario.
-    const  FILE_JSON = fs.readFileSync("resources/quiz_files/"+quiz_name_actual_file+".json");
+    const  FILE_JSON = fs.readFileSync("resources/quiz_files/"+quiz_name_actual_file);
     // Creamos el array con toda la información del cuestionario.
     var quiz_json = JSON.parse(FILE_JSON);
 

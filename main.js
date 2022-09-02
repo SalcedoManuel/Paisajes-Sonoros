@@ -92,7 +92,7 @@ electron.ipcMain.handle('test', (event, msg) => {
   const  MAIN_JSON_FILE = fs.readFileSync(MAIN_JSON);
   var main_info = JSON.parse(MAIN_JSON_FILE);
   //-- Guardamos el nombre del archivo para cuando lo usemos.
-  msg = msg.split("/")[1];
+  msg = msg.split("/")[2];
   //-- Buscamos en el array de nombres si está en la lista
   if (main_info["Quizs_Names"].includes(msg) == false) {
     // Si entra aquí es que el valor NO está en la lista y por tanto se guarda.

@@ -30,27 +30,12 @@
         },
         "extraResources": [
             {
-              "from": "./resources/plantillas/",
-              "to": "plantillas",
+              "from": "./resources/",
+              "to": "",
               "filter": [
                 "**/*"
               ]
-            },
-            {
-                "from": "./resources/quiz_files/",
-                "to": "quiz_files",
-                "filter": [
-                  "**/*"
-                ]
-            },
-            {
-                "from": "./resources/quiz_savings/",
-                "to": "quiz_savings",
-                "filter": [
-                  "**/*"
-                ]
-            }
-            
+            }            
           ],
         "directories": {
             "buildResources": "public"
