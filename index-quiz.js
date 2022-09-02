@@ -72,7 +72,7 @@ electron.ipcRenderer.on('actual_quizs', (event, message) => {
     quiz_name_actual_file = message;
     quiz_name_actual = quiz_name_actual_file.split(".json")[0];
     // Obtenemos el nombre de los archivos.
-    const MAIN_JSON = "plantillas/main.json";
+    const MAIN_JSON = "resources/plantillas/main.json";
     const  MAIN_JSON_FILE = fs.readFileSync(MAIN_JSON);
     var main_info = JSON.parse(MAIN_JSON_FILE);
     quizs_names = main_info["Quizs_Names"]
@@ -147,7 +147,7 @@ function show_questions() {
             aux_visual_length = aux_visual.length;
             console.log(aux_visual[aux_visual_length-1])
             format_visual = aux_visual[aux_visual_length-1];
-            if (format_visual == 'jpg' || format_visual == 'jiff' || format_visual == 'png' ) {
+            if (format_visual == 'jpg' || format_visual == 'jiff' || format_visual == 'png' || format_visual == 'jfif') {
                 document.getElementById("wrapper_files").innerHTML += '<img id="file_image" src="'+visual_files[number_places_questions_replied][number_recordings_questions_replied-1]+'" alt=""></img><br>';
             }else if (format_visual == 'mp4' || format_visual == 'ogg' || format_visual == 'webm') {
                 document.getElementById("wrapper_files").innerHTML += '<video id="file_video" src="'+visual_files[number_places_questions_replied][number_recordings_questions_replied-1]+'" autoplay muted></video><br>';
@@ -196,7 +196,7 @@ function Select_Quiz(position) {
     document.getElementById("wrapper_text").innerHTML = "";
 
     // Leer el fichero JSON donde esté la información para el cuestionario.
-    const  FILE_JSON = fs.readFileSync("quiz_files/"+quiz_name_actual_file);
+    const  FILE_JSON = fs.readFileSync("resources/quiz_files/"+quiz_name_actual_file+".json");
     // Creamos el array con toda la información del cuestionario.
     var quiz_json = JSON.parse(FILE_JSON);
 

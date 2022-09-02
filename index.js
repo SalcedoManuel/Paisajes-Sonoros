@@ -388,7 +388,7 @@ function create_quiz() {
         }
         // Extraeremos un JSON de ejemplo, lo convertiremos en un array, lo rellenaremos a nuestro gusto
         // y luego lo guardaremos para su posterior uso.
-        const PLANTILLA_JSON = "plantilla_json.json";
+        const PLANTILLA_JSON = "resources/plantillas/plantilla_json.json";
         //-- Leer el fichero JSON
         const  plantilla_json = fs.readFileSync(PLANTILLA_JSON);
         //-- Creamos el array en el que se modificará todo.
@@ -434,8 +434,9 @@ function create_quiz() {
         //-- Convertir la variable a cadena JSON
         let myJSON = JSON.stringify(quiz_json);
         //-- Guardarla en el fichero destino
-        let destinity = "quiz_files/"+name_quiz+".json"; 
+        let destinity = "resources/quiz_files/"+name_quiz; 
         fs.writeFileSync(destinity, myJSON);
+        console.log(destinity)
         electron.ipcRenderer.invoke('test',destinity);
     }
 }
@@ -544,7 +545,7 @@ function select_option(value,mode){
 }
 
 function root_mode_activated() {
-    const MAIN_JSON = "plantillas/main.json";
+    const MAIN_JSON = "resources/plantillas/main.json";
     const  MAIN_JSON_FILE = fs.readFileSync(MAIN_JSON);
     var main_info = JSON.parse(MAIN_JSON_FILE);
     if (main_info["root_mode"]) {

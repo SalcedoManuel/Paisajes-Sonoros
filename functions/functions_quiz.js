@@ -62,54 +62,54 @@ function add_recordings_questions(pos) {
     let reply = "";
     if (recordings_questions[pos] == "¿Buena definición?") {
         reply += pos +". <strong>"+recordings_questions[pos] + "</strong>: ";
-        reply += 'Sí <input type="radio" name="question0" value="yes" id="yes1_recordings_question" checked></input> ';
-        reply += 'No <input type="radio" name="question0" value="no" id="no1_recordings_question"></input> ';
+        reply += '<input type="radio" name="question0" value="yes" id="yes1_recordings_question" checked>Sí</input>&nbsp ';
+        reply += '<input type="radio" name="question0" value="no" id="no1_recordings_question">No</input>&nbsp ';
     }
     if (recordings_questions[pos] == "¿Qué sonidos podrías distinguir en la toma?") {
         reply += pos + ". <strong>" + recordings_questions[pos] + "</strong>: ";
-        reply += 'Naturaleza <input type="radio" name="question1" value="nature" id="nature_recordings_question" checked></input> ';
-        reply += 'Urbano <input type="radio" name="question1" value="urban" id="urban_recordings_question"></input> ';
-        reply += 'Otro <input type="radio" name="question1" value="other" id="other_recordings_question"></input> ';
+        reply += '<input type="radio" name="question1" value="nature" id="nature_recordings_question" checked>Naturaleza</input>&nbsp';
+        reply += '<input type="radio" name="question1" value="urban" id="urban_recordings_question">Urbano</input>&nbsp ';
+        reply += '<input type="radio" name="question1" value="other" id="other_recordings_question">Otro</input>&nbsp ';
     }
     if (recordings_questions[pos] == "¿Consideras ruidoso el audio del paisaje sonoro?") {
         reply += pos + ". <strong>" + recordings_questions[pos] + "</strong>: ";
-        reply += 'Sí <input type="radio" name="question2" value="yes" id="yes2_recordings_question" checked></input>';
-        reply += 'No <input type="radio" name="question2" value="no" id="no2_recordings_question"></input>';
+        reply += '<input type="radio" name="question2" value="yes" id="yes2_recordings_question" checked>Sí</input>&nbsp';
+        reply += '<input type="radio" name="question2" value="no" id="no2_recordings_question">No</input>&nbsp';
     }
     if (recordings_questions[pos] == "¿Consideras buena la calidad del audio?") {
         reply += pos + ". <strong>" + recordings_questions[pos] + "</strong>: ";
-        reply += 'Sí <input type="radio" name="question3" value="yes" id="yes3_recordings_question" checked></input>';
-        reply += 'No <input type="radio" name="question3" value="no" id="no3_recordings_question"></input>';
+        reply += '<input type="radio" name="question3" value="yes" id="yes3_recordings_question" checked>Sí</input>&nbsp';
+        reply += '<input type="radio" name="question3" value="no" id="no3_recordings_question">No</input>&nbsp';
     }
     if (recordings_questions[pos] == "¿Consideras realista el audio del paisaje sonoro?") {
         reply += pos + ". <strong>" + recordings_questions[pos] + "</strong>: ";
-        reply += 'Sí <input type="radio" name="question4" value="yes" id="yes4_recordings_question" checked></input>';
-        reply += 'No <input type="radio" name="question4" value="no" id="no4_recordings_question"></input>';
+        reply += '<input type="radio" name="question4" value="yes" id="yes4_recordings_question" checked>Sí</input>&nbsp';
+        reply += '<input type="radio" name="question4" value="no" id="no4_recordings_question">No</input>&nbsp';
     }
     if (recordings_questions[pos] == "¿Consideras alto el volumen del audio?") {
         reply += pos + ". <strong>" + recordings_questions[pos] + "</strong>: ";
-        reply += 'Sí <input type="radio" name="question5" value="yes" id="yes5_recordings_question"checked></input>';
-        reply += 'No <input type="radio" name="question5" value="no" id="no5_recordings_question"></input>';
+        reply += '<input type="radio" name="question5" value="yes" id="yes5_recordings_question"checked>Sí</input>&nbsp';
+        reply += '<input type="radio" name="question5" value="no" id="no5_recordings_question">No</input>&nbsp';
     }
     if (recordings_questions[pos] == "¿Consideras desagradable el audio del paisaje sonoro?") {
         reply += pos + ". <strong>" + recordings_questions[pos] + "</strong>: ";
-        reply += 'Sí <input type="radio" name="question6" value="yes" id="yes6_recordings_question" checked></input>';
-        reply += 'No <input type="radio" name="question6" value="no" id="no6_recordings_question"></input>';
+        reply += '<input type="radio" name="question6" value="yes" id="yes6_recordings_question" checked>Sí</input>&nbsp';
+        reply += '<input type="radio" name="question6" value="no" id="no6_recordings_question">No</input>&nbsp';
     }
     if (recordings_questions[pos] == "¿Consideras definido el audio del paisaje sonoro?") {
         reply += pos + ". <strong>" + recordings_questions[pos] + "</strong>: ";
-        reply += 'Sí <input type="radio" name="question7" value="yes" id="yes7_recordings_question" checked></input>';
-        reply += 'No <input type="radio" name="question7" value="no" id="no7_recordings_question"></input>';
+        reply += '<input type="radio" name="question7" value="yes" id="yes7_recordings_question" checked>Sí</input>&nbsp';
+        reply += '<input type="radio" name="question7" value="no" id="no7_recordings_question">No</input>&nbsp';
     }
     if (recordings_questions[pos] == "¿Has notado espacialidad en el audio del paisaje sonoro?") {
         reply += pos + ". <strong>" + recordings_questions[pos] + "</strong>: ";
-        reply += 'Sí <input type="radio" name="question8" value="yes" id="yes8_recordings_question" checked></input>';
-        reply += 'No <input type="radio" name="question8" value="no" id="no8_recordings_question"></input>';
+        reply += '<input type="radio" name="question8" value="yes" id="yes8_recordings_question" checked>Sí</input>';
+        reply += '<input type="radio" name="question8" value="no" id="no8_recordings_question">No</input>';
     }
     if (recordings_questions[pos] == "¿Consideras que te ha gustado la toma?") {
         reply += pos + ". <strong>" + recordings_questions[pos] + "</strong>: ";
-        reply += 'Sí <input type="radio" name="question9" value="yes" id="yes9_recordings_question" checked></input>';
-        reply += 'No <input type="radio" name="question9" value="no" id="no9_recordings_question"></input>';
+        reply += '<input type="radio" name="question9" value="yes" id="yes9_recordings_question" checked>Sí</input>';
+        reply += '<input type="radio" name="question9" value="no" id="no9_recordings_question">No</input>';
     }
     reply += "<br>";
     return reply;

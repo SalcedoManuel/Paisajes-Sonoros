@@ -1,6 +1,16 @@
-//-- Cargar el módulo de electron
+/*
+      MAIN FILE: Archivo principal y que ejecuta la aplicación.
+      Author: Manuel Salcedo Alonso.
+      DATE: 02/09/2022
+*/
+
+//-- Cargar el módulo de electron y módulo fs.
 const electron = require('electron');
 const fs = require('fs');
+
+// Files names.
+const MAIN_JSON = "resources/plantillas/main.json";
+const MAIN_JSON_ZERO = "resources/plantillas/main_zero.json";
 
 console.log("Arrancando electron...");
 
@@ -12,9 +22,6 @@ var quiz_name_actual = "";
 //--Posición en el Array "Number_Completed_Quiz".
 // Sirve para modificar el número de cuestionarios completados.
 var position_number_completed_quiz = 0;
-
-var questions = [true,true,true,true,true,true,true,true,true,true,true,true,true,true]
-
 
 //-- Punto de entrada. En cuanto electron está listo,
 //-- ejecuta esta función
@@ -35,30 +42,23 @@ electron.app.on('ready', () => {
 
   //-- Cargar interfaz gráfica en HTML
   win.loadFile("index.html");
-
-  //-- Esperar a que la página se cargue y se muestre
-  //-- y luego enviar el mensaje al proceso de renderizado para que 
-  //-- lo saque por la interfaz gráfica
-  win.on('ready-to-show', () => {
-    win.webContents.send('print', "MENSAJE ENVIADO DESDE PROCESO MAIN");
-  });
-
-  //-- Enviar un mensaje al proceso de renderizado para que lo saque
-  //-- por la interfaz gráfica
-  win.webContents.send('print', "MENSAJE ENVIADO DESDE PROCESO MAIN");
-
 });
 
 
+// Esta función está en espera hasta que el cliente solicita el nombre del cuestionario
+// actual. Así de esta manera el usuario puede continuar con el cuestionario realizado anteriormente.
+
 electron.ipcMain.handle('actual_quizs',(event, msg) => {
   console.log("Nos piden el nombre del Quiz actual: " + msg);
-  const MAIN_JSON = "plantillas/main.json";
+  // Leemos el archivo 'main.json'
   const  MAIN_JSON_FILE = fs.readFileSync(MAIN_JSON);
+  // Adaptamos el archivo JSON para que pueda tratar con él en JAVASCRIPT.
   var main_info = JSON.parse(MAIN_JSON_FILE);
-  //-- Guardamos el nombre del archivo para cuando lo usemos.
-  let quizs_names = main_info["Quiz_actual"];
-  console.log("Enviamos: " + quizs_names)
-  win.webContents.send('actual_quizs', quizs_names);
+  //-- Extraemos el nombre del archivo actual para cuando lo usemos.
+  let quiz_name_actual = main_info["Quiz_actual"];
+  //-- Enviamos el nombre del quiz actual al archivo JAVASCRIPT correspondiente.
+  console.log("Enviamos: " + quiz_name_actual)
+  win.webContents.send('actual_quizs', quiz_name_actual);
 
 });
 
@@ -68,7 +68,6 @@ electron.ipcMain.handle('actual_quizs',(event, msg) => {
 
 electron.ipcMain.handle('quizs',(event, msg) => {
   console.log("Nos piden los nombres de los quizs ya creados: " + msg);
-  const MAIN_JSON = "plantillas/main.json";
   const  MAIN_JSON_FILE = fs.readFileSync(MAIN_JSON);
   var main_info = JSON.parse(MAIN_JSON_FILE);
   //-- Guardamos el nombre del archivo para cuando lo usemos.
@@ -81,7 +80,6 @@ electron.ipcMain.handle('quizs',(event, msg) => {
 electron.ipcMain.handle('refresh_quiz_actual_name',(event, msg) => {
   quiz_name_actual = msg;
   console.log("El nombre del Quiz actualizado es: " + quiz_name_actual);
-  const MAIN_JSON = "plantillas/main.json";
   const  MAIN_JSON_FILE = fs.readFileSync(MAIN_JSON);
   var main_info = JSON.parse(MAIN_JSON_FILE);
   main_info["Quiz_actual"]= quiz_name_actual;
@@ -90,8 +88,7 @@ electron.ipcMain.handle('refresh_quiz_actual_name',(event, msg) => {
 });
 
 electron.ipcMain.handle('test', (event, msg) => {
-  console.log("El nombre del quiz nuevo creado es: " + msg.split("/")[1]);
-  const MAIN_JSON = "plantillas/main.json";
+  console.log("El nombre del quiz nuevo creado es: " + msg.split("/")[2]);
   const  MAIN_JSON_FILE = fs.readFileSync(MAIN_JSON);
   var main_info = JSON.parse(MAIN_JSON_FILE);
   //-- Guardamos el nombre del archivo para cuando lo usemos.
@@ -123,7 +120,6 @@ electron.ipcMain.handle('completed_quiz', (event, msg) => {
   console.log("Cuestionario Terminado, se procede a guardarlo");
   // Lo primero es modificar el nombre del nombre del Quiz Actual en el JSON.
   console.log("Cargamos el main.json");
-  const MAIN_JSON = "plantillas/main.json";
   const  MAIN_JSON_FILE = fs.readFileSync(MAIN_JSON);
   var main_info = JSON.parse(MAIN_JSON_FILE);
   console.log("El nombre del quiz actual para la APP es: '" + quiz_name_actual + "'");
@@ -168,14 +164,14 @@ electron.ipcMain.handle('completed_quiz', (event, msg) => {
     save_file = [];
     save_file[0] = msg;
   }else{
-    const SAVE_JSON = "quiz_savings/"+ quiz_name_actual;
+    const SAVE_JSON = "resources/quiz_savings/"+ quiz_name_actual;
     const  SAVE_JSON_FILE = fs.readFileSync(SAVE_JSON);
     save_file = JSON.parse(SAVE_JSON_FILE);
     // Se añade el último cuestionario realizado a la lista.
     save_file.push(msg);
 
   }
-  const SAVE_JSON = "quiz_savings/"+ quiz_name_actual;
+  const SAVE_JSON = "resources/quiz_savings/"+ quiz_name_actual;
   let myJSON = JSON.stringify(save_file);
   fs.writeFileSync(SAVE_JSON,myJSON);
   //-- Guardamos en el JSON Principal la información.
@@ -186,7 +182,6 @@ electron.ipcMain.handle('completed_quiz', (event, msg) => {
 //-- Envía al cliente la lista de cuestionarios que poseen resultados.
 electron.ipcMain.handle('load_quizs_opened',(event, msg) => {
   console.log("Nos piden los nombres de los quizs que se han usado: " + msg);
-  const MAIN_JSON = "plantillas/main.json";
   const  MAIN_JSON_FILE = fs.readFileSync(MAIN_JSON);
   var main_info = JSON.parse(MAIN_JSON_FILE);
   //-- Para saber si el cuestionario se ha realizado al menos una vez es necesario ver 
@@ -207,7 +202,7 @@ electron.ipcMain.handle('load_quizs_opened',(event, msg) => {
 //-- Envía todos los resultados del Cuestionario con el nombre del mensaje.
 electron.ipcMain.handle('quizs_summary',(event, msg) => {
   console.log("Nos piden los resultados del cuestionario con nombre: " + msg);
-  const SUMMARY_JSON = "quiz_savings/" + msg;
+  const SUMMARY_JSON = "resources/quiz_savings/" + msg;
   const  SUMMARY_JSON_FILE = fs.readFileSync(SUMMARY_JSON);
   var summary_info = JSON.parse(SUMMARY_JSON_FILE);
   console.log("Enviamos los resultados de ese Quiz: " + summary_info)
@@ -216,7 +211,6 @@ electron.ipcMain.handle('quizs_summary',(event, msg) => {
 
 //-- Enviamos si el modo root está activado o no.
 electron.ipcMain.handle('root_activated_mode',(event, msg) => {
-  const MAIN_JSON = "plantillas/main.json";
   const  MAIN_JSON_FILE = fs.readFileSync(MAIN_JSON);
   var main_info = JSON.parse(MAIN_JSON_FILE);
   msg = main_info["root_mode"]

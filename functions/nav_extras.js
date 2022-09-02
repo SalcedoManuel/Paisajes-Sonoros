@@ -78,17 +78,17 @@ function settings() {
         switch (value) {
        
           case "reseat":
-            const MAIN_ZERO = "plantillas/main_zero.json";
+            const MAIN_ZERO = "resources/plantillas/main_zero.json";
             const  MAIN_ZERO_FILE = fs.readFileSync(MAIN_ZERO);
             var main_zero = JSON.parse(MAIN_ZERO_FILE);
             let myJSON = JSON.stringify(main_zero);
-            const MAIN_FILE = "plantillas/main.json";
+            const MAIN_FILE = "resources/plantillas/main.json";
             fs.writeFileSync(MAIN_FILE,myJSON);
             msg = "Configuración Reseteada";
             swal(title,msg);
             break;
           case "root":
-            const MAIN_JSON = "plantillas/main.json";
+            const MAIN_JSON = "resources/plantillas/main.json";
             const  MAIN_JSON_FILE = fs.readFileSync(MAIN_JSON);
             var info = JSON.parse(MAIN_JSON_FILE);
             if (info["root_mode"] == true) {

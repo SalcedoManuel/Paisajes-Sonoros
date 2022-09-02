@@ -30,22 +30,22 @@
         },
         "extraResources": [
             {
-              "from": "./plantillas/",
+              "from": "./resources/plantillas",
               "to": "plantillas",
               "filter": [
                 "**/*"
               ]
             },
             {
-                "from": "./quiz_files/",
+                "from": "./resources/quiz_files/",
                 "to": "quiz_files",
                 "filter": [
                   "**/*"
                 ]
             },
             {
-                "from": "./quiz_savings/",
-                "to": "quiz_files",
+                "from": "./resources/quiz_savings/",
+                "to": "quiz_savings",
                 "filter": [
                   "**/*"
                 ]
