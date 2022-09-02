@@ -30,7 +30,7 @@
         },
         "extraResources": [
             {
-              "from": "./resources/plantillas",
+              "from": "./resources/plantillas/",
               "to": "plantillas",
               "filter": [
                 "**/*"
