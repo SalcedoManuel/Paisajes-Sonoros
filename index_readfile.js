@@ -1,4 +1,4 @@
-const { table } = require('console');
+
 const electron = require('electron');
 const fs = require('fs');
 
