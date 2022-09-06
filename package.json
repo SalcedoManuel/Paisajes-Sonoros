@@ -5,7 +5,7 @@
     "main": "main.js",
     "repository": {
         "url": "https://https://github.com/SalcedoManuel/Paisajes-Sonoros"
-     },
+    },
     "author": {
         "name": "Manuel Salcedo",
         "email": "m.salcedoa.2016@alumnos.urjc.es",
@@ -30,13 +30,13 @@
         },
         "extraResources": [
             {
-              "from": "./resources/",
-              "to": "",
-              "filter": [
-                "**/*"
-              ]
-            }            
-          ],
+                "from": "./resources/",
+                "to": "",
+                "filter": [
+                    "**/*"
+                ]
+            }
+        ],
         "directories": {
             "buildResources": "public"
         }

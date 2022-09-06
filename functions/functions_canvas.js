@@ -16,17 +16,48 @@ function canvas_create_position_and_draw(ctx,number_canvas) {
       point_y = radius*y;
       
       let angulo = Math.atan(point_x/point_y);
-      if (point_x < 0) {
-        point_x = (-Math.sin(angulo)*radius)+center_x;
-      }else{
+
+      if (eventful_list[number_canvas][i] > uneventful_list[number_canvas][i] && annoying_list[number_canvas][i] >= pleasant_list[number_canvas][i]) {
+        // Primer cuadrante.
+        // Point x menor de 198 y point y menor de 151
         point_x = (Math.sin(angulo)*radius)+center_x;
+        point_y = -(Math.cos(angulo)*radius)+center_y;
+      }
+    
+      if (eventful_list[number_canvas][i] > uneventful_list[number_canvas][i] && pleasant_list[number_canvas][i] >= annoying_list[number_canvas][i]) {
+          // Segundo Cuadrante
+          // Point x mayor de 198 y point y menor de 151
+          point_x = (Math.sin(angulo)*radius)+center_x;
+          point_y = -(Math.cos(angulo)*radius)+center_y;
+      }
+      
+      if (uneventful_list[number_canvas][i] > eventful_list[number_canvas][i] && pleasant_list[number_canvas][i] >= annoying_list[number_canvas][i]) {
+          // Tercer Cuadrante
+          // Point x menor de 198 y point y mayor de 151
+          point_x = -(Math.sin(angulo)*radius)+center_x;
+          point_y = (Math.cos(angulo)*radius)+center_y;
+      }
+      
+      if (uneventful_list[number_canvas][i] > eventful_list[number_canvas][i] && annoying_list[number_canvas][i] >= pleasant_list[number_canvas][i]) {
+          // Cuarto Cuadrante
+          // Point x mayor de 198 y point y mayor de 151
+          point_x = -(Math.sin(angulo)*radius)+center_x;
+          point_y = (Math.cos(angulo)*radius)+center_y;
       }
 
-      if (point_y < 0) {
-        point_y = (Math.cos(angulo)*radius)+center_y;
-      }else{
-        point_y = -(Math.cos(angulo)*radius)+center_y;
-      }  
+      if (eventful_list[number_canvas][i] == uneventful_list[number_canvas][i]) {
+        point_y = center_y;
+        if (pleasant_list[number_canvas][i]> annoying_list[number_canvas][i]) {
+            point_x = (Math.sin(angulo)*radius)+center_x;
+        }else if (annoying_list[number_canvas][i] > pleasant_list[number_canvas][i]) {
+            point_x = -(Math.sin(angulo)*radius)+center_x;
+        }else{
+            point_x = center_x;
+        }
+        console.log("Eventful or not",eventful_list[number_canvas][i] == uneventful_list[number_canvas][i])
+    }
+
+      console.log("Coordenada X",point_x,"Coordenada Y",point_y)
 
       coordenada_x[i] = point_x;
       coordenada_y[i] = point_y;

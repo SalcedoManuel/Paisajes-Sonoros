@@ -64,15 +64,16 @@ function get_features_diagram(number_place,number_toma) {
     var str = "";
     var eventful = false;
     var pleasant = false;
-    console.log(eventful_list[number_place])
-    console.log(uneventful_list[number_place])
+    console.log("Eventful: "+eventful_list[number_place][number_toma])
+    console.log("Uneventful: "+uneventful_list[number_place][number_toma])
     if (eventful_list[number_place][number_toma] >= uneventful_list[number_place][number_toma]) {
         str += "Eventful, ";
         eventful = true;
     }else{
         str += "Uneventful, ";
     }
-    
+    console.log("Valor de Pleasant" + pleasant_list[number_place])
+    console.log("Valor de Annoying" +annoying_list[number_place])
     if (pleasant_list[number_place][number_toma] >= annoying_list[number_place][number_toma]) {
         str += "Pleasant, ";
         pleasant = true;
@@ -89,7 +90,7 @@ function get_features_diagram(number_place,number_toma) {
     }else if (!eventful && !pleasant) {
         str += "and Monotonous.";
     }
-
+    console.log(str)
     return str;
 }
 
@@ -395,6 +396,9 @@ function recordings_global_results() {
                 eventful[e] += VALUE;
             }else if (quiz_info[i][2][e]["¿Qué sonidos podrías distinguir en la toma?"] == "nature") {
                 uneventful[e] += VALUE;
+            }else{
+                eventful[e] += 0;
+                uneventful[e] += 0;
             }
     
             if (quiz_info[i][2][e]["¿Consideras desagradable el audio del paisaje sonoro?"] == "yes") {
