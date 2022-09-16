@@ -167,13 +167,19 @@ function show_questions() {
             document.getElementById("wrapper_next").innerHTML = '<button onclick="functions_quiz.next_option(2)">Siguiente</button>';
             break;
         case "generic_questions":
+            // Si el número de lugares es uno y el número de grabaciones también lo es no hay nada con lo que comparar al solo haber una grabación y un solo lugar.
+            // Por tanto, eliminamos las preguntas genéricas.
             var table_generic_questions = '<table><caption><div id="wrapper_title_question"><h2>Preguntas Genéricas del Cuestionario: '+quiz_name_actual+'</h2></div></caption>'+
             '<tr><td><div id="wrapper_files"></div></td></tr>'+
             '<tr><td><div id="wrapper_replys"></div></td></tr>'+
             '<tr><th><div id="wrapper_next"></div></th></tr></table>';
             document.getElementById("wrapper2").innerHTML = table_generic_questions;
-            
-            document.getElementById("wrapper_title_question").innerHTML = "<h2>Preguntas Genéricas del Cuestionario: &nbsp"+quiz_name_actual+"</h2>";
+            if (number_places == 1 && number_recordings == 1) {
+                replys = document.getElementById("wrapper_replys");
+                replys.innerHTML = '<h2>Al no haber suficientes recursos para comparar este apartado se rellena automáticamente.</h2>';
+                document.getElementById("wrapper_next").innerHTML = '<button onclick="functions_quiz.end_quiz()">Finalizar</button>';
+            }else{        
+                document.getElementById("wrapper_title_question").innerHTML = "<h2>Preguntas Genéricas del Cuestionario: &nbsp"+quiz_name_actual+"</h2>";
                 replys = document.getElementById("wrapper_replys");
                 console.log("Número de Preguntas Genéricas",Object.keys(generic_questions).length)
                 e = places_questions * recordings_questions;
@@ -182,6 +188,8 @@ function show_questions() {
                     replys.innerHTML += functions_quiz.add_generic_questions(pos,i);    
                 }
                 document.getElementById("wrapper_next").innerHTML = '<button onclick="functions_quiz.end_quiz()">Finalizar</button>';
+            }
+
             break;
         default:
             break;

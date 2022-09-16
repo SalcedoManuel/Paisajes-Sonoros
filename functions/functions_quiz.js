@@ -275,41 +275,68 @@ function end_quiz() {
     // En esta función lo primero que tenemos que hacer es asegurarnos de que el usuario ha ordenado todas las tomas
     let ok_output_replys = true;
     let number_output_error = "";
-    for (let i = 0; i < Object.keys(generic_questions).length; i++) {
-        let id_text = "output"+i;
-        let output = document.getElementById(id_text);
-        let output_text = output.innerHTML;
-        const number_elements = number_places * number_recordings;
-        if (output_text.length != (number_elements)) {
-            ok_output_replys = false;
-            if (number_output_error.length > 0) {
-                number_output_error += ", " + (i+1);
-            }else{
-                number_output_error += i+1;
-            }
-
-        }        
-    }
-    if (ok_output_replys) {
-        // Si se ha introducido todos los valores correctamente se procede a guardar lo mostrado en el quiz.
-        
+    let generic_autocomplete = false;
+    // Si las preguntas genéricas se han rellenado automáticamente el número de lugares y el número de grabaciones es 1.
+    if (number_places == 1 && number_recordings == 1) {
+        ok_output_replys = true;
+        generic_autocomplete = true;
+    }else{
         for (let i = 0; i < Object.keys(generic_questions).length; i++) {
             let id_text = "output"+i;
             let output = document.getElementById(id_text);
-            generic_object[generic_questions[i+1]] = output.innerHTML;            
+            let output_text = output.innerHTML;
+            const number_elements = number_places * number_recordings;
+            if (output_text.length != (number_elements)) {
+                ok_output_replys = false;
+                if (number_output_error.length > 0) {
+                    number_output_error += ", " + (i+1);
+                }else{
+                    number_output_error += i+1;
+                }
+    
+            }        
         }
+    }
+
+    if (ok_output_replys) {
+        // Si se ha introducido todos los valores correctamente se procede a guardar lo mostrado en el quiz.
+        // Si el número de recursos es uno, se procederá al autocompletado del apartado de preguntas genéricas.
+        if (generic_autocomplete) {
+            // Se guardará automáticamente el único elemento disponible
+            for (let i = 0; i < Object.keys(generic_questions).length; i++) {
+                let output = '11';
+                generic_object[generic_questions[i+1]] = output;
+            }
+        }else{
+            // Se procederá a leer todos los output ya revisados para guardarlos en el objecto de las preguntas genéricas.
+            for (let i = 0; i < Object.keys(generic_questions).length; i++) {
+                let id_text = "output"+i;
+                let output = document.getElementById(id_text);
+                console.log(output.innerHTML)
+                generic_object[generic_questions[i+1]] = output.innerHTML;            
+            }
+            console.table(generic_object)
+        }
+        // Creamos una variable que guardará las respuestas.
         completed_quiz = new Object;
+        // Guardamos las respuestas de las preguntas sobre el usuario.
         completed_quiz[0] = user_object;
+        // Guardamos las respuestas de las preguntas sobre los lugares.
         completed_quiz[1] = all_places_replies;
+        // Guardamos las respuestas sobre las grabaciones.
         completed_quiz[2] = all_recordings_replies;
+        // Guardamos las respuestas del apartado de las preguntas genéricas.
         completed_quiz[3] = generic_object;
         console.log(completed_quiz)
+        // Enviamos toda la información del escenario a la app para que ella lo trate.
         electron.ipcRenderer.invoke('completed_quiz', completed_quiz);
+        // Después del envío de datos se procede a cambiar la interfaz para dar por finalizado el Cuestionario. 
         document.getElementById("wrapper_title_question").innerHTML = "<strong>Cuestionario Finalizado</strong>";
         document.getElementById("wrapper_files").innerHTML = "";
         document.getElementById("wrapper_replys").innerHTML = "";
         document.getElementById("wrapper_next").innerHTML = "";
     }else{
+        // Si no se cumple la condición se le muestra al usuario una ventana con los errores que tiene.
         window.alert("Errores en la elección en los siguientes apartados ->" + number_output_error);
     }
 
