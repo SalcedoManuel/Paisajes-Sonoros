@@ -150,11 +150,11 @@ function show_questions() {
             if (format_visual == 'jpg' || format_visual == 'jiff' || format_visual == 'png' || format_visual == 'jfif') {
                 document.getElementById("wrapper_files").innerHTML += '<img id="file_image" src="'+visual_files[number_places_questions_replied][number_recordings_questions_replied-1]+'" alt=""></img><br>';
             }else if (format_visual == 'mp4' || format_visual == 'ogg' || format_visual == 'webm') {
-                document.getElementById("wrapper_files").innerHTML += '<video id="file_video" src="'+visual_files[number_places_questions_replied][number_recordings_questions_replied-1]+'" autoplay muted></video><br>';
+                document.getElementById("wrapper_files").innerHTML += '<video id="file_video" src="'+visual_files[number_places_questions_replied][number_recordings_questions_replied-1]+'" autoplay muted loop></video><br>';
             }
             
 
-            document.getElementById("wrapper_files").innerHTML += '<audio controls><source src="' +
+            document.getElementById("wrapper_files").innerHTML += '<audio controls loop><source src="' +
             audio_files[number_places_questions_replied][number_recordings_questions_replied-1] + '"></audio>';
             replys = document.getElementById("wrapper_replys");
             replys.innerHTML = "";
