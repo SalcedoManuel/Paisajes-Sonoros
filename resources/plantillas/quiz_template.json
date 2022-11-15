@@ -1,0 +1,81 @@
+{
+    "Name_Quiz": "09/07/2022/13:50",
+    "Number_Places": 1,
+    "Number_Recordings": 1,
+    "files": [
+      {
+        "Name_Scenary": "Felipe II",
+        "Name_recordings":["Móvil","binaural","micrófono"],
+        "audio_files": [
+          "default.mp3",
+          "default.mp3"
+        ],
+        "visual_files":[
+          "default.png",
+          "default.png",
+          "default.png"
+        ],
+        "file_location_online": false
+      },
+      {
+          "Name_Scenary": "Atocha",
+          "Name_recordings":["Móvil","binaural","micrófono"],
+          "audio_files": [
+            "default.mp3"
+          ],
+          "visual_files":[
+            "default.png"
+          ],
+        "file_location_online": false
+      },
+      {
+      "Name_Scenary": "Metropolitano",
+      "Name_recordings":["Móvil","binaural","micrófono"],
+      "audio_files": [
+          "default.mp3"
+      ],
+      "visual_files":[
+          "default.png"
+      ],
+      "file_location_online": false
+      }
+    ],
+    "questions":[
+      {
+          "1":"¿Cuántos años tienes?",
+          "2":"¿Cuál es tu género?",
+          "3":"¿Tienes problemas auditivos?"
+      },{
+          "1":"¿En qué medida estás de acuerdo o en desacuerdo con los siguientes 8 adjetivos como descriptores del entorno acústico que escuchas?",
+          "2":"En general, ¿Cómo describirías la calidad acústica del entorno que escuchas?",
+          "3":"¿Cuánto tiempo permanecerías en un lugar con un ambiente sonoro como este?",
+          "4":"¿Para cuál de los siguientes contextos urbanos crees que es adecuado el entorno acústico que escuchas?"
+      },{
+          "1":"¿A qué período del año crees que se corresponde el entorno sonoro que escuchas?"
+      }
+    ],
+    "questions_replies":[
+      {
+          "¿Cuántos años tienes?":["number"],
+          "¿Cuál es tu género?": ["Masculino", "Femenino","Otro"],
+          "¿Tienes problemas auditivos?": ["Sí", "No"],
+          "¿En qué medida estás de acuerdo o en desacuerdo con los siguientes 8 adjetivos como descriptores del entorno acústico que escuchas?": ["Agradable/Placentero","Sin Actividad/Estático","Desagradable/Molesto","Con Actividad/Dinámico"],
+          "En general, ¿Cómo describirías la calidad acústica del entorno que escuchas?":["Muy malo","Malo","Ni bueno ni malo","Bueno","Muy bueno"],
+          "¿Cuánto tiempo permanecerías en un lugar con un ambiente sonoro como este?": ["Insoportable","Me molesta un poco","Para pasar un rato","Pasaría bastante tiempo","Me encanta"],
+          "¿Para cuál de los siguientes contextos urbanos crees que es adecuado el entorno acústico que escuchas?": ["Comercial","Residencial","Recreativo","Otro"],
+          "¿A qué período del año crees que se corresponde el entorno sonoro que escuchas?": ["Invierno", "Verano", "Otro"]
+      }
+    ],
+    "questions_types_replies":[
+        {
+        "¿Cuántos años tienes?":"number",
+          "¿Cuál es tu género?": "3-option-no",
+          "¿Tienes problemas auditivos?": "2-option-no",
+          "¿En qué medida estás de acuerdo o en desacuerdo con los siguientes 8 adjetivos como descriptores del entorno acústico que escuchas?": "5-table-no",
+          "En general, ¿Cómo describirías la calidad acústica del entorno que escuchas?":"5-option-no",
+          "¿Cuánto tiempo permanecerías en un lugar con un ambiente sonoro como este?": "5-option-no",
+          "¿Para cuál de los siguientes contextos urbanos crees que es adecuado el entorno acústico que escuchas?": "3-option-yes",
+          "¿A qué período del año crees que se corresponde el entorno sonoro que escuchas?": "3-option-yes"
+        }
+    ]
+}
