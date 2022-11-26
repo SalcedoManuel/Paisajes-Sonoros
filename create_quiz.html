@@ -64,11 +64,22 @@
         <th colspan="2">
           <div id="class_name_quiz">
             <label><h3>Introducir nombre del Cuestionario: <input type="text" id="id_name_quiz"></h3></label>
+            <br>
           </div>
         </th>
     
       </tr>
-    
+      <tr>
+        <th colspan="2">
+          <div id="class_online_quiz">
+            <label><h3>Seleccione la ubicación de los recursos:
+               <button  id="online_button" onclick="select_file_location(true)" style="width: 50px;"><b>Online</b></button>
+               <button  id="local_button"  onclick="select_file_location(false)" style="width: 50px;"><b>Local</b></button>
+               </h3></label>               
+            <br>
+          </div>
+        </th>
+      </tr>
       <tr>
         <td style="padding: 1vh;border-right: 2px white solid;">
           <nav style="height: 85px;">
@@ -105,7 +116,7 @@
     <span id="button_start_creation"><button id="button_start_creation" onclick="functions_extras.start_creation()" style="width:fit-content;height: fit-content;"><h5>Iniciar recogida de archivos</h5></button></span>
   </div>
 
-  <div class="wrapper" id="wrapper0">
+  <div class="wrapper" id="wrapper0"> <!-- Contenedor que recoge los recursos-->
     <span>
       <div id="wrapper_files" style="text-align: center;"></div>
       <div id="file_table1">
@@ -209,147 +220,68 @@
     <p>A continuación, se muestran las preguntas que los participantes deberán responder para completar el cuestionario:</p>
   </div>
 
-  <div class="wrapper" id="wrapper1">
+  <div class="wrapper" id="wrapper1"> <!-- Contenedor que guarda las preguntas sobre el participante-->
+    <br>
     <table style="margin: auto; width:600px;">
       <tr>    
         <th colspan="2" style="border-bottom: 1px white solid;"><h2>Parte 1: Preguntas al Participante</h2></th>
       </tr>
     
-      <tr>
-        <th style="text-align: right; width:33%;"><p>1ª</p></th>    
-        <td style="text-align: left;"><p>¿Cuántos años tienes?</p></td>    
+      <tr><br>
+        <th style="text-align: right; width:10%;"><p>1ª</p></th>    
+        <td style="text-align: left;"><p>Introduce aquí tu puntaje auditivo obtenido en el test hearWHO</p></td>    
       </tr>
-    
-      <tr>
-        <th style="text-align: right;width:33%;"><p>2ª</p></th>    
-        <td style="text-align: left;"><p>¿Cuál es tu género?</p></td>    
-      </tr>
-      <tr>        
-        <th style="text-align: right;width:33%;"><p>3ª</p></th>    
-        <td style="text-align: left;"><p>¿Tienes problemas auditivos?</p></td>    
-      </tr>    
     </table>    
   </div>
-
-  <div class="wrapper" id="wrapper2">
-    <table style="margin: auto; width:600px;">
+  <div class="wrapper" id="wrapper2"> <!-- Contenedor que guarda las preguntas sobre la evaluación de la calidad acústica-->
+    <table style="margin: auto; width:700px;">
       <tr>    
-        <th colspan="2" style="border-bottom: 1px white solid;"><h2>Parte 2: Preguntas de Introducción al Escenario</h2> </th>
+        <th colspan="2" style="border-bottom: 1px white solid;"><h2>Parte 2: Evaluación de la calidad acústica</h2></th>
       </tr>
       <tr>
-        <th style="text-align: right; width:33%;"><p>1ª</p></th>    
-        <td style="text-align: left;"><p>¿Conoces el escenario?</p></td>    
+        <th style="text-align: right; width:10%;"><p>1ª</p></th>    
+        <td style="text-align: left;"><p>¿En qué medida estás de acuerdo o en desacuerdo con los siguientes 8 adjetivos como descriptores del entorno acústico que escuchas?</p></td>    
       </tr>
       <tr>
-        <th style="text-align: right;width:33%;"><p>2ª</p></th>    
-        <td style="text-align: left;"><p>¿Cuál es tú frecuencia de paso por él?</p></td>    
+        <th style="text-align: right;width:10%;"><p>2ª</p></th>    
+        <td style="text-align: left;"><p>En general, ¿cómo describirías la calidad acústica del entorno que escuchas?</p></td>    
       </tr>
+
       <tr>        
-        <th style="text-align: right;width:33%;"><p>3ª</p></th>    
-        <td style="text-align: left;"><p>Cuando lo has transitado ¿Has prestado atención al sonido que te rodeaba?</p></td>    
+        <th style="text-align: right;width:10%;"><p>3ª</p></th>    
+        <td style="text-align: left;"><p>¿Cuánto tiempo permanecerías en un lugar con un ambiente sonoro como este?</p></td>    
       </tr>
+
       <tr>        
-        <th style="text-align: right;width:33%;"><p>4ª</p></th>    
-        <td style="text-align: left;"><p>¿Las grabaciones se asemejan a tu recuerdo del escenario?</p></td>    
+        <th style="text-align: right;width:10%;"><p>4ª</p></th>    
+        <td style="text-align: left;"><p>¿Para cuál de los siguientes contextos urbanos crees que es adecuado el entorno acústico que escuchas?</p></td>    
       </tr>        
     </table> 
   </div>
 
-  <div class="wrapper" id="wrapper3">
+  <div class="wrapper" id="wrapper3"> <!-- Contenedor que guarda las preguntas sobre la identificación del contexto-->
     <table style="margin: auto; width:600px;">
       <tr>    
-        <th colspan="2" style="border-bottom: 1px white solid;"><h2>Parte 3: Preguntas Individualizadas</h2></th>
+        <th colspan="2" style="border-bottom: 1px white solid;"><h2>Parte 3: Identificación del contexto</h2></th>
       </tr>
       <tr>
-        <th style="text-align: right; width:33%;"><p>1ª</p></th>    
-        <td style="text-align: left;"><p>¿Buena definición?</p></td>    
-      </tr>
-      <tr>
-        <th style="text-align: right;width:33%;"><p>2ª</p></th>    
-        <td style="text-align: left;"><p>¿Qué sonidos podrías distinguir en la toma?</p></td>    
-      </tr>
-      <tr>        
-        <th style="text-align: right;width:33%;"><p>3ª</p></th>    
-        <td style="text-align: left;"><p>¿Consideras ruidoso el audio del paisaje sonoro?</p></td>    
-      </tr>
-      <tr>        
-        <th style="text-align: right;width:33%;"><p>4ª</p></th>    
-        <td style="text-align: left;"><p>¿Consideras buena la calidad del audio?</p></td>    
+        <th style="text-align: right; width:10%;"><p>1ª</p></th>    
+        <td style="text-align: left;"><p>¿A qué período del año crees que se corresponde el entorno sonoro que escuchas?<br></p></td>    
       </tr>     
-      <tr>        
-        <th style="text-align: right;width:33%;"><p>5ª</p></th>    
-        <td style="text-align: left;"><p>¿Consideras realista el audio del paisaje sonoro?</p></td>    
-      </tr>
-      <tr>        
-        <th style="text-align: right;width:33%;"><p>6ª</p></th>    
-        <td style="text-align: left;"><p>¿Consideras alto el volumen del audio?</p></td>    
-      </tr>
-      <tr>        
-        <th style="text-align: right;width:33%;"><p>7ª</p></th>    
-        <td style="text-align: left;"><p>¿Consideras desagradable el audio del paisaje sonoro?</p></td>    
-      </tr>
-      <tr>        
-        <th style="text-align: right;width:33%;"><p>8ª</p></th>    
-        <td style="text-align: left;"><p>¿Consideras definido el audio del paisaje sonoro?</p></td>    
-      </tr>
-      <tr>        
-        <th style="text-align: right;width:33%;"><p>9ª</p></th>    
-        <td style="text-align: left;"><p>¿Has notado espacialidad en el audio del paisaje sonoro?</p></td>    
-      </tr>
-      <tr>        
-        <th style="text-align: right;width:33%;"><p>10ª</p></th>    
-        <td style="text-align: left;"><p>¿Consideras que te ha gustado la toma?</p></td>    
-      </tr>       
+      <br>
     </table> 
   </div>
 
-  <div class="wrapper" id="wrapper4">
-    <table style="margin: auto; width:600px;">
-      <tr>    
-        <th colspan="2" style="border-bottom: 1px white solid;"><h2>Parte 4: Idoneidad del entorno sonoro circundante</h2></th>
-      </tr>
-      <tr>
-        <th style="text-align: right; width:33%;"><p>1ª</p></th>    
-        <td style="text-align: left;"><p>De más a menos ruidosa</p></td>    
-      </tr>
-      <tr>
-        <th style="text-align: right;width:33%;"><p>2ª</p></th>    
-        <td style="text-align: left;"><p>De más calidad a menos calidad</p></td>    
-      </tr>
-      <tr>        
-        <th style="text-align: right;width:33%;"><p>3ª</p></th>    
-        <td style="text-align: left;"><p>De más realista a menos realista</p></td>    
-      </tr>
-      <tr>        
-        <th style="text-align: right;width:33%;"><p>4ª</p></th>    
-        <td style="text-align: left;"><p>De más desagradable a menos desagradable</p></td>    
-      </tr>     
-      <tr>        
-        <th style="text-align: right;width:33%;"><p>5ª</p></th>    
-        <td style="text-align: left;"><p>De más definida a menos definida</p></td>    
-      </tr>
-      <tr>        
-        <th style="text-align: right;width:33%;"><p>6ª</p></th>    
-        <td style="text-align: left;"><p>De más espacial a menos espacial</p></td>    
-      </tr>
-      <tr>        
-        <th style="text-align: right;width:33%;"><p>7ª</p></th>    
-        <td style="text-align: left;"><p>De más alta a menos alta</p></td>    
-      </tr>
-      <tr>        
-        <th style="text-align: right;width:33%;"><p>8ª</p></th>    
-        <td style="text-align: left;"><p>De la que más te ha gustado, a la que menos</p></td>    
-      </tr>     
-    </table>
+  <div class="wrapper" id="wrapper4"> <!-- Contenedor para mostrar contenido adicional-->
   </div>
   <br>
   <br>
   <table style="margin: auto;">
     <tr>
-      <td id="button_end_page1">
+      <td id="button_end_page1"> <!-- Botón que sirve para terminar el proceso de creación del cuestionario-->
         <button id="end_create" onclick="create_quiz()">Finalizar</button>
       </td>
-      <td>
+      <td> <!-- Botón de rehacer el cuestionario-->
         <a href="create_quiz.html"><button id="retry">Reintentar</button></a>
       </td>
     </tr>

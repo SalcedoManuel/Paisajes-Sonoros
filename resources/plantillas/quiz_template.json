@@ -2,6 +2,7 @@
     "Name_Quiz": "09/07/2022/13:50",
     "Number_Places": 1,
     "Number_Recordings": 1,
+    "File_Location_Online": false,
     "files": [
       {
         "Name_Scenary": "Felipe II",
@@ -14,8 +15,8 @@
           "default.png",
           "default.png",
           "default.png"
-        ],
-        "file_location_online": false
+        ]
+        
       },
       {
           "Name_Scenary": "Atocha",
@@ -25,8 +26,7 @@
           ],
           "visual_files":[
             "default.png"
-          ],
-        "file_location_online": false
+          ]
       },
       {
       "Name_Scenary": "Metropolitano",
@@ -36,15 +36,12 @@
       ],
       "visual_files":[
           "default.png"
-      ],
-      "file_location_online": false
+      ]
       }
     ],
     "questions":[
       {
-          "1":"¿Cuántos años tienes?",
-          "2":"¿Cuál es tu género?",
-          "3":"¿Tienes problemas auditivos?"
+          "1":"Introduce aquí tu puntaje auditivo obtenido en el test hearWHO"
       },{
           "1":"¿En qué medida estás de acuerdo o en desacuerdo con los siguientes 8 adjetivos como descriptores del entorno acústico que escuchas?",
           "2":"En general, ¿Cómo describirías la calidad acústica del entorno que escuchas?",
@@ -56,9 +53,7 @@
     ],
     "questions_replies":[
       {
-          "¿Cuántos años tienes?":["number"],
-          "¿Cuál es tu género?": ["Masculino", "Femenino","Otro"],
-          "¿Tienes problemas auditivos?": ["Sí", "No"],
+          "Introduce aquí tu puntaje auditivo obtenido en el test hearWHO":"0",
           "¿En qué medida estás de acuerdo o en desacuerdo con los siguientes 8 adjetivos como descriptores del entorno acústico que escuchas?": ["Agradable/Placentero","Sin Actividad/Estático","Desagradable/Molesto","Con Actividad/Dinámico"],
           "En general, ¿Cómo describirías la calidad acústica del entorno que escuchas?":["Muy malo","Malo","Ni bueno ni malo","Bueno","Muy bueno"],
           "¿Cuánto tiempo permanecerías en un lugar con un ambiente sonoro como este?": ["Insoportable","Me molesta un poco","Para pasar un rato","Pasaría bastante tiempo","Me encanta"],
@@ -68,9 +63,7 @@
     ],
     "questions_types_replies":[
         {
-        "¿Cuántos años tienes?":"number",
-          "¿Cuál es tu género?": "3-option-no",
-          "¿Tienes problemas auditivos?": "2-option-no",
+          "Introduce aquí tu puntaje auditivo obtenido en el test hearWHO":"number",
           "¿En qué medida estás de acuerdo o en desacuerdo con los siguientes 8 adjetivos como descriptores del entorno acústico que escuchas?": "5-table-no",
           "En general, ¿Cómo describirías la calidad acústica del entorno que escuchas?":"5-option-no",
           "¿Cuánto tiempo permanecerías en un lugar con un ambiente sonoro como este?": "5-option-no",

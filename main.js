@@ -5,6 +5,7 @@
 */
 
 //-- Cargar el módulo de electron y módulo fs.
+const { table } = require('console');
 const electron = require('electron');
 const fs = require('fs');
 
@@ -20,6 +21,7 @@ let win = null;
 
 var quiz_name_actual = "";
 //--Posición en el Array "Number_Completed_Quiz".
+// Marca la posición en el array del cuestionario.
 // Sirve para modificar el número de cuestionarios completados.
 var position_number_completed_quiz = 0;
 
@@ -103,12 +105,12 @@ electron.ipcMain.handle('test', (event, msg) => {
     // Si existe se va a resetear lo que tenga, por tanto se resetea el número de quiz realizados.
     for (let i = 0; i < main_info["Number_Completed_Quiz"].length; i++) {
       // Como se ha cambiado el nombre del Cuestionario se actualiza el nombre.
-      if (main_info["Quiz_Names"][i] == quiz_name_actual) {
+      if (main_info["Quizs_Names"][i] == quiz_name_actual) {
          position_number_completed_quiz = i;
       } 
     }
     main_info["Number_Completed_Quiz"][position_number_completed_quiz] = 0;
-    console.log("El archivo ya existía");
+    console.log("El archivo ya existia");
   }
   let myJSON = JSON.stringify(main_info);
   fs.writeFileSync(MAIN_JSON,myJSON);

@@ -16,6 +16,12 @@ var get_files1 = false;
 var get_files2 = false;
 var get_files3 = false;
 
+//-- Guarda si la Ubicación de los archivos es la nube o en local
+//--        Si el valor es cero, los archivos están en un servidor.
+//--        Si el valor es uno, los archivos están en el ordenador.
+
+var file_location_online = false;
+
 var back = document.getElementById("back");
 
 //-- Obtener elementos de la interfaz
@@ -328,17 +334,16 @@ function create_quiz() {
             get_files = false;
             break;
     }
-    
+    //-- Si no has entroducido el número de recursos necesarios --> Debe saltar un error.
     if (number_examples == 0 || !(get_files)) {
         if (!get_files) {
-            back.innerHTML = "No has introducido los <strong>Audios</strong> mínimos, revisa otra vez tu petición.";
+            back.innerHTML = '<p style="text-align:center;">No has introducido los <strong>Audios</strong> mínimos, revisa otra vez tu petición.</p>';
             window.alert("No has introducido los Audios mínimos, revisa otra vez tu petición.")
         }else{
-            back.innerHTML = "No has seleccionado nada."
+            back.innerHTML = '<p style="text-align:center;">No has seleccionado nada.</p>';
         }
        
     }else{
-        /*var questions = functions_extras.checking_quiz();*/
         var name_place1 = "";
         var name_place2 = "";
         var name_place3 = "";
@@ -352,6 +357,7 @@ function create_quiz() {
             case 1:
                 // Nombre del Escenario 1
                 name_place1 = document.getElementById("name_place1").value;
+                //-- Si no está definido el nombre generamos uno por defecto.
                 if (name_place1 == null) {
                     name_place1 = "Escenario 1";
                 }
@@ -361,6 +367,7 @@ function create_quiz() {
                 name_place1 = document.getElementById("name_place1").value;
                 // Nombre del Escenario 2
                 name_place2 = document.getElementById("name_place2").value;
+                //-- Si no está definido el nombre generamos uno por defecto.
                 if (name_place1 == null) {
                     name_place1 = "Escenario 1";
                 }
@@ -375,6 +382,7 @@ function create_quiz() {
                 name_place2 = document.getElementById("name_place2").value;
                 // Nombre del Escenario 3
                 name_place3 = document.getElementById("name_place3").value;
+                //-- Si no está definido el nombre generamos uno por defecto.
                 if (name_place1 == null || name_place1 == "") {
                     name_place1 = "Escenario 1";
                 }
@@ -388,7 +396,7 @@ function create_quiz() {
         }
         // Extraeremos un JSON de ejemplo, lo convertiremos en un array, lo rellenaremos a nuestro gusto
         // y luego lo guardaremos para su posterior uso.
-        const PLANTILLA_JSON = "resources/plantillas/plantilla_json.json";
+        const PLANTILLA_JSON = "resources/plantillas/quiz_template.json";
         //-- Leer el fichero JSON
         const  plantilla_json = fs.readFileSync(PLANTILLA_JSON);
         //-- Creamos el array en el que se modificará todo.
@@ -397,6 +405,8 @@ function create_quiz() {
         quiz_json["Name_Quiz"] = name_quiz;
         quiz_json["Number_Places"] = number_places;
         quiz_json["Number_Recordings"] = number_sistems;
+        //-- Si la ubicación de los recursos es online
+        quiz_json["File_Location_Online"] = file_location_online;
         //-- Añadimos la ruta de los ficheros multimedia al JSON
         switch (number_places) {
             case 1:
@@ -426,11 +436,8 @@ function create_quiz() {
                 quiz_json["files"][2]["audio_files"] = audio_files3;
                 quiz_json["files"][2]["visual_files"] = visual_files3;
                 break;
-        }
-        // Ponemos en el JSON las preguntas que se eligen y las que no.
-        quiz_json["questions_bool"][0] = [,,,,,,,,,,,,];            
+        }       
 
-        // Lo segundo es añadir los ficheros.
         //-- Convertir la variable a cadena JSON
         let myJSON = JSON.stringify(quiz_json);
         //-- Guardarla en el fichero destino
@@ -440,45 +447,27 @@ function create_quiz() {
         electron.ipcRenderer.invoke('test',destinity);
     }
 }
+//-- Esta función selecciona la ubicación de los recursos del cuestionario.
+function select_file_location(online_location) {
+    var option_false;
+    var option_true;
+    switch (online_location) {
 
-
-
-home.onclick = () => {
-    console.log("Creamos un nuevo Cuestionario");
-    //-- Enviar mensaje al proceso principal
-    electron.ipcRenderer.invoke('home', "Vuelta a la página principal");
-}
-
-btn_create.onclick = () => {
-
-    console.log("Creamos un nuevo Cuestionario");
-
-    //-- Enviar mensaje al proceso principal
-    electron.ipcRenderer.invoke('create', "NUEVO CUESTIONARIO DE PAISAJES SONOROS.");
-}
-
-btn_quiz.onclick = () => {
-
-    console.log("Rellenamos el Cuestionario");
-
-    //-- Enviar mensaje al proceso principal
-    electron.ipcRenderer.invoke('quiz', "RELLENAR CUESTIONARIO DE PAISAJES SONOROS.");
-}
-
-btn_show.onclick = () => {
-
-    console.log("Mostramos los resultados del Cuestionario");
-
-    //-- Enviar mensaje al proceso principal
-    electron.ipcRenderer.invoke('show', "RESULTADO CUESTIONARIO DE PAISAJES SONOROS.");
-}
-
-btn_test.onclick = () => {
-    display.innerHTML += "TEST! ";
-    console.log("Botón apretado!");
-
-    //-- Enviar mensaje al proceso principal
-    electron.ipcRenderer.invoke('test', "MENSAJE DE PRUEBA: Boton apretado");
+        //-- Los archivos están en remoto.
+        case true:
+            file_location_online = true;
+            option_true = "online_button";
+            option_false = "local_button";
+            break;
+        //-- Los archivos están en local.
+        default:
+            file_location_online = false;
+            option_true = "local_button";
+            option_false = "online_button";
+            break;
+    }
+    document.getElementById(option_true).style.animation = "neon 5s infinite";
+    document.getElementById(option_false).style.animation = "";
 }
 
 
