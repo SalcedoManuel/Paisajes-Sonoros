@@ -19,25 +19,24 @@ var number_recordings_questions_replied = 1;
 
 // Variables que guardan los PATH a los archivos.
 // Cada Array interno guarda la info de cada lugar max. 3.
+// Los archivos son locales o en remoto --> file_location_online
 var name_scenary = [[],[],[]];
 var name_actual_scenary = "";
+var file_location_online = false;
 var audio_files = [[],[],[]];
 var visual_files = [[],[],[]];
+var questions_replies = [];
+var questions_types_replies = [];
 
 // Variables que guardan las preguntas que se van a usar.
 var user_questions = new Object;
 var places_questions = new Object;
-var recordings_questions = new Object;
-var generic_questions = new Object;
 var type_of_question_active = "";
 
 // Respuestas del cuestionario.
-var edad = 0;
-var genero = "";
 var user_object = new Object;
 var all_places_replies = [];
 var all_recordings_replies = [];
-var generic_object = new Object;
 
 function seek_quizs() {
     // Pedimos al proceso Main que nos mande los quizs ya creados.
@@ -92,8 +91,8 @@ function show_questions() {
         case "user_questions":
             //-- Preguntas al participante
             var table_user_questions = '<table><caption><div id="wrapper_title_question"><h2>Cuestionario: '+quiz_name_actual_file.split('.')[0]+'</h2></div></caption>'+
-            '<tr><th><h3>Resumen General:</h3></th><th><h3>Preguntas Generales al Participante</h3></th></tr>'+
-            '<tr><td rowspan="2" style="border-right: 2px white solid"><div id="wrapper_files" style="margin-right:10px;"></div></td><td><div id="wrapper_replys" style="margin-left: 5px;"></div></td></tr>'+
+            '<tr><th><h3>Resumen General:</h3></th><th><h3>Preguntas Generales al Participante</h3></th><th><h3>Material de Apoyo</h3></th></tr>'+
+            '<tr><td rowspan="2" style="border-right: 2px white solid"><div id="wrapper_files" style="margin-right:10px;"></div></td><td style="border-right: 2px white solid"><div id="wrapper_replys" style="margin-left: 5px;"></div></td><td></td></tr>'+
             '<tr><th><div id="wrapper_next"></div></th></tr></table>';               
             document.getElementById("wrapper2").innerHTML = table_user_questions;
             //-- Cambiar Título.
@@ -115,28 +114,6 @@ function show_questions() {
             document.getElementById("wrapper_next").innerHTML = '<button id="button_next" onclick="functions_quiz.next_option(0)">Siguiente</button>';            
             break;
         case "places_questions":
-            var table_places_questions = '<table><caption><div id="wrapper_title_question"><h2>Cuestionario: '+quiz_name_actual_file.split('.')[0]+'</h2></div></caption>'+
-            '<tr><th style="padding-right: 5px;"><h3>Nombre Escenario:</h3></th><th><h3>Preguntas sobre el Escenario</h3></th></tr>'+
-            '<tr><td rowspan="2" style="border-right: 2px white solid"><div id="wrapper_files" style="margin-right:10px;"></div></td><td><div id="wrapper_replys" style="margin-left: 5px;"></div></td></tr>'+
-            '<tr><th><div id="wrapper_next"></div></th></tr></table>';
-            document.getElementById("wrapper2").innerHTML = table_places_questions;
-            console.log(document.getElementById("wrapper2").innerHTML)
-            //-- Preguntas al participante
-            //-- Se modifica el Nombre del Escenario.
-            document.getElementById("wrapper_files").innerHTML = '<h2>'+name_scenary[number_places_questions_replied]+'</h2>';
-            // Se vacian los replys.
-            replys = document.getElementById("wrapper_replys");
-            replys.innerHTML = "";
-            console.log(Object.keys(places_questions).length)
-            name_actual_scenary = name_scenary[number_places_questions_replied];
-            for (let i = 0; i < Object.keys(places_questions).length; i++) {
-                let pos = i + 1;
-                replys.innerHTML += functions_quiz.add_places_questions(pos);    
-            }
-            document.getElementById("wrapper_next").innerHTML = '<button onclick="functions_quiz.next_option(1)">Siguiente</button>';
-            console.log(document.getElementById("wrapper2").innerHTML)
-            break;
-        case "recordings_questions":
             var table_recordings_questions = '<table><caption><div id="wrapper_title_question"><h2>Cuestionario: '+quiz_name_actual_file.split('.')[0]+'</h2></div></caption>'+
             '<tr><th style="padding-right: 5px;"><h3>Nombre Escenario:</h3></th><th><h3>Preguntas sobre el Escenario</h3></th></tr>'+
             '<tr><td rowspan="2" style="border-right: 2px white solid"><div id="wrapper_files" style="margin-right:10px;"></div></td><td><div id="wrapper_replys" style="margin-left: 5px;"></div></td></tr>'+
@@ -166,31 +143,7 @@ function show_questions() {
             }
             document.getElementById("wrapper_next").innerHTML = '<button onclick="functions_quiz.next_option(2)">Siguiente</button>';
             break;
-        case "generic_questions":
-            // Si el número de lugares es uno y el número de grabaciones también lo es no hay nada con lo que comparar al solo haber una grabación y un solo lugar.
-            // Por tanto, eliminamos las preguntas genéricas.
-            var table_generic_questions = '<table><caption><div id="wrapper_title_question"><h2>Preguntas Genéricas del Cuestionario: '+quiz_name_actual+'</h2></div></caption>'+
-            '<tr><td><div id="wrapper_files"></div></td></tr>'+
-            '<tr><td><div id="wrapper_replys"></div></td></tr>'+
-            '<tr><th><div id="wrapper_next"></div></th></tr></table>';
-            document.getElementById("wrapper2").innerHTML = table_generic_questions;
-            if (number_places == 1 && number_recordings == 1) {
-                replys = document.getElementById("wrapper_replys");
-                replys.innerHTML = '<h2>Al no haber suficientes recursos para comparar este apartado se rellena automáticamente.</h2>';
-                document.getElementById("wrapper_next").innerHTML = '<button onclick="functions_quiz.end_quiz()">Finalizar</button>';
-            }else{        
-                document.getElementById("wrapper_title_question").innerHTML = "<h2>Preguntas Genéricas del Cuestionario: &nbsp"+quiz_name_actual+"</h2>";
-                replys = document.getElementById("wrapper_replys");
-                console.log("Número de Preguntas Genéricas",Object.keys(generic_questions).length)
-                e = places_questions * recordings_questions;
-                for (let i = 0; i < Object.keys(generic_questions).length; i++) {
-                    let pos = i + 1;
-                    replys.innerHTML += functions_quiz.add_generic_questions(pos,i);    
-                }
-                document.getElementById("wrapper_next").innerHTML = '<button onclick="functions_quiz.end_quiz()">Finalizar</button>';
-            }
 
-            break;
         default:
             break;
     }
@@ -209,11 +162,17 @@ function Select_Quiz(position) {
     var quiz_json = JSON.parse(FILE_JSON);
 
     // Extraemos primero la información genérica.
+    // Sacamos el nombre del Cuestionario
     quiz_name_actual = quiz_json["Name_Quiz"];
     console.log("El nombre del quiz actual es: "+quiz_name_actual_file)
+    // Cambiamos en el archivo principal el nuevo nombre del cuestionario.
     electron.ipcRenderer.invoke('refresh_quiz_actual_name', quiz_name_actual_file);
+    // Número de lugares a evaluar
     number_places = quiz_json["Number_Places"];
+    // Número de grabaciones a evaluar.
     number_recordings = quiz_json["Number_Recordings"];
+    // Ruta online o local
+    file_location_online = quiz_json["File_Location_Online"];
 
     //  Conociendo la información genérica extraemos
     // las rutas de los ficheros y el nombre del escenario.
@@ -227,9 +186,11 @@ function Select_Quiz(position) {
     // Ahora toca obtener las preguntas.
     user_questions = quiz_json["questions"][0];
     places_questions = quiz_json["questions"][1];
-    recordings_questions = quiz_json["questions"][2];
-    generic_questions = quiz_json["questions"][3];
-
+    //-- Tipos de Preguntas 
+    questions_types_replies = quiz_json["questions_types_replies"];
+    // Respuestas de las preguntas
+    questions_replies = quiz_json["questions_replies"];
+    // Pregunta Activa, iniciamos las preguntas. 
     type_of_question_active = "user_questions";
     show_questions();
 }

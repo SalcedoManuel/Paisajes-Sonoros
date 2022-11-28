@@ -46,14 +46,13 @@
           "1":"¿En qué medida estás de acuerdo o en desacuerdo con los siguientes 8 adjetivos como descriptores del entorno acústico que escuchas?",
           "2":"En general, ¿Cómo describirías la calidad acústica del entorno que escuchas?",
           "3":"¿Cuánto tiempo permanecerías en un lugar con un ambiente sonoro como este?",
-          "4":"¿Para cuál de los siguientes contextos urbanos crees que es adecuado el entorno acústico que escuchas?"
-      },{
-          "1":"¿A qué período del año crees que se corresponde el entorno sonoro que escuchas?"
+          "4":"¿Para cuál de los siguientes contextos urbanos crees que es adecuado el entorno acústico que escuchas?",
+          "5":"¿A qué período del año crees que se corresponde el entorno sonoro que escuchas?"
       }
     ],
     "questions_replies":[
       {
-          "Introduce aquí tu puntaje auditivo obtenido en el test hearWHO":"0",
+          "Introduce aquí tu puntaje auditivo obtenido en el test hearWHO":["0"],
           "¿En qué medida estás de acuerdo o en desacuerdo con los siguientes 8 adjetivos como descriptores del entorno acústico que escuchas?": ["Agradable/Placentero","Sin Actividad/Estático","Desagradable/Molesto","Con Actividad/Dinámico"],
           "En general, ¿Cómo describirías la calidad acústica del entorno que escuchas?":["Muy malo","Malo","Ni bueno ni malo","Bueno","Muy bueno"],
           "¿Cuánto tiempo permanecerías en un lugar con un ambiente sonoro como este?": ["Insoportable","Me molesta un poco","Para pasar un rato","Pasaría bastante tiempo","Me encanta"],
