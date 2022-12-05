@@ -98,7 +98,8 @@ function show_questions() {
             //-- Cambiar Título.
             let info = document.getElementById("wrapper_files");
             for (let i = 0; i < number_places; i++) {
-                info.innerHTML += "Nombre del Escenario: " + name_scenary[i] + "<br>"
+                info.innerHTML += "Nombre del Escenario: " + name_scenary[i] + "<br>";
+                name_actual_scenary = name_scenary[i];
                 for (let e = 0; e < number_recordings; e++) {
                    info.innerHTML += "Número de tomas: " +  (e+1) + "<br>";                    
                 }
@@ -119,29 +120,49 @@ function show_questions() {
             '<tr><td rowspan="2" style="border-right: 2px white solid"><div id="wrapper_files" style="margin-right:10px;"></div></td><td><div id="wrapper_replys" style="margin-left: 5px;"></div></td></tr>'+
             '<tr><th><div id="wrapper_next"></div></th></tr></table>';
             document.getElementById("wrapper2").innerHTML = table_recordings_questions;
-            
+            //-- Contenido visual
+            console.log("Grabación número:" + number_recordings_questions_replied)
+            name_actual_scenary = name_scenary[number_places_questions_replied]
             aux_visual = visual_files[number_places_questions_replied][number_recordings_questions_replied-1].split(".");
             aux_visual_length = aux_visual.length;
-            console.log(aux_visual[aux_visual_length-1])
-            format_visual = aux_visual[aux_visual_length-1];
+            console.log(aux_visual[aux_visual_length-1])/* Formato del contenido visual */
+            format_visual = aux_visual[aux_visual_length-1]; // El formato del vídeo o de la imagen.
+            // Dependiendo del formato se eligirá una foto o un video.
             if (format_visual == 'jpg' || format_visual == 'jiff' || format_visual == 'png' || format_visual == 'jfif') {
                 document.getElementById("wrapper_files").innerHTML += '<img id="file_image" src="'+visual_files[number_places_questions_replied][number_recordings_questions_replied-1]+'" alt=""></img><br>';
             }else if (format_visual == 'mp4' || format_visual == 'ogg' || format_visual == 'webm') {
                 document.getElementById("wrapper_files").innerHTML += '<video id="file_video" src="'+visual_files[number_places_questions_replied][number_recordings_questions_replied-1]+'" autoplay muted loop></video><br>';
             }
             
-
+            // Añadimos la etiqueta de audio.
             document.getElementById("wrapper_files").innerHTML += '<audio controls loop><source src="' +
             audio_files[number_places_questions_replied][number_recordings_questions_replied-1] + '"></audio>';
             replys = document.getElementById("wrapper_replys");
             replys.innerHTML = "";
-            console.log(Object.keys(recordings_questions).length)
-            replys.innerHTML +=name_scenary[number_places_questions_replied]+ " Toma número: " + number_recordings_questions_replied + "<br>";
-            for (let i = 0; i < Object.keys(recordings_questions).length; i++) {
+            //console.log(Object.keys(places_questions))
+            //console.table(places_questions)
+            for (let i = 0; i < Object.keys(places_questions).length; i++) {
                 let pos = i + 1;
-                replys.innerHTML += functions_quiz.add_recordings_questions(pos);    
+                replys.innerHTML += functions_quiz.add_places_questions(pos);    
             }
-            document.getElementById("wrapper_next").innerHTML = '<button onclick="functions_quiz.next_option(2)">Siguiente</button>';
+            document.getElementById("wrapper_next").innerHTML = '<button onclick="functions_quiz.next_option(1)">Siguiente</button>';
+            console.log("Número grabaciones do it:" + number_recordings_questions_replied)
+            
+
+            switch (number_recordings_questions_replied) {
+                case number_recordings:
+                    number_places_questions_replied += 1;
+                    number_recordings_questions_replied = 1
+                    if (number_places == number_places_questions_replied ) {
+                        document.getElementById("wrapper_next").innerHTML = '<button onclick="functions_quiz.end_quiz()">Finalizar</button>';
+                    }
+                    break;
+            
+                default:
+                    number_recordings_questions_replied += 1;
+                    break;
+            }
+
             break;
 
         default:

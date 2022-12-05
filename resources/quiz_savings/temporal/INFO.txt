@@ -1,0 +1,1 @@
+En esta carpeta se guardan los resultados de un cuestionario, aquí se guardarán los ficheros de manera temporal hasta que el usuario decida que va a hacer con ellos.
