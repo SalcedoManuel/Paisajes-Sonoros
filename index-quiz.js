@@ -31,6 +31,7 @@ var questions_types_replies = [];
 // Variables que guardan las preguntas que se van a usar.
 var user_questions = new Object;
 var places_questions = new Object;
+var places_replies_tag = new Object;
 var type_of_question_active = "";
 
 // Respuestas del cuestionario.
@@ -205,8 +206,12 @@ function Select_Quiz(position) {
     }
 
     // Ahora toca obtener las preguntas.
+    //-- Preguntas al usuario
     user_questions = quiz_json["questions"][0];
+    //-- Preguntas sobre el escenario para mostrar.
     places_questions = quiz_json["questions"][1];
+    //-- Respuestas de las preguntas del escenario.
+    places_replies_tag = quiz_json["questions_replies"][1]
     //-- Tipos de Preguntas 
     questions_types_replies = quiz_json["questions_types_replies"];
     // Respuestas de las preguntas

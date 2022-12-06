@@ -87,39 +87,6 @@ function add_places_questions(pos) {
     return reply;
 }
 
-function select_option(question, value) {
-
-    // Con el valor question y el valor value obtenemos la salida que mostrará el orden de las respuestas.
-    let id_text = "output"+question;
-    let output = document.getElementById(id_text);
-    console.log("Dentro: " + id_text)
-    // Añadimos el valor al string.
-    // Si el indexOf(value) = -1 implica que no hay ningún elemento
-    if (output.innerHTML == ".") {
-        output.innerHTML = value;
-    }else{
-        console.log("Es -1 si no esta: "+output.innerHTML.indexOf(value))
-        if (output.innerHTML.indexOf(value) == -1) {
-            output.innerHTML += value;
-        }else{
-            // Obtenemos la posición a eliminar.
-            console.log("La posición del elemento a eliminar" + output.innerHTML.indexOf(value));
-            // Eliminamos del string al caracter.
-            let str = "";
-            for (let i = 0; i < output.innerHTML.length; i++) {
-                console.log(output.innerHTML[i])
-                if (value != output.innerHTML[i]) {
-                    str += output.innerHTML[i];
-                    console.log("String con los valores: "+str)
-                }                
-            }
-            output.innerHTML = str;
-            console.log("Resultado al borrar: " + output);
-            
-        }
-    }
-}
-
 function next_option(type) {
     switch (type) {
         // Case 0, sacar datos del las PREGUNTAS DE USUARIO.
@@ -143,7 +110,12 @@ function next_option(type) {
             let places = [];
             var places_replies = new Object;
             places_replies["Name_Scenary"] = name_actual_scenary;
-            for (let i = 0; i < Object.keys(places_questions).length; i++) {
+            //-- Número de preguntas a guardar.
+            let number_answers = Object.keys(places_questions).length+3;
+            console.log("-----------------------------Número de respuestas: " + number_answers)
+            console.table(places_replies_tag)
+            console.table(places_questions)
+            for (let i = 0; i < number_answers; i++) {
                 let id_text = "places"+i;
                 let places_list = document.getElementsByName(id_text);
                     for (let e = 0; e < places_list.length; e++) {
@@ -151,9 +123,10 @@ function next_option(type) {
                             places[i] = places_list[e].value;
                         }                
                     }
-                places_replies[places_questions[i+1]] =  places[i];   
+                
+                places_replies[places_replies_tag[i+1]] =  places[i];   
             }
-            console.log("Replies - Places: "+places_replies);
+            console.table(places_replies)
             // Añadimos las respuestas de este apartado al respuestas general.
             all_places_replies.push(places_replies);
             show_questions();
@@ -168,7 +141,12 @@ function end_quiz() {
     let places = [];
     var places_replies = new Object;
     places_replies["Name_Scenary"] = name_actual_scenary;
-    for (let i = 0; i < Object.keys(places_questions).length; i++) {
+    //-- Número de preguntas a guardar.
+    let number_answers = Object.keys(places_questions).length+3;
+    console.log("-----------------------------Número de respuestas: " + number_answers)
+    console.table(places_replies_tag)
+    console.table(places_questions)
+    for (let i = 0; i < number_answers; i++) {
         let id_text = "places"+i;
         let places_list = document.getElementsByName(id_text);
             for (let e = 0; e < places_list.length; e++) {
@@ -176,12 +154,12 @@ function end_quiz() {
                     places[i] = places_list[e].value;
                 }                
             }
-        places_replies[places_questions[i+1]] =  places[i];   
+        
+        places_replies[places_replies_tag[i+1]] =  places[i];   
     }
-    console.log("Replies - Places: "+places_replies);
+    console.table(places_replies)
     // Añadimos las respuestas de este apartado al respuestas general.
     all_places_replies.push(places_replies);
-    console.table(all_places_replies);
     
     // Creamos una variable que guardará las respuestas.
     completed_quiz = new Object;
@@ -214,7 +192,6 @@ function save_file_app() {
 module.exports = {
     add_user_questions,
     add_places_questions,
-    select_option,
     next_option,
     end_quiz,
     save_file_app
