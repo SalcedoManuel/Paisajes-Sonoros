@@ -35,10 +35,14 @@ function get_names_places() {
 
 function create_map() {
     let new_map = new Map();
-    new_map.set("¿Conoces el escenario?",[0,0]);
-    new_map.set("¿Cuál es la frecuencia de paso por él?",[0,0,0,0,0]);
-    new_map.set("Cuando lo has transitado, ¿Has prestado atención al sonido que te rodeaba?",[0,0]);
-    new_map.set("¿Las grabaciones se asemejan a tu recuerdo del escenario?",[0,0]);
+    new_map.set("Agradable/Placentero",[0,0,0,0,0]);
+    new_map.set("Sin Actividad/Estático",[0,0,0,0,0]);
+    new_map.set("Desagradable/Molesto",[0,0,0,0,0]);
+    new_map.set("Con Actividad/Dinámico",[0,0,0,0,0]);
+    new_map.set("En general, ¿Cómo describirías la calidad acústica del entorno que escuchas?",[0,0,0,0,0]);
+    new_map.set("¿Cuánto tiempo permanecerías en un lugar con un ambiente sonoro como este?",[0,0,0,0,0]);
+    new_map.set("¿Para cuál de los siguientes contextos urbanos crees que es adecuado el entorno acústico que escuchas?",[0,0,0,0]);
+    new_map.set("¿A qué período del año crees que se corresponde el entorno sonoro que escuchas?",[0,0,0]);
     return new_map;
 }
 

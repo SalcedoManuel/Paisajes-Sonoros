@@ -4,26 +4,16 @@ function create_table_info_init_string() {
     let string = '<tr valign="top" class="top_cell">'+
     '<th scope="row" id="number_quiz">Número</th>'+
     '<th id="date_quiz">Fecha de realización</th>'+
-    '<th id="age_quiz">Edad</th>'+
-    '<th id="gener_quiz">Género</th>'+
+    '<th id="score_quiz">Nota en el test HearWHO</th>'+
     '</tr>';
     return string;
 }
 function add_data_table_info() {
     for (let i = 0; i < quiz_info.length; i++) {
-        let gender = "";
-        if (quiz_info[i][0]["¿Cuál es tu género?"] == "man") {
-            gender = "Masculino";
-        }else if (quiz_info[i][0]["¿Cuál es tu género?"] == "woman") {
-            gender = "Femenino";
-        }else{
-            gender = "Otro";
-        }
         info_table.innerHTML += '<tr id="table_value">'+
         '<th id="number_quiz">'+(i+1)+'</th>'+
         '<th id="date_quiz">' + quiz_info[i][0]["Date"] + '</th>'+
-        '<th id="age_quiz">'+quiz_info[i][0]["¿Cuántos años tienes?"]+'</th>'+
-        '<th id="gener_quiz">'+gender+'</th>'+
+        '<th id="score_quiz">'+quiz_info[i][0]["Introduce aquí tu puntaje auditivo obtenido en el test hearWHO"]+'</th>'
         +'</tr>';
     }
     info_table.innerHTML = info_table.innerHTML.split("NaN").join('');
@@ -33,10 +23,10 @@ function add_data_table_info() {
 
 function table_global_results_string(params,i) {
     let string = '<table class="table_global_results">';
-    if (params == "age") {        
-        string += '<caption id="caption_table"><h2>Edades de los Participantes</h2></caption>';
+    if (params == "WHO_score") {        
+        string += '<caption id="caption_table"><h2>Puntuación en los test HearWHO</h2></caption>';
         string += '<tr style="font-size:large;">';
-        string += '<th scope="col">Grupo de Edades</th>';
+        string += '<th scope="col">Grupo de Notas</th>';
         string += '<th>Número</th>';
         string += '<th>Porcentaje</th>';
         string += '</tr>';
@@ -96,64 +86,54 @@ function get_features_diagram(number_place,number_toma) {
 
 /* FUNCIONES  DEL APARATADO de RESULTADOS GLOBALES*/
 
-function age_global_results() {
-    //-- Mostaremos ahora la franja de edad.
-    //-- Guardamos en un array cuanta gente hay con esa edad.
-    // Los rangos son 7:
+function WHO_score_global_results() {
+    //-- Mostaremos ahora la franja de los resultados del test.
+    //-- Guardamos en un array cuanta gente hay con esa puntuación.
+    // Los rangos son 4:
     // <18 años, de 18 a 25, de 26 a 35, de 36 a 45, de 46 a 55, de 56 a 65 y 65<.
-    let age_array_results = [0,0,0,0,0,0,0];
-    let age_array_porcentaje = [0,0,0,0,0,0,0];
+    let score_array_results = [0,0,0,0,0];
+    let score_array_porcentaje = [0,0,0,0,0];
     for (let i = 0; i < quiz_info.length; i++) {
-        if (quiz_info[i][0]["¿Cuántos años tienes?"] < 18) {
-            number = 0;
-        }else if (quiz_info[i][0]["¿Cuántos años tienes?"] < 26) {
+        if (quiz_info[i][0]["Introduce aquí tu puntaje auditivo obtenido en el test hearWHO"] == 0){
+            number = 0
+        }else if (quiz_info[i][0]["Introduce aquí tu puntaje auditivo obtenido en el test hearWHO"] < 50) {
             number = 1;
-        }else if (quiz_info[i][0]["¿Cuántos años tienes?"] < 36) {
+        }else if (quiz_info[i][0]["Introduce aquí tu puntaje auditivo obtenido en el test hearWHO"] < 65) {
             number = 2;
-        }else if (quiz_info[i][0]["¿Cuántos años tienes?"] < 46) {
+        }else if (quiz_info[i][0]["Introduce aquí tu puntaje auditivo obtenido en el test hearWHO"] < 76) {
             number = 3;
-        }else if (quiz_info[i][0]["¿Cuántos años tienes?"] < 56) {
+        }else{ //-- Por encima de 76 puntos.
             number = 4;
-        }else if (quiz_info[i][0]["¿Cuántos años tienes?"] < 66) {
-            number = 5;
-        }else{
-            number = 6;
         }
-        age_array_results[number] += 1;     
+        score_array_results[number] += 1;     
     }
     //-- Calculamos los porcentajes.
-    for (let i = 0; i < age_array_porcentaje.length; i++) {
-        //-- Dividimos la edad de ese intervalo con el número de participantes.
-        age_array_porcentaje[i]=(age_array_results[i]/quiz_info.length)*100 + "%";        
+    for (let i = 0; i < score_array_porcentaje.length; i++) {
+        //-- Dividimos la cantidad de notas que hay en ese intervalo con el número de participantes.
+        score_array_porcentaje[i]=(score_array_results[i]/quiz_info.length)*100 + "%";        
     }
-    let string = table_global_results_string("age",0);
+    let string = table_global_results_string("WHO_score",0);
     //-- Bucle que sirve para colocar en la APP la información de las edades.
-    for (let i = 0; i < age_array_results.length; i++) {
+    for (let i = 0; i < score_array_results.length; i++) {
         switch (i) {
             case 0:
-                string += "<tr><th> Menor 18 Años: </th>";
+                string += "<tr><th> Sin Cuestionario: </th>";
                 break;
             case 1:
-                string += "<tr><th> 18-25 Años: </th>";
+                string += "<tr><th> Menos de 50 puntos: </th>";
             break;
             case 2:
-                string += "<tr><th> 26-35 Años: </th>";
+                string += "<tr><th> Entre 50 y 64 puntos: </th>";
             break;
             case 3:
-                string += "<tr><th> 36-46 Años: </th>";
-            break;
-            case 4:
-                string += "<tr><th> 46-55 Años: </th>";
-            break;
-            case 5:
-                string += "<tr><th> 55-65 Años: </th>";
+                string += "<tr><th> Entre 65 y 75 puntos: </th>";
             break;
             default:
-                string += "<tr><th> Mayor 65 Años: </th>";
-                break;
+                string += "<tr><th> Por encima de 75 puntos: </th>";
+            break;
         }
         string += '<td id="value_table">';
-        string += age_array_results[i] + '</td><td id="value_table">'+age_array_porcentaje[i]+"</td></tr>";
+        string += score_array_results[i] + '</td><td id="value_table">'+score_array_porcentaje[i]+"</td></tr>";
     }
     string += '</table>';
     global_results.innerHTML += string + "<br>";
@@ -204,7 +184,10 @@ function gender_global_results() {
 
 function places_global_results() {
     const number_people = quiz_info.length;
-    const number_places = quiz_info[0][1].length;
+    console.log("Número de personas: "+number_people)
+    const number_places = quiz_info[0][0]["Places_Number"];
+    console.log("Número de lugares: " + number_places)
+    const number_recordings = quiz_info[0][0]["Recordings_Number"];
     const VALUE = 1/number_people;
 
     const name_Scenaries = functions_readfile.get_names_places();
@@ -216,6 +199,11 @@ function places_global_results() {
     /* Crearemos un array que contendrá las partes de las preguntas.*/
 
     var array = new Array()
+    for (let index = 0; index < number_places*number_recordings; index++) {
+        array.push(functions_readfile.create_map())
+        
+    }
+    /*
     if (number_places == 1) {
         array.push(functions_readfile.create_map())
     }
@@ -228,53 +216,138 @@ function places_global_results() {
         array.push(functions_readfile.create_map())    
         array.push(functions_readfile.create_map())
     }
-
-    for (let e = 0; e < number_places; e++) {
+    */
+    for (let e = 0; e < number_places*number_recordings; e++) {
         for (let i = 0; i < number_people; i++) {
-        if (quiz_info[i][1][e]['¿Conoces el escenario?'] == "yes") {
-            let value = array[e].get("¿Conoces el escenario?")
-            value[0] += 1/number_people;
-        }else{
-            let value = array[e].get("¿Conoces el escenario?")
-            value[1] += 1/number_people;
-        }
+            if (quiz_info[i][1][e]['Agradable/Placentero'] == "muy_desacuerdo") {
+                let value = array[e].get("Agradable/Placentero")
+                value[0] += 1/number_people;
+            }else if(quiz_info[i][1][e]['Agradable/Placentero'] == "desacuerdo"){
+                let value = array[e].get("Agradable/Placentero")
+                value[1] += 1/number_people;
+            }else if(quiz_info[i][1][e]['Agradable/Placentero'] == "neutro"){
+                let value = array[e].get("Agradable/Placentero")
+                value[2] += 1/number_people;
+            }else if(quiz_info[i][1][e]['Agradable/Placentero'] == "acuerdo"){
+                let value = array[e].get("Agradable/Placentero")
+                value[3] += 1/number_people;
+            }else if(quiz_info[i][1][e]['Agradable/Placentero'] == "muy_acuerdo"){
+                let value = array[e].get("Agradable/Placentero")
+                value[4] += 1/number_people;
+            }
 
-        if (quiz_info[i][1][e]['¿Cuál es la frecuencia de paso por él?'] == "ninguna") {
-            let value = array[e].get('¿Cuál es la frecuencia de paso por él?')
-            value[0] += 1/number_people;
-        }else if (quiz_info[i][1][e]['¿Cuál es la frecuencia de paso por él?'] == "poca") {
-            let value = array[e].get('¿Cuál es la frecuencia de paso por él?')
-            value[1] += 1/number_people;
-        }else if (quiz_info[i][1][e]['¿Cuál es la frecuencia de paso por él?'] == "aveces") {
-            let value = array[e].get('¿Cuál es la frecuencia de paso por él?')
-            value[2] += 1/number_people;
-            
-        }else if (quiz_info[i][1][e]['¿Cuál es la frecuencia de paso por él?'] == "frecuentemente") {
-            let value = array[e].get('¿Cuál es la frecuencia de paso por él?')
-            value[3] += 1/number_people;
-        }else{
-            let value = array[e].get('¿Cuál es la frecuencia de paso por él?')
-            value[4] += 1/number_people;
-        }
+            if (quiz_info[i][1][e]['Sin Actividad/Estático'] == "muy_desacuerdo") {
+                let value = array[e].get('Sin Actividad/Estático')
+                value[0] += 1/number_people;
+            }else if (quiz_info[i][1][e]['Sin Actividad/Estático'] == "desacuerdo") {
+                let value = array[e].get('Sin Actividad/Estático')
+                value[1] += 1/number_people;
+            }else if (quiz_info[i][1][e]['Sin Actividad/Estático'] == "neutro") {
+                let value = array[e].get('Sin Actividad/Estático')
+                value[2] += 1/number_people;                
+            }else if (quiz_info[i][1][e]['Sin Actividad/Estático'] == "acuerdo") {
+                let value = array[e].get('Sin Actividad/Estático')
+                value[3] += 1/number_people;
+            }else if (quiz_info[i][1][e]['Sin Actividad/Estático'] == "muy_acuerdo") {
+                let value = array[e].get('Sin Actividad/Estático')
+                value[4] += 1/number_people;
+            }
+            if (quiz_info[i][1][e]['Desagradable/Molesto'] == "muy_desacuerdo") {
+                let value = array[e].get('Desagradable/Molesto')
+                value[0] += 1/number_people;
+            }else if (quiz_info[i][1][e]['Desagradable/Molesto'] == "desacuerdo") {
+                let value = array[e].get('Desagradable/Molesto')
+                value[1] += 1/number_people;
+            }else if (quiz_info[i][1][e]['Desagradable/Molesto'] == "neutro") {
+                let value = array[e].get('Desagradable/Molesto')
+                value[2] += 1/number_people;                
+            }else if (quiz_info[i][1][e]['Desagradable/Molesto'] == "acuerdo") {
+                let value = array[e].get('Desagradable/Molesto')
+                value[3] += 1/number_people;
+            }else if (quiz_info[i][1][e]['Desagradable/Molesto'] == "muy_acuerdo") {
+                let value = array[e].get('Desagradable/Molesto')
+                value[4] += 1/number_people;
+            }
 
-        if (quiz_info[i][1][e]['Cuando lo has transitado, ¿Has prestado atención al sonido que te rodeaba?'] == "yes") {
-            let value = array[e].get('Cuando lo has transitado, ¿Has prestado atención al sonido que te rodeaba?')
-            value[0] += 1/number_people;
-        }else{
-            let value = array[e].get('Cuando lo has transitado, ¿Has prestado atención al sonido que te rodeaba?')
-            value[1] += 1/number_people;
-        }
+            if (quiz_info[i][1][e]['Con Actividad/Dinámico'] == "muy_desacuerdo") {
+                let value = array[e].get('Con Actividad/Dinámico')
+                value[0] += 1/number_people;
+            }else if (quiz_info[i][1][e]['Con Actividad/Dinámico'] == "desacuerdo") {
+                let value = array[e].get('Con Actividad/Dinámico')
+                value[1] += 1/number_people;
+            }else if (quiz_info[i][1][e]['Con Actividad/Dinámico'] == "neutro") {
+                let value = array[e].get('Con Actividad/Dinámico')
+                value[2] += 1/number_people;                
+            }else if (quiz_info[i][1][e]['Con Actividad/Dinámico'] == "acuerdo") {
+                let value = array[e].get('Con Actividad/Dinámico')
+                value[3] += 1/number_people;
+            }else if (quiz_info[i][1][e]['Con Actividad/Dinámico'] == "muy_acuerdo") {
+                let value = array[e].get('Con Actividad/Dinámico')
+                value[4] += 1/number_people;
+            }
 
-        if (quiz_info[i][1][e]['¿Las grabaciones se asemejan a tu recuerdo del escenario?'] == "yes") {
-            let value = array[e].get('¿Las grabaciones se asemejan a tu recuerdo del escenario?')
-            value[0] += 1/number_people;
-        }else{
-            let value = array[e].get('¿Las grabaciones se asemejan a tu recuerdo del escenario?')
-            value[1] += 1/number_people;
-        }
+            if (quiz_info[i][1][e]['En general, ¿Cómo describirías la calidad acústica del entorno que escuchas?'] == "muy_malo") {
+                let value = array[e].get('En general, ¿Cómo describirías la calidad acústica del entorno que escuchas?')
+                value[0] += 1/number_people;
+            }else if (quiz_info[i][1][e]['En general, ¿Cómo describirías la calidad acústica del entorno que escuchas?'] == "malo") {
+                let value = array[e].get('En general, ¿Cómo describirías la calidad acústica del entorno que escuchas?')
+                value[1] += 1/number_people;
+            }else if (quiz_info[i][1][e]['En general, ¿Cómo describirías la calidad acústica del entorno que escuchas?'] == "neutro") {
+                let value = array[e].get('En general, ¿Cómo describirías la calidad acústica del entorno que escuchas?')
+                value[2] += 1/number_people;                
+            }else if (quiz_info[i][1][e]['En general, ¿Cómo describirías la calidad acústica del entorno que escuchas?'] == "bueno") {
+                let value = array[e].get('En general, ¿Cómo describirías la calidad acústica del entorno que escuchas?')
+                value[3] += 1/number_people;
+            }else if (quiz_info[i][1][e]['En general, ¿Cómo describirías la calidad acústica del entorno que escuchas?'] == "muy_bueno") {
+                let value = array[e].get('En general, ¿Cómo describirías la calidad acústica del entorno que escuchas?')
+                value[4] += 1/number_people;
+            }
+
+            if (quiz_info[i][1][e]['¿Cuánto tiempo permanecerías en un lugar con un ambiente sonoro como este?'] == "insoportable") {
+                let value = array[e].get('¿Cuánto tiempo permanecerías en un lugar con un ambiente sonoro como este?')
+                value[0] += 1/number_people;
+            }else if (quiz_info[i][1][e]['¿Cuánto tiempo permanecerías en un lugar con un ambiente sonoro como este?'] == "molesto") {
+                let value = array[e].get('¿Cuánto tiempo permanecerías en un lugar con un ambiente sonoro como este?')
+                value[1] += 1/number_people;
+            }else if (quiz_info[i][1][e]['¿Cuánto tiempo permanecerías en un lugar con un ambiente sonoro como este?'] == "bien") {
+                let value = array[e].get('¿Cuánto tiempo permanecerías en un lugar con un ambiente sonoro como este?')
+                value[2] += 1/number_people;                
+            }else if (quiz_info[i][1][e]['¿Cuánto tiempo permanecerías en un lugar con un ambiente sonoro como este?'] == "bastante") {
+                let value = array[e].get('¿Cuánto tiempo permanecerías en un lugar con un ambiente sonoro como este?')
+                value[3] += 1/number_people;
+            }else if (quiz_info[i][1][e]['¿Cuánto tiempo permanecerías en un lugar con un ambiente sonoro como este?'] == "encanta") {
+                let value = array[e].get('¿Cuánto tiempo permanecerías en un lugar con un ambiente sonoro como este?')
+                value[4] += 1/number_people;
+            }
+
+            if (quiz_info[i][1][e]['¿Para cuál de los siguientes contextos urbanos crees que es adecuado el entorno acústico que escuchas?'] == "comercial") {
+                let value = array[e].get('¿Para cuál de los siguientes contextos urbanos crees que es adecuado el entorno acústico que escuchas?')
+                value[0] += 1/number_people;
+            }else if (quiz_info[i][1][e]['¿Para cuál de los siguientes contextos urbanos crees que es adecuado el entorno acústico que escuchas?'] == "residencial") {
+                let value = array[e].get('¿Para cuál de los siguientes contextos urbanos crees que es adecuado el entorno acústico que escuchas?')
+                value[1] += 1/number_people;
+            }else if (quiz_info[i][1][e]['¿Para cuál de los siguientes contextos urbanos crees que es adecuado el entorno acústico que escuchas?'] == "recreativo") {
+                let value = array[e].get('¿Para cuál de los siguientes contextos urbanos crees que es adecuado el entorno acústico que escuchas?')
+                value[2] += 1/number_people;                
+            }else if (quiz_info[i][1][e]['¿Para cuál de los siguientes contextos urbanos crees que es adecuado el entorno acústico que escuchas?'] == "otro") {
+                let value = array[e].get('¿Para cuál de los siguientes contextos urbanos crees que es adecuado el entorno acústico que escuchas?')
+                value[3] += 1/number_people;                
+            }
+
+            if (quiz_info[i][1][e]['¿A qué período del año crees que se corresponde el entorno sonoro que escuchas?'] == "invierno") {
+                let value = array[e].get('¿A qué período del año crees que se corresponde el entorno sonoro que escuchas?')
+                value[0] += 1/number_people;
+            }else if (quiz_info[i][1][e]['¿A qué período del año crees que se corresponde el entorno sonoro que escuchas?'] == "verano") {
+                let value = array[e].get('¿A qué período del año crees que se corresponde el entorno sonoro que escuchas?')
+                value[1] += 1/number_people;
+            }else if (quiz_info[i][1][e]['¿A qué período del año crees que se corresponde el entorno sonoro que escuchas?'] == "otro") {
+                let value = array[e].get('¿A qué período del año crees que se corresponde el entorno sonoro que escuchas?')
+                value[2] += 1/number_people;                
+            }
 
         }
     }
+    console.table(array)
     string += "<h3> Preguntas sobre los Escenarios </h3>"
     var preguntas = array[0].keys();
     // Crearemos tantas tablas como preguntas 
@@ -292,63 +365,185 @@ function places_global_results() {
             string += '<th>Número</th><th>Porcentaje</th>';
         }
         string += '</tr>';
-
-        if (pregunta_actual == "¿Cuál es la frecuencia de paso por él?") {
+        if (pregunta_actual == "En general, ¿Cómo describirías la calidad acústica del entorno que escuchas?") {
             string += '<tr>';
-            string +='<th>Ninguna</th>'
-            for (let index = 0; index < number_places; index++) {
-                let number = array[index].get('¿Cuál es la frecuencia de paso por él?')[0]
-                console.log(number)
+            string +='<th>Muy Malo</th>'
+            for (let index = 0; index < number_places*number_recordings; index++) {
+                let number = array[index].get('En general, ¿Cómo describirías la calidad acústica del entorno que escuchas?')[0]
+
                 string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
             }
             string += '</tr>';
 
-            string +='<th>Poca</th>'
-            for (let index = 0; index < number_places; index++) {
-                let number = array[index].get('¿Cuál es la frecuencia de paso por él?')[1]
-                console.log(number)
+            string +='<th>Malo</th>'
+            for (let index = 0; index < number_places*number_recordings; index++) {
+                let number = array[index].get('En general, ¿Cómo describirías la calidad acústica del entorno que escuchas?')[1]
+                
                 string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
             }
             string += '</tr>';
 
-            string +='<th>A veces</th>'
-            for (let index = 0; index < number_places; index++) {
-                let number = array[index].get('¿Cuál es la frecuencia de paso por él?')[2]
-                console.log(number)
+            string +='<th>Ni bueno ni malo</th>'
+            for (let index = 0; index < number_places*number_recordings; index++) {
+                let number = array[index].get('En general, ¿Cómo describirías la calidad acústica del entorno que escuchas?')[2]
+                
                 string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
             }
             string += '</tr>';
 
-            string +='<th>Frecuentemente</th>'
-            for (let index = 0; index < number_places; index++) {
-                let number = array[index].get('¿Cuál es la frecuencia de paso por él?')[3]
-                console.log(number)
+            string +='<th>Bueno</th>'
+            for (let index = 0; index < number_places*number_recordings; index++) {
+                let number = array[index].get('En general, ¿Cómo describirías la calidad acústica del entorno que escuchas?')[3]
+                
                 string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
             }
             string += '</tr>';
 
-            string +='<th>Diariamente</th>'
-            for (let index = 0; index < number_places; index++) {
-                let number = array[index].get('¿Cuál es la frecuencia de paso por él?')[4]
-                console.log(number)
+            string +='<th>Muy bueno</th>'
+            for (let index = 0; index < number_places*number_recordings; index++) {
+                let number = array[index].get('En general, ¿Cómo describirías la calidad acústica del entorno que escuchas?')[4]
+                string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
+            }
+            string += '</tr>'; 
+        }else if(pregunta_actual == "¿Cuánto tiempo permanecerías en un lugar con un ambiente sonoro como este?"){
+            string += '<tr>';
+            string +='<th>Me parece insoportable y no aguantaría ni 10 minutos.</th>'
+            for (let index = 0; index < number_places*number_recordings; index++) {
+                let number = array[index].get('¿Cuánto tiempo permanecerías en un lugar con un ambiente sonoro como este?')[0]
+                string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
+            }
+            string += '</tr>';
+
+            string +='<th>Me molesta un poco y no permanecería mucho tiempo ahí.</th>'
+            for (let index = 0; index < number_places*number_recordings; index++) {
+                let number = array[index].get('¿Cuánto tiempo permanecerías en un lugar con un ambiente sonoro como este?')[1]
+                
+                string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
+            }
+            string += '</tr>';
+
+            string +='<th>Para un rato está bien, pero sin más.</th>'
+            for (let index = 0; index < number_places*number_recordings; index++) {
+                let number = array[index].get('¿Cuánto tiempo permanecerías en un lugar con un ambiente sonoro como este?')[2]
+                
+                string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
+            }
+            string += '</tr>';
+
+            string +='<th>Pasaría bastante tiempo en un lugar como este.</th>'
+            for (let index = 0; index < number_places*number_recordings; index++) {
+                let number = array[index].get('¿Cuánto tiempo permanecerías en un lugar con un ambiente sonoro como este?')[3]
+                
+                string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
+            }
+            string += '</tr>';
+
+            string +='<th>Me encanta y pasaría el resto de mi vida en este lugar.</th>'
+            for (let index = 0; index < number_places*number_recordings; index++) {
+                let number = array[index].get('¿Cuánto tiempo permanecerías en un lugar con un ambiente sonoro como este?')[4]
+                
+                string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
+            }
+            string += '</tr>';
+        }else if(pregunta_actual == "¿Para cuál de los siguientes contextos urbanos crees que es adecuado el entorno acústico que escuchas?"){
+            string += '<tr>';
+            string +='<th>Comercial</th>'
+            for (let index = 0; index < number_places*number_recordings; index++) {
+                let number = array[index].get('¿Para cuál de los siguientes contextos urbanos crees que es adecuado el entorno acústico que escuchas?')[0]
+                
+                string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
+            }
+            string += '</tr>';
+
+            string +='<th>Residencial</th>'
+            for (let index = 0; index < number_places*number_recordings; index++) {
+                let number = array[index].get('¿Para cuál de los siguientes contextos urbanos crees que es adecuado el entorno acústico que escuchas?')[1]
+                
+                string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
+            }
+            string += '</tr>';
+
+            string +='<th>Recreativo</th>'
+            for (let index = 0; index < number_places*number_recordings; index++) {
+                let number = array[index].get('¿Para cuál de los siguientes contextos urbanos crees que es adecuado el entorno acústico que escuchas?')[2]
+                
+                string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
+            }
+            string += '</tr>';
+
+            string +='<th>Otro</th>'
+            for (let index = 0; index < number_places*number_recordings; index++) {
+                let number = array[index].get('¿Para cuál de los siguientes contextos urbanos crees que es adecuado el entorno acústico que escuchas?')[3]
+                
+                string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
+            }
+            string += '</tr>';
+        }else if(pregunta_actual == "¿A qué período del año crees que se corresponde el entorno sonoro que escuchas?"){
+            string += '<tr>';
+            string +='<th>Invierno</th>'
+            for (let index = 0; index < number_places*number_recordings; index++) {
+                let number = array[index].get('¿A qué período del año crees que se corresponde el entorno sonoro que escuchas?')[0]
+                
+                string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
+            }
+            string += '</tr>';
+
+            string +='<th>Verano</th>'
+            for (let index = 0; index < number_places*number_recordings; index++) {
+                let number = array[index].get('¿A qué período del año crees que se corresponde el entorno sonoro que escuchas?')[1]
+                
+                string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
+            }
+            string += '</tr>';
+
+            string +='<th>Otro</th>'
+            for (let index = 0; index < number_places*number_recordings; index++) {
+                let number = array[index].get('¿A qué período del año crees que se corresponde el entorno sonoro que escuchas?')[2]
+                
                 string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
             }
             string += '</tr>';
         }else{
             string += '<tr>';
-            string +='<th>Sí</th>'
-            for (let index = 0; index < number_places; index++) {
+            string +='<th>Muy en Desacuerdo</th>'
+            for (let index = 0; index < number_places*number_recordings; index++) {
                 let number = array[index].get(pregunta_actual)[0]
-                console.log(number)
                 string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
             }
             string += '</tr>';
 
             string += '<tr>';
-            string +='<th>No</th>'
-            for (let index = 0; index < number_places; index++) {
+            string +='<th>En Desacuerdo</th>'
+            for (let index = 0; index < number_places*number_recordings; index++) {
                 let number = array[index].get(pregunta_actual)[1]
-                console.log(number)
+                
+                string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
+            }
+            string += '</tr>';
+
+            string += '<tr>';
+            string +='<th>Neutral</th>'
+            for (let index = 0; index < number_places*number_recordings; index++) {
+                let number = array[index].get(pregunta_actual)[2]
+                
+                string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
+            }
+            string += '</tr>';
+
+            string += '<tr>';
+            string +='<th>De acuerdo</th>'
+            for (let index = 0; index < number_places*number_recordings; index++) {
+                let number = array[index].get(pregunta_actual)[3]
+                
+                string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
+            }
+            string += '</tr>';
+
+            string += '<tr>';
+            string +='<th>Muy de acuerdo</th>'
+            for (let index = 0; index < number_places*number_recordings; index++) {
+                let number = array[index].get(pregunta_actual)[4]
+                
                 string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
             }
             string += '</tr>';
@@ -519,7 +714,7 @@ function generic_global_results() {
 module.exports = {
     create_table_info_init_string,
     add_data_table_info,
-    age_global_results,
+    WHO_score_global_results,
     gender_global_results,
     places_global_results,
     recordings_global_results,

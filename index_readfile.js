@@ -16,16 +16,6 @@ var info_table = document.getElementById("info_table");
 var global_results = document.getElementById("global_quiz_results");
 var diagram_examples = document.getElementById("diagram_examples");
 
-// Se rellenan en otro archivo. Son las listas para dibujar.
-var annoying_list = [];
-var calm_list= [];
-var chaotic_list = [];
-var eventful_list = [];
-var monotonous_list = [];
-var pleasant_list = [];
-var uneventful_list = [];
-var vibrant_list = [];
-
 function load_results() {
     electron.ipcRenderer.invoke('load_quizs_opened', load_quizs_opened);
 }
@@ -42,10 +32,13 @@ electron.ipcRenderer.on('load_quizs_opened', (event, message) => {
 function name_selected(file_number) {
     // Dependiendo del número se selecciona una opción u otra.
     console.log("El Quiz seleccionado es: " + load_quizs_opened[file_number]);
+    // Almacenamos el nombre del cuestionario que vamos a mostrar.
     name_quiz =load_quizs_opened[file_number];
     // Pedimos al main.js que nos pase en un array toda la información sobre los Cuestionarios hechos con ese nombre.
     electron.ipcRenderer.invoke('quizs_summary', load_quizs_opened[file_number]);
 }
+
+//--- Esta función estará esperando a recibir el resumen del custionario pedido para su posterior análisis.
 electron.ipcRenderer.on('quizs_summary', (event, message) => {
     console.log("Recibido los resultados: " + message);
     /* Se añade el nombre del Cuestionario a la página para que el Usuario de que cuestioanrio está 
@@ -54,8 +47,7 @@ electron.ipcRenderer.on('quizs_summary', (event, message) => {
     //-- Pasamos a una variable global toda la información sobre los cuestionarios realizados.
     quiz_info = message;
     console.log("Número de cuestionarios hechos: " + quiz_info.length);
-    console.log("Info " + quiz_info[0][0]["Date"])
-/* Creating a table with the information of the file. */
+    console.log("Fecha: " + quiz_info[0][0]["Date"])
     // Creamos la tabla para que se introduzcan los elementos más relevantes en ella.
 
     // La tabla estará ordenada de la forma 'First-In First-Out', el primer cuestionario en rellenarse será
@@ -67,23 +59,21 @@ electron.ipcRenderer.on('quizs_summary', (event, message) => {
     // COMENZAMOS CON EL DESARROLLO Y MUESTRA DE LOS VALORES GLOBALES
 
     // Cargamos ahora los resultados globales.
-    // Comenzamos con la información de la edad.
-    functions_tableinfo.age_global_results();
-    // Continuamos con la información del género.
-    functions_tableinfo.gender_global_results();
+    // Comenzamos con la información de los custionarios.
+    functions_tableinfo.WHO_score_global_results();
 
     // AÑADIMOS LA INFORMACIÓN SOBRE LOS LUGARES.
     functions_tableinfo.places_global_results();
 
     // AÑADIMOS LA INFORMACIÓN SOBRE LAS GRABACIONES.
-    functions_tableinfo.recordings_global_results();
+    //functions_tableinfo.recordings_global_results();
     // DIBUJAMOS LA INFORMACIÓN SOBRE LAS GRABACIONES.
-    draw();
-    
-    //AÑADIMOS LA INFORMARCIÓN SOBRE LAS CUESTIONES GENERALES.
-    functions_tableinfo.generic_global_results();
-});
+    //draw();
 
+    //AÑADIMOS LA INFORMARCIÓN SOBRE LAS CUESTIONES GENERALES.
+    //functions_tableinfo.generic_global_results();
+});
+/*
 var img = new Image(400,400);
 img.src = "images/diagram.png";
 
@@ -105,4 +95,4 @@ function draw() {
         const ctx = canvas3.getContext('2d');
         functions_canvas.canvas_create_position_and_draw(ctx,2);
     }
-}
+}*/

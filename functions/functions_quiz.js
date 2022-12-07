@@ -97,6 +97,8 @@ function next_option(type) {
             user_object["Date"] = date;
             let hearing_score = document.getElementById("score")                
             user_object[user_questions[1]] = hearing_score.value;
+            user_object["Places_Number"] = number_places;
+            user_object["Recordings_Number"] = number_recordings;
             console.log("Valor del WHO: "+user_object[user_questions[1]])
             type_of_question_active = "places_questions";
             number_places_questions_replied = 0;
@@ -110,6 +112,8 @@ function next_option(type) {
             let places = [];
             var places_replies = new Object;
             places_replies["Name_Scenary"] = name_actual_scenary;
+            places_replies["Places_Number"] = number_places_questions_replied;
+            places_replies["Recording_Number"] = number_recordings_questions_replied;
             //-- Número de preguntas a guardar.
             let number_answers = Object.keys(places_questions).length+3;
             console.log("-----------------------------Número de respuestas: " + number_answers)
@@ -141,6 +145,7 @@ function end_quiz() {
     let places = [];
     var places_replies = new Object;
     places_replies["Name_Scenary"] = name_actual_scenary;
+    places_replies["Number_Recording"] = number_recordings_questions_replied;
     //-- Número de preguntas a guardar.
     let number_answers = Object.keys(places_questions).length+3;
     console.log("-----------------------------Número de respuestas: " + number_answers)
