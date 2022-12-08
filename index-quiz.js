@@ -113,16 +113,18 @@ function show_questions() {
                 replys.innerHTML += functions_quiz.add_user_questions(pos);    
             }
             replys.innerHTML += "<br>"
-            document.getElementById("wrapper_next").innerHTML = '<button id="button_next" onclick="functions_quiz.next_option(0)">Siguiente</button>';            
+            document.getElementById("wrapper_next").innerHTML = '<button id="button_next" onclick="functions_quiz.next_option(0)">Siguiente</button>';
+          
             break;
         case "places_questions":
+            console.log("Fijo: ", number_places,number_recordings)
+            console.log("Replied",number_places_questions_replied,number_recordings_questions_replied)  
             var table_recordings_questions = '<table><caption><div id="wrapper_title_question"><h2>Cuestionario: '+quiz_name_actual_file.split('.')[0]+'</h2></div></caption>'+
             '<tr><th style="padding-right: 5px;"><h3>Nombre Escenario:</h3></th><th><h3>Preguntas sobre el Escenario</h3></th></tr>'+
             '<tr><td rowspan="2" style="border-right: 2px white solid"><div id="wrapper_files" style="margin-right:10px;"></div></td><td><div id="wrapper_replys" style="margin-left: 5px;"></div></td></tr>'+
             '<tr><th><div id="wrapper_next"></div></th></tr></table>';
             document.getElementById("wrapper2").innerHTML = table_recordings_questions;
             //-- Contenido visual
-            console.log("Grabación número:" + number_recordings_questions_replied)
             name_actual_scenary = name_scenary[number_places_questions_replied]
             aux_visual = visual_files[number_places_questions_replied][number_recordings_questions_replied-1].split(".");
             aux_visual_length = aux_visual.length;
@@ -147,23 +149,13 @@ function show_questions() {
                 replys.innerHTML += functions_quiz.add_places_questions(pos);    
             }
             document.getElementById("wrapper_next").innerHTML = '<button onclick="functions_quiz.next_option(1)">Siguiente</button>';
-            console.log("Número grabaciones do it:" + number_recordings_questions_replied)
-            
-
             switch (number_recordings_questions_replied) {
-                case number_recordings:
-                    number_places_questions_replied += 1;
-                    number_recordings_questions_replied = 1
-                    if (number_places == number_places_questions_replied ) {
+                case (number_recordings):
+                    if ((number_places-1) == number_places_questions_replied ) {
                         document.getElementById("wrapper_next").innerHTML = '<button onclick="functions_quiz.end_quiz()">Finalizar</button>';
                     }
-                    break;
-            
-                default:
-                    number_recordings_questions_replied += 1;
-                    break;
-            }
-
+                break;
+            }    
             break;
 
         default:

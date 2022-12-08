@@ -113,12 +113,9 @@ function next_option(type) {
             var places_replies = new Object;
             places_replies["Name_Scenary"] = name_actual_scenary;
             places_replies["Places_Number"] = number_places_questions_replied;
-            places_replies["Recording_Number"] = number_recordings_questions_replied;
+            places_replies["Recording_Number"] = number_recordings_questions_replied-1;
             //-- Número de preguntas a guardar.
             let number_answers = Object.keys(places_questions).length+3;
-            console.log("-----------------------------Número de respuestas: " + number_answers)
-            console.table(places_replies_tag)
-            console.table(places_questions)
             for (let i = 0; i < number_answers; i++) {
                 let id_text = "places"+i;
                 let places_list = document.getElementsByName(id_text);
@@ -130,9 +127,20 @@ function next_option(type) {
                 
                 places_replies[places_replies_tag[i+1]] =  places[i];   
             }
-            console.table(places_replies)
             // Añadimos las respuestas de este apartado al respuestas general.
             all_places_replies.push(places_replies);
+            switch (number_recordings_questions_replied) {
+                case (number_recordings):
+                    if ((number_places-1) != number_places_questions_replied ) {
+                        number_places_questions_replied += 1;
+                        number_recordings_questions_replied = 1;
+                    }
+                    break;
+            
+                default:
+                    number_recordings_questions_replied += 1;
+                    break;
+            }
             show_questions();
             break;
         default:
@@ -145,12 +153,10 @@ function end_quiz() {
     let places = [];
     var places_replies = new Object;
     places_replies["Name_Scenary"] = name_actual_scenary;
-    places_replies["Number_Recording"] = number_recordings_questions_replied;
+    places_replies["Places_Number"] = number_places_questions_replied;
+    places_replies["Number_Recording"] = number_recordings_questions_replied-1;
     //-- Número de preguntas a guardar.
     let number_answers = Object.keys(places_questions).length+3;
-    console.log("-----------------------------Número de respuestas: " + number_answers)
-    console.table(places_replies_tag)
-    console.table(places_questions)
     for (let i = 0; i < number_answers; i++) {
         let id_text = "places"+i;
         let places_list = document.getElementsByName(id_text);

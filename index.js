@@ -264,7 +264,7 @@ function logFilenamesAudio2() {
    }else if(number > 0){
        output_Audio2.innerHTML = "Se han introducido " + number + " de mas."       
    }
-
+   console.table(files_Audio2)
 }
 
 function logFilenamesAudio3() {
