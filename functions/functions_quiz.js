@@ -87,6 +87,22 @@ function add_places_questions(pos) {
     return reply;
 }
 
+function create_array(list,number) {
+    for (let i = 0; i < number; i++) {
+        list[i] = i;        
+    }
+}
+
+function random_quiz(list) {
+    var i,j,k;
+    for (i = list.length; i; i--) {
+        j = Math.floor(Math.random() * i);
+        k = list[i - 1];
+        list[i - 1] = list[j];
+        list[j] = k;
+    }
+}
+
 function next_option(type) {
     switch (type) {
         // Case 0, sacar datos del las PREGUNTAS DE USUARIO.
@@ -101,8 +117,19 @@ function next_option(type) {
             user_object["Recordings_Number"] = number_recordings;
             console.log("Valor del WHO: "+user_object[user_questions[1]])
             type_of_question_active = "places_questions";
-            number_places_questions_replied = 0;
-            number_recordings_questions_replied = 1;
+            // Aleatorizar los números para el cuestionario.
+            //--- Lista con el orden de aparición tanto en lugares como en grabaciones.
+            create_array(places_list,number_places)
+            create_array(recordings_list,number_recordings)
+            random_quiz(places_list)
+            random_quiz(recordings_list)
+            pos_places = 0;
+            pos_recording = 0;
+            console.info("Las posiciones en los array: ",pos_places,pos_recording)
+            console.table(places_list)
+            console.table(recordings_list)
+            number_places_questions_replied = places_list[pos_places];
+            number_recordings_questions_replied = recordings_list[pos_recording];
             // Ahora se mostrarán las preguntas del lugar.
             show_questions();
 
@@ -111,9 +138,12 @@ function next_option(type) {
         case 1:
             let places = [];
             var places_replies = new Object;
+            //-- Guardamos el valor exacto del 
+            number_places_questions_replied = places_list[pos_places];
+            number_recordings_questions_replied = recordings_list[pos_recording]
             places_replies["Name_Scenary"] = name_actual_scenary;
             places_replies["Places_Number"] = number_places_questions_replied;
-            places_replies["Recording_Number"] = number_recordings_questions_replied-1;
+            places_replies["Recording_Number"] = number_recordings_questions_replied;
             //-- Número de preguntas a guardar.
             let number_answers = Object.keys(places_questions).length+3;
             for (let i = 0; i < number_answers; i++) {
@@ -128,19 +158,28 @@ function next_option(type) {
                 places_replies[places_replies_tag[i+1]] =  places[i];   
             }
             // Añadimos las respuestas de este apartado al respuestas general.
-            all_places_replies.push(places_replies);
-            switch (number_recordings_questions_replied) {
-                case (number_recordings):
-                    if ((number_places-1) != number_places_questions_replied ) {
-                        number_places_questions_replied += 1;
-                        number_recordings_questions_replied = 1;
+            var position = ((places_list[pos_places]*number_recordings) - 1) + (recordings_list[pos_recording]+1);
+            console.log("Se guarda en la posición en el array: ",position)
+            all_places_replies[position] = places_replies;
+            console.table(all_places_replies)
+            switch (pos_recording) {
+                case (number_recordings-1):
+                    console.log("Como se ha evaluado 3 posiciones cambiamos el valor de la posición en el array del lugar.")
+                    if ((number_places-1) != pos_places) {
+                        pos_places += 1;
+                        pos_recording = 0;
+                    }else{
+                        number_places_questions_replied = number_recordings
                     }
                     break;
             
                 default:
-                    number_recordings_questions_replied += 1;
+                    pos_recording += 1;
                     break;
             }
+            number_places_questions_replied = places_list[pos_places];
+            number_recordings_questions_replied = recordings_list[pos_recording]
+            console.info("La nueva posición del lugar es: ",pos_places," y de la grabación es ",pos_recording)
             show_questions();
             break;
         default:
@@ -152,9 +191,11 @@ function end_quiz() {
 
     let places = [];
     var places_replies = new Object;
+    number_places_questions_replied = places_list[pos_places];
+    number_recordings_questions_replied = recordings_list[pos_recording]
     places_replies["Name_Scenary"] = name_actual_scenary;
     places_replies["Places_Number"] = number_places_questions_replied;
-    places_replies["Number_Recording"] = number_recordings_questions_replied-1;
+    places_replies["Recording_Number"] = number_recordings_questions_replied;
     //-- Número de preguntas a guardar.
     let number_answers = Object.keys(places_questions).length+3;
     for (let i = 0; i < number_answers; i++) {
@@ -170,7 +211,9 @@ function end_quiz() {
     }
     console.table(places_replies)
     // Añadimos las respuestas de este apartado al respuestas general.
-    all_places_replies.push(places_replies);
+    var position = ((places_list[pos_places]*number_recordings) - 1) + (recordings_list[pos_recording]+1);
+    console.log("Se guarda en la posición en el array: ",position)
+    all_places_replies[position] = places_replies;
     
     // Creamos una variable que guardará las respuestas.
     completed_quiz = new Object;

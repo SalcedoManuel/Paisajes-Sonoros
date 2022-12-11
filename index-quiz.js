@@ -17,6 +17,11 @@ var number_places_questions_replied = 0;
 var number_recordings = 0;
 var number_recordings_questions_replied = 1;
 
+var recordings_list = new Array;
+var places_list = new Array;
+var pos_places = 0;
+var pos_recording = 0;
+
 // Variables que guardan los PATH a los archivos.
 // Cada Array interno guarda la info de cada lugar max. 3.
 // Los archivos son locales o en remoto --> file_location_online
@@ -117,8 +122,7 @@ function show_questions() {
           
             break;
         case "places_questions":
-            console.log("Fijo: ", number_places,number_recordings)
-            console.log("Replied",number_places_questions_replied,number_recordings_questions_replied)  
+            console.log("Empezamos por el lugar ",number_places_questions_replied," y Grabación ",number_recordings_questions_replied)  
             var table_recordings_questions = '<table><caption><div id="wrapper_title_question"><h2>Cuestionario: '+quiz_name_actual_file.split('.')[0]+'</h2></div></caption>'+
             '<tr><th style="padding-right: 5px;"><h3>Nombre Escenario:</h3></th><th><h3>Preguntas sobre el Escenario</h3></th></tr>'+
             '<tr><td rowspan="2" style="border-right: 2px white solid"><div id="wrapper_files" style="margin-right:10px;"></div></td><td><div id="wrapper_replys" style="margin-left: 5px;"></div></td></tr>'+
@@ -126,20 +130,20 @@ function show_questions() {
             document.getElementById("wrapper2").innerHTML = table_recordings_questions;
             //-- Contenido visual
             name_actual_scenary = name_scenary[number_places_questions_replied]
-            aux_visual = visual_files[number_places_questions_replied][number_recordings_questions_replied-1].split(".");
+            aux_visual = visual_files[number_places_questions_replied][number_recordings_questions_replied].split(".");
             aux_visual_length = aux_visual.length;
             console.log(aux_visual[aux_visual_length-1])/* Formato del contenido visual */
             format_visual = aux_visual[aux_visual_length-1]; // El formato del vídeo o de la imagen.
             // Dependiendo del formato se eligirá una foto o un video.
             if (format_visual == 'jpg' || format_visual == 'jiff' || format_visual == 'png' || format_visual == 'jfif') {
-                document.getElementById("wrapper_files").innerHTML += '<img id="file_image" src="'+visual_files[number_places_questions_replied][number_recordings_questions_replied-1]+'" alt=""></img><br>';
+                document.getElementById("wrapper_files").innerHTML += '<img id="file_image" src="'+visual_files[number_places_questions_replied][number_recordings_questions_replied]+'" alt=""></img><br>';
             }else if (format_visual == 'mp4' || format_visual == 'ogg' || format_visual == 'webm') {
-                document.getElementById("wrapper_files").innerHTML += '<video id="file_video" src="'+visual_files[number_places_questions_replied][number_recordings_questions_replied-1]+'" autoplay muted loop></video><br>';
+                document.getElementById("wrapper_files").innerHTML += '<video id="file_video" src="'+visual_files[number_places_questions_replied][number_recordings_questions_replied]+'" autoplay muted loop></video><br>';
             }
             
             // Añadimos la etiqueta de audio.
             document.getElementById("wrapper_files").innerHTML += '<audio controls loop><source src="' +
-            audio_files[number_places_questions_replied][number_recordings_questions_replied-1] + '"></audio>';
+            audio_files[number_places_questions_replied][number_recordings_questions_replied] + '"></audio>';
             replys = document.getElementById("wrapper_replys");
             replys.innerHTML = "";
             //console.log(Object.keys(places_questions))
@@ -149,10 +153,13 @@ function show_questions() {
                 replys.innerHTML += functions_quiz.add_places_questions(pos);    
             }
             document.getElementById("wrapper_next").innerHTML = '<button onclick="functions_quiz.next_option(1)">Siguiente</button>';
-            switch (number_recordings_questions_replied) {
-                case (number_recordings):
-                    if ((number_places-1) == number_places_questions_replied ) {
+            console.info("Si los siguientes números son iguales excepción ",pos_recording,number_recordings-1)
+            switch (pos_recording) {
+                case (number_recordings-1):
+                    console.info("Si los siguientes números son iguales --> SE ACABA",pos_places,number_places-1)
+                    if ((number_places-1) == pos_places ) {
                         document.getElementById("wrapper_next").innerHTML = '<button onclick="functions_quiz.end_quiz()">Finalizar</button>';
+                        console.log("Se acaba")
                     }
                 break;
             }    
