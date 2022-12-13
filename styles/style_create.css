@@ -24,6 +24,16 @@
     min-height: 150px;
     text-align: center;
   }
+  div[id^="wrapper_visual"]{
+    border:rgb(255, 0, 0) solid 2px;
+    height:fit-content; width: 690px;
+    min-height: 150px;
+    text-align: center;
+  }
+  input[class^=input_online]{
+    width: 500px;
+    padding-top: 0.5vh;
+  }
   div[id^="file_table"],div[id^="online_table"]{
     width: 700px;background-color: #fff;
     text-align:center;color:black;
@@ -68,6 +78,10 @@
   }
 .input_file{
   padding-top: 0.5vh;width: 105px;
+}
+
+img[id^="status"]{
+  margin-top: 1vh;
 }
 
 .output{

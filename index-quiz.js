@@ -139,11 +139,17 @@ function show_questions() {
                 document.getElementById("wrapper_files").innerHTML += '<img id="file_image" src="'+visual_files[number_places_questions_replied][number_recordings_questions_replied]+'" alt=""></img><br>';
             }else if (format_visual == 'mp4' || format_visual == 'ogg' || format_visual == 'webm') {
                 document.getElementById("wrapper_files").innerHTML += '<video id="file_video" src="'+visual_files[number_places_questions_replied][number_recordings_questions_replied]+'" autoplay muted loop></video><br>';
+            }else{
+                document.getElementById('wrapper_files').innerHTML += '<iframe id="file_video" src="'+visual_files[number_places_questions_replied][number_recordings_questions_replied]+'?controls=0?showinfo=0?modestbranding=1?loop=1?rel=0&amp;autoplay=1"'+
+                ' allow="accelerometer; autoplay;loop;showinfo;modestbranding; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><br>';
             }
             
-            // Añadimos la etiqueta de audio.
-            document.getElementById("wrapper_files").innerHTML += '<audio controls loop><source src="' +
-            audio_files[number_places_questions_replied][number_recordings_questions_replied] + '"></audio>';
+            // Añadimos la etiqueta de audio si los recursos están en en local, en caso contrario se deja solo el vídeo.
+            if (!file_location_online) {
+                document.getElementById("wrapper_files").innerHTML += '<audio controls loop><source src="' +
+                audio_files[number_places_questions_replied][number_recordings_questions_replied] + '"></audio>';
+            }
+
             replys = document.getElementById("wrapper_replys");
             replys.innerHTML = "";
             //console.log(Object.keys(places_questions))

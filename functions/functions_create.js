@@ -90,9 +90,7 @@ function start_creation() {
             }
             for (let i = 0; i < number_places; i++) {
                 for (let e = 0; e < number_sistems; e++) {
-                    let text_audio = "online_option"+(i+1)+"_audio"+(e+1);
                     let text_video = "online_option"+(i+1)+"_video"+(e+1);
-                    document.getElementById(text_audio).style.display = "block";
                     document.getElementById(text_video).style.display = "block";
                 }
             }

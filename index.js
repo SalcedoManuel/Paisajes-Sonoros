@@ -326,7 +326,7 @@ function change_status(place,type,recording) {
 function create_quiz() {
     /*
         Dependiendo de si el cuestionario tiene recursos online o locales se comprueba de distinta manera.
-        --> Si el online lo primero es comprobar que los espacios no están vacíos, en caso de que en los audios 
+        --> Si los recursos son online lo primero es comprobar que los espacios no están vacíos, en caso de que en los videos 
             no se introdujese el número necesario se avisaría al usuario.
     */
    console.log("Es online los recursos?? ",file_location_online)
@@ -335,10 +335,11 @@ function create_quiz() {
     if (file_location_online == true) {
         //-- Se tomará como que el usuario ha introducido las url correctamente salvo que se diga lo contrario.
         get_files = true
+        //-- El objetivo de este bucle es el de saber si el usuario ha introducido correctamente todos los enlaces a los recursos.
         for (let i = 0; i < number_places; i++) {
             for (let e = 0; e < number_sistems; e++) {
                 //--Creamos el id que va a leer.
-                  let text = "scenary"+(i+1)+"_audio"+(e+1);
+                  let text = "scenary"+(i+1)+"_video"+(e+1);
                 //-- Leemos el valor.
                   let text_value = document.getElementById(text).value;
                   console.info(text_value)
@@ -389,8 +390,14 @@ function create_quiz() {
     //-- Si no has entroducido el número de recursos necesarios --> Debe saltar un error.
     if (number_examples == 0 || !(get_files)) {
         if (!get_files) {
-            back.innerHTML = '<p style="text-align:center;">No has introducido los <strong>Audios</strong> mínimos, revisa otra vez tu petición.</p>';
-            window.alert("No has introducido los Audios mínimos, revisa otra vez tu petición.")
+            if (file_location_online) {
+                back.innerHTML = '<p style="text-align:center;">No has introducido los <strong>VÍDEOS</strong> mínimos, revisa otra vez tu petición.</p>';
+                window.alert("No has introducido los RECURSOS AUDIOVISUALES mínimos, revisa otra vez tu petición.")
+            } else {
+                back.innerHTML = '<p style="text-align:center;">No has introducido los <strong>Audios</strong> mínimos, revisa otra vez tu petición.</p>';
+                window.alert("No has introducido los Audios mínimos, revisa otra vez tu petición.")
+            }
+
         }else{
             back.innerHTML = '<p style="text-align:center;">No has seleccionado nada.</p>';
         }
@@ -462,14 +469,15 @@ function create_quiz() {
         //-- Si el contenido multimedia son enlaces, entrará en esta opción, si no en el else.
         if (file_location_online) {
             for (let i = 0; i < number_places; i++) {
-                let audio_files = [];
+                //let audio_files = [];
                 let visual_files = [];
+                //-- Recorremos todos los inputs
                 for (let e = 0; e < number_sistems; e++) {
                     //-- Obtenemos el identificador de cada audio y video.
-                    let text_audio = "scenary"+(i+1)+"_audio"+(e+1);
+                    //let text_audio = "scenary"+(i+1)+"_audio"+(e+1);
                     let text_video = "scenary"+(i+1)+"_video"+(e+1);
                     //-- Sacamos el contenido del input para poder posteriormente guardarlo.
-                    let audio_url = document.getElementById(text_audio).value;
+                    //let audio_url = document.getElementById(text_audio).value;
                     let video_url = document.getElementById(text_video).value;
                     //-- Comprobamos que se ha añadido contenido al input de video o imagen, si no es así, se añade el predeterminado.
                     if (video_url == null || video_url == "") {
@@ -479,22 +487,22 @@ function create_quiz() {
                     }
 
                     //-- Guardamos el contenido en un array. 
-                    audio_files.push(audio_url);
+                    //audio_files.push(audio_url);
                     visual_files.push(video_url);
                     console.info("Terminado el push del escenario ",i+1," y la grabación ", e+1)                
                 }
                 //-- Cuando se ha recorrido todas las grabaciones, lo pasamos a su correspondiente variable.
                 switch (i) {
                     case 0:
-                        audio_files1 = audio_files;
+                        //audio_files1 = audio_files;
                         visual_files1 = visual_files;
                         break;
                     case 1:
-                        audio_files2 = audio_files;
+                        //audio_files2 = audio_files;
                         visual_files2 = visual_files;
                         break;
                     default:
-                        audio_files3 = audio_files;
+                        //audio_files3 = audio_files;
                         visual_files3 = visual_files;
                         break;
                 }
