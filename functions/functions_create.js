@@ -73,49 +73,78 @@ function start_creation() {
         document.getElementById("button_start_creation").innerHTML = message;
         // Activamos que aparezcan el resto de opciones.
         console.log(number_places)
-        switch (number_places) {
-            case 1:
-                document.getElementById("file_table1").style.display = "block";
-                break;
-            case 2:
-                document.getElementById("file_table1").style.display = "block";
-                document.getElementById("file_table2").style.display = "block";
-                break;
-            default:
-                document.getElementById("file_table1").style.display = "block";
-                document.getElementById("file_table2").style.display = "block";
-                document.getElementById("file_table3").style.display = "block";
-                break;
+        if (file_location_name == "Online") {
+            switch (number_places) {
+                case 1:
+                    document.getElementById("online_table1").style.display = "block";
+                    break;
+                case 2:
+                    document.getElementById("online_table1").style.display = "block";
+                    document.getElementById("online_table2").style.display = "block";
+                    break;
+                default:
+                    document.getElementById("online_table1").style.display = "block";
+                    document.getElementById("online_table2").style.display = "block";
+                    document.getElementById("online_table3").style.display = "block";
+                    break;
+            }
+            for (let i = 0; i < number_places; i++) {
+                for (let e = 0; e < number_sistems; e++) {
+                    let text_audio = "online_option"+(i+1)+"_audio"+(e+1);
+                    let text_video = "online_option"+(i+1)+"_video"+(e+1);
+                    document.getElementById(text_audio).style.display = "block";
+                    document.getElementById(text_video).style.display = "block";
+                }
+            }
+        }else{
+            switch (number_places) {
+                case 1:
+                    document.getElementById("file_table1").style.display = "block";
+                    break;
+                case 2:
+                    document.getElementById("file_table1").style.display = "block";
+                    document.getElementById("file_table2").style.display = "block";
+                    break;
+                default:
+                    document.getElementById("file_table1").style.display = "block";
+                    document.getElementById("file_table2").style.display = "block";
+                    document.getElementById("file_table3").style.display = "block";
+                    break;
+            }
         }
+
         
         show_wrapper();
         end_boton.style.display = "block";
-        switch (number_sistems) {
-            case 1:
-                document.getElementById("recording_number_text_audio1").innerHTML = " un audio.";
-                document.getElementById("recording_number_text_video1").innerHTML = " un vídeo.";
-                if (number_places > 1) {
-                    document.getElementById("recording_number_text_audio2").innerHTML = " un audio.";
-                    document.getElementById("recording_number_text_video2").innerHTML = " un vídeo.";
-                }
-                if (number_places > 2) {
-                    document.getElementById("recording_number_text_audio3").innerHTML = " un audio.";
-                    document.getElementById("recording_number_text_video3").innerHTML = " un vídeo.";
-                }
-                break;
-            default:
-                document.getElementById("recording_number_text_audio1").innerHTML = number_sistems + " audios.";
-                document.getElementById("recording_number_text_video1").innerHTML = number_sistems + " vídeos."
-                if (number_places > 1) {
-                    document.getElementById("recording_number_text_audio2").innerHTML = number_sistems + " audios.";
-                    document.getElementById("recording_number_text_video2").innerHTML = number_sistems + " vídeos.";
-                }
-                if (number_places > 2) {
-                    document.getElementById("recording_number_text3").innerHTML = number_sistems + " audios.";
-                    document.getElementById("recording_number_text3").innerHTML = number_sistems + " vídeos.";
-                }
-                break;
+        if (file_location_name == "Local") {
+            switch (number_sistems) {
+                case 1:
+                    document.getElementById("recording_number_text_audio1").innerHTML = " un audio.";
+                    document.getElementById("recording_number_text_video1").innerHTML = " un vídeo.";
+                    if (number_places > 1) {
+                        document.getElementById("recording_number_text_audio2").innerHTML = " un audio.";
+                        document.getElementById("recording_number_text_video2").innerHTML = " un vídeo.";
+                    }
+                    if (number_places > 2) {
+                        document.getElementById("recording_number_text_audio3").innerHTML = " un audio.";
+                        document.getElementById("recording_number_text_video3").innerHTML = " un vídeo.";
+                    }
+                    break;
+                default:
+                    document.getElementById("recording_number_text_audio1").innerHTML = number_sistems + " audios.";
+                    document.getElementById("recording_number_text_video1").innerHTML = number_sistems + " vídeos."
+                    if (number_places > 1) {
+                        document.getElementById("recording_number_text_audio2").innerHTML = number_sistems + " audios.";
+                        document.getElementById("recording_number_text_video2").innerHTML = number_sistems + " vídeos.";
+                    }
+                    if (number_places > 2) {
+                        document.getElementById("recording_number_text3").innerHTML = number_sistems + " audios.";
+                        document.getElementById("recording_number_text3").innerHTML = number_sistems + " vídeos.";
+                    }
+                    break;
+            }
         }
+        
     }else{
         back.innerHTML = '<h2 style="text-align:center;">El número de lugares seleccionados es cero, cosa imposible.</h2>';
         file_table.style.display = "none";

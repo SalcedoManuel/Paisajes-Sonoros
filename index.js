@@ -311,29 +311,81 @@ myFiles_Audio1.addEventListener("change", logFilenamesAudio1)
 myFiles_Audio2.addEventListener("change", logFilenamesAudio2)
 myFiles_Audio3.addEventListener("change", logFilenamesAudio3)
 
+function change_status(place,type,recording) {
+    let text_status = "status"+place+"_"+type+recording;
+    let text_input = "scenary"+place+"_"+type+recording;
+    let input = document.getElementById(text_input).value;
+    if (input == "" || input == null) {
+        document.getElementById(text_status).src = "images/no.png";
+    }else{
+        document.getElementById(text_status).src = "images/ok.png";
+    }
+}
+
 
 function create_quiz() {
-    // Para que el número de grabaciones sea cero, el número de lugares debe ser cero.
-    switch (number_places) {
-        case 1:
-            if(get_files1){
-                get_files = true;
+    /*
+        Dependiendo de si el cuestionario tiene recursos online o locales se comprueba de distinta manera.
+        --> Si el online lo primero es comprobar que los espacios no están vacíos, en caso de que en los audios 
+            no se introdujese el número necesario se avisaría al usuario.
+    */
+   console.log("Es online los recursos?? ",file_location_online)
+   console.log("El número de lugares es:",number_places)
+   console.log("El número de grabaciones es:",number_sistems)
+    if (file_location_online == true) {
+        //-- Se tomará como que el usuario ha introducido las url correctamente salvo que se diga lo contrario.
+        get_files = true
+        for (let i = 0; i < number_places; i++) {
+            for (let e = 0; e < number_sistems; e++) {
+                //--Creamos el id que va a leer.
+                  let text = "scenary"+(i+1)+"_audio"+(e+1);
+                //-- Leemos el valor.
+                  let text_value = document.getElementById(text).value;
+                  console.info(text_value)
+                //-- Si el valor es igual a "", implica que no está definido y por tanto está mal.
+                if (text_value == "") {
+                    //-- Lo ha hecho mal y saltará la excepción.
+                    get_files = false;
+                }            
             }
-            break;
-        case 2:
-            if(get_files1 && get_files2){
-                get_files = true;
-            }
-            break;
-        case 3:
-            if (get_files1 && get_files2 && get_files3) {
-                get_files = true;
-            }
-            break;
-        default:
-            get_files = false;
-            break;
+        }
+        //-- Si se ha hecho todo bien, preparamos la lectura de los valores eliminando lo que moleste para ello.
+        if (get_files) {
+            //-- Se borran las tablas no necesarias.
+            document.getElementById("file_table1").innerHTML = "";
+            document.getElementById("file_table2").innerHTML = "";
+            document.getElementById("file_table3").innerHTML = "";
+        }
+    }else{
+        // Para que el número de grabaciones sea cero, el número de lugares debe ser cero.
+        switch (number_places) {
+            case 1:
+                if(get_files1){
+                    get_files = true;
+                }
+                break;
+            case 2:
+                if(get_files1 && get_files2){
+                    get_files = true;
+                }
+                break;
+            case 3:
+                if (get_files1 && get_files2 && get_files3) {
+                    get_files = true;
+                }
+                break;
+            default:
+                get_files = false;
+                break;
+        }
+        if (get_files) {
+            //-- Se borran las tablas no necesarias.
+            document.getElementById("online_table1").innerHTML = "";
+            document.getElementById("online_table2").innerHTML = "";
+            document.getElementById("online_table3").innerHTML = "";
+        }
     }
+
     //-- Si no has entroducido el número de recursos necesarios --> Debe saltar un error.
     if (number_examples == 0 || !(get_files)) {
         if (!get_files) {
@@ -407,36 +459,81 @@ function create_quiz() {
         quiz_json["Number_Recordings"] = number_sistems;
         //-- Si la ubicación de los recursos es online
         quiz_json["File_Location_Online"] = file_location_online;
-        //-- Añadimos la ruta de los ficheros multimedia al JSON
+        //-- Si el contenido multimedia son enlaces, entrará en esta opción, si no en el else.
+        if (file_location_online) {
+            for (let i = 0; i < number_places; i++) {
+                let audio_files = [];
+                let visual_files = [];
+                for (let e = 0; e < number_sistems; e++) {
+                    //-- Obtenemos el identificador de cada audio y video.
+                    let text_audio = "scenary"+(i+1)+"_audio"+(e+1);
+                    let text_video = "scenary"+(i+1)+"_video"+(e+1);
+                    //-- Sacamos el contenido del input para poder posteriormente guardarlo.
+                    let audio_url = document.getElementById(text_audio).value;
+                    let video_url = document.getElementById(text_video).value;
+                    //-- Comprobamos que se ha añadido contenido al input de video o imagen, si no es así, se añade el predeterminado.
+                    if (video_url == null || video_url == "") {
+                        video_url = "https://github.com/SalcedoManuel/Paisajes-Sonoros/blob/main/images/logo3.png";
+                    } else {
+                        video_url = document.getElementById(text_video).value;  
+                    }
+
+                    //-- Guardamos el contenido en un array. 
+                    audio_files.push(audio_url);
+                    visual_files.push(video_url);
+                    console.info("Terminado el push del escenario ",i+1," y la grabación ", e+1)                
+                }
+                //-- Cuando se ha recorrido todas las grabaciones, lo pasamos a su correspondiente variable.
+                switch (i) {
+                    case 0:
+                        audio_files1 = audio_files;
+                        visual_files1 = visual_files;
+                        break;
+                    case 1:
+                        audio_files2 = audio_files;
+                        visual_files2 = visual_files;
+                        break;
+                    default:
+                        audio_files3 = audio_files;
+                        visual_files3 = visual_files;
+                        break;
+                }
+            }
+        }
+
+        //-- Añadimos la ruta de los ficheros multimedia al JSON en LOCAL.
         switch (number_places) {
-            case 1:
-                quiz_json["files"][0]["Name_Scenary"] = name_place1;
-                quiz_json["files"][0]["audio_files"] = audio_files1;
-                quiz_json["files"][0]["visual_files"] = visual_files1;
-                break;
-            case 2:
-                quiz_json["files"][0]["Name_Scenary"] = name_place1;
-                quiz_json["files"][0]["audio_files"] = audio_files1;
-                quiz_json["files"][0]["visual_files"] = visual_files1;
+        case 1:
+            quiz_json["files"][0]["Name_Scenary"] = name_place1;
+            quiz_json["files"][0]["audio_files"] = audio_files1;
+            quiz_json["files"][0]["visual_files"] = visual_files1;
+            break;
+        case 2:
+            quiz_json["files"][0]["Name_Scenary"] = name_place1;
+            quiz_json["files"][0]["audio_files"] = audio_files1;
+            quiz_json["files"][0]["visual_files"] = visual_files1;
 
-                quiz_json["files"][1]["Name_Scenary"] = name_place2;
-                quiz_json["files"][1]["audio_files"] = audio_files2;
-                quiz_json["files"][1]["visual_files"] = visual_files2;
-                break;
-            default:
-                quiz_json["files"][0]["Name_Scenary"] = name_place1;
-                quiz_json["files"][0]["audio_files"] = audio_files1;
-                quiz_json["files"][0]["visual_files"] = visual_files1;
+            quiz_json["files"][1]["Name_Scenary"] = name_place2;
+            quiz_json["files"][1]["audio_files"] = audio_files2;
+            quiz_json["files"][1]["visual_files"] = visual_files2;
+            break;
+        default:
+            quiz_json["files"][0]["Name_Scenary"] = name_place1;
+            quiz_json["files"][0]["audio_files"] = audio_files1;
+            quiz_json["files"][0]["visual_files"] = visual_files1;
 
-                quiz_json["files"][1]["Name_Scenary"] = name_place2;
-                quiz_json["files"][1]["audio_files"] = audio_files2;
-                quiz_json["files"][1]["visual_files"] = visual_files2;
+            quiz_json["files"][1]["Name_Scenary"] = name_place2;
+            quiz_json["files"][1]["audio_files"] = audio_files2;
+            quiz_json["files"][1]["visual_files"] = visual_files2;
 
-                quiz_json["files"][2]["Name_Scenary"] = name_place3;
-                quiz_json["files"][2]["audio_files"] = audio_files3;
-                quiz_json["files"][2]["visual_files"] = visual_files3;
-                break;
-        }       
+            quiz_json["files"][2]["Name_Scenary"] = name_place3;
+            quiz_json["files"][2]["audio_files"] = audio_files3;
+            quiz_json["files"][2]["visual_files"] = visual_files3;
+            break;
+        } 
+
+        
+      
 
         //-- Convertir la variable a cadena JSON
         let myJSON = JSON.stringify(quiz_json);

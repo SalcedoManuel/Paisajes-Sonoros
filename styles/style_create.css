@@ -24,13 +24,17 @@
     min-height: 150px;
     text-align: center;
   }
-  div[id^="file_table"]{
+  div[id^="file_table"],div[id^="online_table"]{
     width: 700px;background-color: #fff;
     text-align:center;color:black;
     padding: 1vh; margin: auto;
     border: 2px solid #000;
     display: none;
   }
+  span[id^="online_option"]{
+    display: none;
+  }
+  
   #wrapper_file,#wrapper_file0,#wrapper_file1,#wrapper_file2{
     background-color: beige;
     padding: 1%;
