@@ -29,6 +29,18 @@ div[id^="wrapper0"],div[id^="wrapper1"],div[id^="wrapper2"]{
     display: flex;
     justify-content: center
 }
+span[id^="wrapper_summary"]{
+    display: none;
+}
+label[id^="label_summary"]{
+    display: block;
+}
+table[id^="table_summary"]{
+    display: none;
+}
+input[id^=verify_quiz_online]{
+    width: 280px;
+}
 input[id^="yes_user_option"]{
       /* remove standard background appearance */
   -webkit-appearance: none;

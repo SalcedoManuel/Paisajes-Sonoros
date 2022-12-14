@@ -44,10 +44,76 @@ var user_object = new Object;
 var all_places_replies = [];
 var all_recordings_replies = [];
 
+//-- Esta función se encarga de preparar todo para obtener un cuestionario que está online.
+function seek_online_quiz() {
+    document.getElementById("wrapper_files").innerHTML = "";
+    document.getElementById("wrapper_summary").style.display = "block";
+    document.getElementById("table_summary").style.display = "none";
+    document.getElementById("wrapper_text").style.display = "none";
+}
+
+//-- Esta función se encarga de verificar que el enlace es un cuestionario.
+function verify_quiz_online() {
+     let url = document.getElementById("verify_quiz_online").value;
+     fetch(url)
+        .then(response => response.json())
+        .then(data => saveData(data))
+        .catch(error => show_error(error));
+
+}
+
+function saveData(data) {
+    console.log("Dentro")
+    var quiz_json = data;
+    //-- Enviamos el JSON al main para que lo descargue, lo guarde y después lo ejecute.
+    electron.ipcRenderer.invoke('online_quiz_save',quiz_json);
+}
+
+function show_error(error) {
+    console.log(error);
+    //-- Modificamos los valores del resumen.
+    document.getElementById("table_summary").style.display = "block";
+    document.getElementById("online_status").innerHTML = "Cuestionario No Válido";
+    document.getElementById("online_quiz_name").innerHTML = "";
+    document.getElementById("online_number_places").innerHTML = "";
+    document.getElementById("online_number_recording").innerHTML = "";
+    document.getElementById("online_button_start").style.display = "none";
+
+}
+
+electron.ipcRenderer.on('online_quiz_save', (event, message) => {
+    console.log(message);
+    //-- Añadimos el nuevo nombre.
+    quizs_names.push(message);
+    //-- Modificaremos ahora los valores de la tabla resumen.
+    //-- Para ello primero habrá que obtener los valores del JSON.
+    // Leer el fichero JSON donde esté la información para el cuestionario.
+    const  FILE_JSON = fs.readFileSync("resources/quiz_files/"+message);
+    // Creamos el array con toda la información del cuestionario.
+    let quiz_info = JSON.parse(FILE_JSON);
+    document.getElementById("online_status").innerHTML = "Correcto";
+    document.getElementById("online_quiz_name").innerHTML = quiz_info["Name_Quiz"];
+    document.getElementById("online_number_places").innerHTML = quiz_info["Number_Places"] + " Lugares";
+    document.getElementById("online_number_recording").innerHTML = quiz_info["Number_Recordings"] + " Grabaciones";
+    //-- Hacemos visibles al usuario todos los datos.
+    document.getElementById("table_summary").style.display = "block";
+    document.getElementById("online_button_start").style.display = "block";
+
+    
+});
+
+function get_quiz_online() {
+    //-- La función que crea el cuestionario necesita la posición en el quizs_names.
+    let name = document.getElementById("online_quiz_name").innerHTML;
+    let position = quizs_names.indexOf(name)
+    Select_Quiz(position);
+}
+
 function seek_quizs() {
     // Pedimos al proceso Main que nos mande los quizs ya creados.
     console.log("Pedimos al main.js los nombre de los quizs")
     document.getElementById("wrapper_files").innerHTML = "";
+    document.getElementById("wrapper_summary").style.display = "none";
     electron.ipcRenderer.invoke('quizs', "Quizs names");
 }
 
@@ -70,6 +136,7 @@ electron.ipcRenderer.on('quizs', (event, message) => {
 function start_quiz() {
     // Pedimos al proceso Main que nos mande el Quiz Actual.
     electron.ipcRenderer.invoke('actual_quizs', "Quiz actual");
+    document.getElementById("wrapper_summary").style.display = "none";
 }
 
 electron.ipcRenderer.on('actual_quizs', (event, message) => {
@@ -177,6 +244,9 @@ function show_questions() {
 }
 
 function Select_Quiz(position) {
+    //-- Eliminamos la información dada si se ha iniciado a través de la opción Cuestionario Online,
+    //-- En caso de venir otra opción no pasa nada.
+    document.getElementById("wrapper_summary").display = "none";
     //  Obtenemos el nombre del fichero del que vamos a realiza el Cuestioanrio.
     quiz_name_actual_file = quizs_names[position];
     console.log("El nombre del quiz actual seleccionado:" + quiz_name_actual_file)

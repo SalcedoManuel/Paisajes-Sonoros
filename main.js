@@ -219,3 +219,35 @@ electron.ipcMain.handle('root_activated_mode',(event, msg) => {
   win.webContents.send('root_activated_mode', msg);
 });
 
+electron.ipcMain.handle('online_quiz_save',(event,msg) =>{
+  //-- Abrimos la información del main.
+  const MAIN_JSON_FILE = fs.readFileSync(MAIN_JSON);
+  var main_info = JSON.parse(MAIN_JSON_FILE);
+  //-- Añadimos en la información del main la información actual.
+  var quiz_json = msg;
+
+  //-- Añadimos en el array que guarda los nombres del cuestionario el nuevo nombre.
+  //-- Si ese nombre ya está asignado, se debe resetear y sobreescribir.
+  let name_quiz = quiz_json["Name_Quiz"];
+  if (main_info["Quizs_Names"].indexOf(name_quiz) == -1) {
+      //-- Sumamos uno al número de Cuestionarios creados.
+      main_info["Number_Quizs"] += 1;
+      main_info["Quizs_Names"].push(name_quiz);
+  }
+
+  //-- Colocamos como cuestionario actual el nuevo cuestionario.
+  main_info["Quiz_actual"] = name_quiz;
+  //-- Guardamos la información del main en el main.json
+  //-- Guardamos en el JSON Principal la información.
+  myJSON = JSON.stringify(main_info);
+  fs.writeFileSync(MAIN_JSON,myJSON);
+  //-- Después de actualizar la información del main, guardamos el cuestionario, de forma que el usuario 
+  //-- ya no tenga que volver a descargarlo.
+  myJSON = JSON.stringify(quiz_json);
+  const QUIZ_FILE = "resources/quiz_files/"+name_quiz+".json";
+  fs.writeFileSync(QUIZ_FILE,myJSON)
+  console.log(QUIZ_FILE)
+  //-- Informamos al usuario que todo el main.js ha guardado y preparado todo para realizar el cuestionario.
+  //-- Enviamos la posición en el array.
+  win.webContents.send('online_quiz_save',name_quiz+'.json')
+});
