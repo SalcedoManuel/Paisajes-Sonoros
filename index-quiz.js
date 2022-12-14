@@ -83,7 +83,7 @@ function show_error(error) {
 
 electron.ipcRenderer.on('online_quiz_save', (event, message) => {
     console.log(message);
-    //-- Añadimos el nuevo nombre.
+    //-- Añadimos el nuevo nombre, ya viene con el JSON
     quizs_names.push(message);
     //-- Modificaremos ahora los valores de la tabla resumen.
     //-- Para ello primero habrá que obtener los valores del JSON.
@@ -104,8 +104,9 @@ electron.ipcRenderer.on('online_quiz_save', (event, message) => {
 
 function get_quiz_online() {
     //-- La función que crea el cuestionario necesita la posición en el quizs_names.
-    let name = document.getElementById("online_quiz_name").innerHTML;
-    let position = quizs_names.indexOf(name)
+    let name = document.getElementById("online_quiz_name").innerHTML + ".json";
+    let position = quizs_names.indexOf(name);
+    console.log("position es: ",position)
     Select_Quiz(position);
 }
 
@@ -246,9 +247,10 @@ function show_questions() {
 function Select_Quiz(position) {
     //-- Eliminamos la información dada si se ha iniciado a través de la opción Cuestionario Online,
     //-- En caso de venir otra opción no pasa nada.
-    document.getElementById("wrapper_summary").display = "none";
+    document.getElementById("wrapper_summary").style.display = "none";
     //  Obtenemos el nombre del fichero del que vamos a realiza el Cuestioanrio.
     quiz_name_actual_file = quizs_names[position];
+    console.table(quizs_names);
     console.log("El nombre del quiz actual seleccionado:" + quiz_name_actual_file)
     // Eliminar las opciones que han aparecido.
     document.getElementById("wrapper_text").innerHTML = "";

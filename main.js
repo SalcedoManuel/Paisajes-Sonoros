@@ -232,7 +232,7 @@ electron.ipcMain.handle('online_quiz_save',(event,msg) =>{
   if (main_info["Quizs_Names"].indexOf(name_quiz) == -1) {
       //-- Sumamos uno al número de Cuestionarios creados.
       main_info["Number_Quizs"] += 1;
-      main_info["Quizs_Names"].push(name_quiz);
+      main_info["Quizs_Names"].push(name_quiz+".json");
   }
 
   //-- Colocamos como cuestionario actual el nuevo cuestionario.
