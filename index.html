@@ -10,6 +10,7 @@
 
     <!-- Cargar el proceso asociado a esta página -->
     <script src="index.js" defer></script>
+    <script src="functions/hide_content.js"></script>
 
     <title>Soundscape Questionnaire</title>
 </head>
@@ -52,7 +53,20 @@
                   <td>
                       <div id="info_option">
                           <span style="padding: 2vh;">
-                            <span style="text-align: left;">
+                            <table>
+                              <tr>
+                                <td><h2 style="text-align: center;width: 500px;">¿Cómo se crea un Cuestionario?</h2></td>
+                                <td id="msg_create_id">
+                                  <button id="msg_create" onclick="show_content(0)">
+                                      <b>Mostar</b>
+                                  </button>                                    
+                                </td>
+                                <td id="arrow_create_id">
+                                  <img src="images/down-arrow.png" id="arrow_create" onclick="show_content(0)" alt="Mostar información">
+                                </td>
+                              </tr>
+                            </table>
+                            <span id="text_create_quiz" style="text-align: left;">
                               <p>Esta función sirve para generar un cuestionario introduciendo archivos de audio
                                 y si es necesario, también se puede introducir archivos multimedia.</p>
                              <p>• Se deben introducir los nombres de los lugares además de ponerle un nombre al Cuestionario,
@@ -83,7 +97,8 @@
       <span>
         <div id="option_table_home" style="display: block;">
           <table>
-              <tbody><tr>
+              <tbody>
+                <tr>
                   <td>
                       <div id="title">
                           <span style="padding:2vh;">
@@ -95,20 +110,34 @@
                       <div id="info_option">
                           <span style="padding: 2vh;">
                             <span style="text-align: left;">
-                              <h2 style="text-align: center;">Realizar Cuestionario Información</h2>
-                             <p>Después de crear los cuestionarios se pueden estos rellenar por parte de los partipantes. Los cuestionarios que muestra esta aplicación son <b>"Cuestionarios de Paisajes Sonoros".</b></p>
-                             <p><b>Un cuestionario sonoro es una lista de preguntas con el fin de evaluar el entorno acústico de un lugar tal y como es percibido, experimentado o entendido por las personas.</b></p>
-                             <p>Todos los cuestionarios creados a través de esta aplicación siguen la siguiente estructura:</p>
-                             <p><b>• Preguntas Generales al Participante</b></p>
-                             <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-- En esta parte se le pregunta al usuario su puntaje auditivo obtenido en el test "hearWHO".</p>
-                             <p><b>• Preguntas de Evaluación de la Calidad Acústica</b></p>
-                             <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-- En esta parte se le pregunta al usuario características que tiene el entrono o la calidad del mismo.
-                               El usuario tendrá que responder esta parte tantas veces como lugares a examinar tenga.
-                             </p>
-                             <p><b>• Preguntas sobre la Identificación del Contexto</b></p>
-                             <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-- En esta parte se le pregunta al usuario que identifique entre unas opciones el contexto del audio.</p>
-                             <p>Se deberá identificar el contexto de cada grabación acústica y este deberá seleccionar alguna de las opciones.</p>
-                             <h3>Luego de acabar con la última parte se da por terminado el cuestionario.</h3>
+                              <table>
+                                <tr>
+                                  <td><h2 style="text-align: center;width: 500px;">Información sobre como realizar un Cuestionario </h2></td>
+                                  <td id="msg_fill_id">
+                                    <button id="msg_fill" onclick="show_content(1)">
+                                        <b>Mostar</b>
+                                    </button>                                    
+                                  </td>
+                                  <td id="arrow_fill_id">
+                                    <img src="images/down-arrow.png" id="arrow_fill" onclick="show_content(1)" alt="Mostar información">
+                                  </td>
+                                </tr>
+                              </table>
+                              <span id="text_fill_quiz">
+                                <p>Después de crear los cuestionarios se pueden estos rellenar por parte de los partipantes. Los cuestionarios que muestra esta aplicación son <b>"Cuestionarios de Paisajes Sonoros".</b></p>
+                                <p><b>Un cuestionario sonoro es una lista de preguntas con el fin de evaluar el entorno acústico de un lugar tal y como es percibido, experimentado o entendido por las personas.</b></p>
+                                <p>Todos los cuestionarios creados a través de esta aplicación siguen la siguiente estructura:</p>
+                                <p><b>• Preguntas Generales al Participante</b></p>
+                                <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-- En esta parte se le pregunta al usuario su puntaje auditivo obtenido en el test "hearWHO".</p>
+                                <p><b>• Preguntas de Evaluación de la Calidad Acústica</b></p>
+                                <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-- En esta parte se le pregunta al usuario características que tiene el entrono o la calidad del mismo.
+                                  El usuario tendrá que responder esta parte tantas veces como lugares a examinar tenga.
+                                </p>
+                                <p><b>• Preguntas sobre la Identificación del Contexto</b></p>
+                                <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-- En esta parte se le pregunta al usuario que identifique entre unas opciones el contexto del audio.</p>
+                                <p>Se deberá identificar el contexto de cada grabación acústica y este deberá seleccionar alguna de las opciones.</p>
+                                <h3>Luego de acabar con la última parte se da por terminado el cuestionario.</h3>
+                              </span>
                             </span>
                             <div>
                               <a href="quiz.html"><button id="btn_quiz"><h3>Empezar</h3></button></a>
@@ -116,6 +145,7 @@
                           </span>
                       </div>
                   </td>
+                  <td></td>
               </tr>
               </tbody>
         </table>
@@ -143,12 +173,27 @@
                   <td>
                       <div id="info_option">
                           <span style="padding: 2vh;">
+                            <table>
+                              <tr>
+                                <td><h2 style="text-align: center;width: 500px;">Mostrar los Resultados de los Cuestionarios</h2></td>
+                                <td id="msg_show_id">
+                                  <button id="msg_show" onclick="show_content(2)">
+                                      <b>Mostar</b>
+                                  </button>                                    
+                                </td>
+                                <td id="arrow_show_id">
+                                  <img src="images/down-arrow.png" id="arrow_show" onclick="show_content(2)" alt="Mostar información">
+                                </td>
+                              </tr>
+                            </table>
+                            <span id="text_show_quiz">
                               <p>Esta función sirve para generar un cuestionario introduciendo archivos de audio
-                                 y si es necesario, también se puede introducir archivos multimedia.</p>
-                              <p>• Se deben introducir los nombres de los lugares además de ponerle un nombre al Cuestionario,
-                                 esto se hace para facilitar la tarea de rellenar los cuestionarios a los encuestados.</p>
-                              <p>• El sistema de creación de los cuestionarios es muy sencillo, se selecciona el número de lugares
-                                 y el número de sistemas de grabación o grabaciones distintas por lugar.</p>
+                                y si es necesario, también se puede introducir archivos multimedia.</p>
+                             <p>• Se deben introducir los nombres de los lugares además de ponerle un nombre al Cuestionario,
+                                esto se hace para facilitar la tarea de rellenar los cuestionarios a los encuestados.</p>
+                             <p>• El sistema de creación de los cuestionarios es muy sencillo, se selecciona el número de lugares
+                                y el número de sistemas de grabación o grabaciones distintas por lugar.</p>
+                            </span>
                               <div>
                                 <a href="read_file.html"><button id="btn_show"><h3>Ver</h3></button></a>
                               </div>

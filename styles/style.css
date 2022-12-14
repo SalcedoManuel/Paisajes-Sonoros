@@ -206,6 +206,20 @@ button[id="retry"]{
     font-size: x-large;
     border: #ffffff 1px solid;
 }
+button{
+    cursor:pointer;
+}
+[id^="msg_"]{
+    background-color: transparent;
+    color: #ffff;border: 0ch;
+    cursor: pointer;
+}
+img[id^="arrow_"]{
+    width: 15px;cursor:pointer;border: 2px #ffff solid;border-radius: 25%;
+}
+span[id^="text_"]{
+    display: none;
+}
 button[id="retry"]:hover{
     animation: neon 5s infinite;
     cursor: pointer;
