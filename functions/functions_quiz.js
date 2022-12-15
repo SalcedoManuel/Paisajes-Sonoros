@@ -14,7 +14,7 @@ function add_user_questions(pos) {
 function add_places_questions(pos) {
     let reply = "";
     if (places_questions[pos] == "¿En qué medida estás de acuerdo o en desacuerdo con los siguientes 8 adjetivos como descriptores del entorno acústico que escuchas?") {
-        reply = '<h3>Evaluación de la calidad acústica</h3>';
+        reply = '<h3>• Evaluación de la calidad acústica</h3>';
         //-- Escribimos la pregunta.
         reply += '<table class="default"><caption><h3>1.'+places_questions[pos]+'</h3></caption>';
         //-- Escribimos las opciones y la tabla.
@@ -243,10 +243,86 @@ function save_file_app() {
     document.getElementById("wrapper2").innerHTML = '<a href='+'"index.html"'+'><button>Volver a Inicio</button></a>';
 }
 
+function add_support_examples() {
+    var text = '<div style="text-align: center;margin: 0 auto;border-bottom: 1px #ffff solid;width: 200px;">'+
+                    '<div onclick="functions_quiz.show_audio(0)"><h4>Audio Agradable <img id="img_pleasant"style="width: 12px;" src="images/down-arrow.png" alt="" srcset=""></h4></div>'+
+                    '<div id="support_pleasant" style="text-align: center;margin: 0 auto;width: 200px;">'+
+                        '<audio controls loop style="width: 200px;"><source src="resources/examples/Pleasant/Agradable.wav"></audio>'+
+                    '</div>'+
+                '</div>'+
+                '<div style="text-align: center;margin: 0 auto;border-bottom: 1px #ffff solid;width: 200px;">'+
+                    '<div onclick="functions_quiz.show_audio(1)"><h4>Audio Sin Actividad <img id="img_uneventful"style="width: 12px;" src="images/down-arrow.png" alt="" srcset=""></h4></div>'+
+                    '<div id="support_uneventful" style="text-align: center;margin: 0 auto;width: 200px;">'+
+                        '<audio controls loop style="width: 200px;"><source src="resources/examples/Pleasant/Agradable.wav"></audio>'+
+                    '</div>'+
+                '</div>'+
+                '<div style="text-align: center;margin: 0 auto;border-bottom: 1px #ffff solid;width: 200px;">'+
+                    '<div onclick="functions_quiz.show_audio(2)"><h4>Desagradable <img id="img_annoying"style="width: 12px;" src="images/down-arrow.png" alt="" srcset=""></h4></div>'+
+                    '<div id="support_annoying" style="text-align: center;margin: 0 auto;width: 200px;">'+
+                        '<audio controls loop style="width: 200px;"><source src="resources/examples/Pleasant/Agradable.wav"></audio>'+
+                    '</div>'+
+                '</div>'+
+                '<div style="text-align: center;margin: 0 auto;border-bottom: 1px #ffff solid;width: 200px;">'+
+                    '<div onclick="functions_quiz.show_audio(3)"><h4>Dinámico <img id="img_eventful"style="width: 12px;" src="images/down-arrow.png" alt="" srcset=""></h4></div>'+
+                    '<div id="support_eventful" style="text-align: center;margin: 0 auto;width: 200px;">'+
+                        '<audio controls loop style="width: 200px;"><source src="resources/examples/Pleasant/Agradable.wav"></audio>'+
+                    '</div>'+
+                '</div>';
+    document.getElementById("wrapper_support").innerHTML = text;
+
+}
+
+function show_audio(value) {
+
+    var text_id = "";
+
+    switch (value) {
+        case 0:
+            text_id = "support_pleasant";
+            img_id = "img_pleasant";
+            break;
+        case 1:
+            text_id = "support_uneventful";
+            img_id = "img_uneventful";
+            break;
+        case 2:
+            text_id = "support_annoying";
+            img_id = "img_annoying";
+            break;    
+        default:
+            text_id = "support_eventful";
+            img_id = "img_eventful";
+            break;
+    }
+    console.info(document.getElementById(text_id).style.display=="")
+    if (document.getElementById(text_id).style.display == "") {
+        document.getElementById("support_pleasant").style.display = "none";
+        document.getElementById("support_uneventful").style.display = "none";
+        document.getElementById("support_annoying").style.display = "none";
+        document.getElementById("support_eventful").style.display = "none";
+        document.getElementById(text_id).style.display = "block";
+    }else if(document.getElementById(text_id).style.display == "none"){
+        document.getElementById("support_pleasant").style.display = "none";
+        document.getElementById("support_uneventful").style.display = "none";
+        document.getElementById("support_annoying").style.display = "none";
+        document.getElementById("support_eventful").style.display = "none";
+        document.getElementById(text_id).style.display = "block";
+    }else{
+        document.getElementById("support_pleasant").style.display = "none";
+        document.getElementById("support_uneventful").style.display = "none";
+        document.getElementById("support_annoying").style.display = "none";
+        document.getElementById("support_eventful").style.display = "none";
+    }
+    console.log(document.getElementById(text_id).style.display)
+
+}
+
 module.exports = {
     add_user_questions,
     add_places_questions,
     next_option,
     end_quiz,
-    save_file_app
+    save_file_app,
+    add_support_examples,
+    show_audio
 }

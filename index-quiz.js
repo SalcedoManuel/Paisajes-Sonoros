@@ -165,8 +165,9 @@ function show_questions() {
         case "user_questions":
             //-- Preguntas al participante
             var table_user_questions = '<table><caption><div id="wrapper_title_question"><h2>Cuestionario: '+quiz_name_actual_file.split('.')[0]+'</h2></div></caption>'+
-            '<tr><th><h3>Resumen General:</h3></th><th><h3>Preguntas Generales al Participante</h3></th><th><h3>Material de Apoyo</h3></th></tr>'+
-            '<tr><td rowspan="2" style="border-right: 2px white solid"><div id="wrapper_files" style="margin-right:10px;"></div></td><td style="border-right: 2px white solid"><div id="wrapper_replys" style="margin-left: 5px;"></div></td><td></td></tr>'+
+            '<tr><th><h3>Resumen General:</h3></th><th><h3>Preguntas Generales al Participante</h3></th><th><h3 style="text-align: center;">Material de Apoyo</h3></th></tr>'+
+            '<tr><td rowspan="2" style="border-right: 2px white solid"><div id="wrapper_files" style="margin-right:10px;"></div></td><td style="border-right: 2px white solid;"><div id="wrapper_replys" style="margin-left: 5px;"></div></td>'+
+            '<td></td></tr>'+
             '<tr><th><div id="wrapper_next"></div></th></tr></table>';               
             document.getElementById("wrapper2").innerHTML = table_user_questions;
             //-- Cambiar Título.
@@ -192,8 +193,9 @@ function show_questions() {
         case "places_questions":
             console.log("Empezamos por el lugar ",number_places_questions_replied," y Grabación ",number_recordings_questions_replied)  
             var table_recordings_questions = '<table><caption><div id="wrapper_title_question"><h2>Cuestionario: '+quiz_name_actual_file.split('.')[0]+'</h2></div></caption>'+
-            '<tr><th style="padding-right: 5px;"><h3>Nombre Escenario:</h3></th><th><h3>Preguntas sobre el Escenario</h3></th></tr>'+
-            '<tr><td rowspan="2" style="border-right: 2px white solid"><div id="wrapper_files" style="margin-right:10px;"></div></td><td><div id="wrapper_replys" style="margin-left: 5px;"></div></td></tr>'+
+            '<tr><th style="padding-right: 5px;"><h3>Nombre Escenario:</h3></th><th style=""><h3>Preguntas sobre el Escenario</h3></th><th><h3">Material de Apoyo</h3></th></tr>'+
+            '<tr><td rowspan="2" style="border-right: 2px white solid"><div id="wrapper_files" style="margin-right:10px;"></div></td><td><div id="wrapper_replys" style="margin-left: 5px;border-right: 2px #ffff solid"></div></td>'+
+            '<td style="max-height: fit-content;"><div id="wrapper_support"></div></td></tr>'+
             '<tr><th><div id="wrapper_next"></div></th></tr></table>';
             document.getElementById("wrapper2").innerHTML = table_recordings_questions;
             //-- Contenido visual
@@ -227,6 +229,8 @@ function show_questions() {
                 replys.innerHTML += functions_quiz.add_places_questions(pos);    
             }
             document.getElementById("wrapper_next").innerHTML = '<button onclick="functions_quiz.next_option(1)">Siguiente</button>';
+            //-- Esta función añadirá los audios de apoyo.
+            functions_quiz.add_support_examples();
             console.info("Si los siguientes números son iguales excepción ",pos_recording,number_recordings-1)
             switch (pos_recording) {
                 case (number_recordings-1):

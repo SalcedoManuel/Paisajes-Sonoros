@@ -119,3 +119,7 @@ button[id^="btn_special"]{
     transform: scaleX(1);
     transform-origin: left;
 }
+
+div[id^="support_"]{
+    display: none;
+}

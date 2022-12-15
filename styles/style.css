@@ -247,3 +247,6 @@ button[id^="modify_button"]{
     font-size: x-large;
     border: #ffffff 1px solid;
 }
+audio::-webkit-media-controls-volume-slider {
+    display:none;
+  }
