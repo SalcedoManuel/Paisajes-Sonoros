@@ -68,8 +68,12 @@ function settings() {
             value: "reseat"
           },
           root: {
-            text: "Modo Root",
+            text: "Modo Admin",
             value: "root"
+          },
+          join: {
+            text: "Juntar Resultados",
+            value:"join"
           },
           cancel: true
         },
@@ -101,6 +105,10 @@ function settings() {
             console.log(info["root_mode"])
             fs.writeFileSync(MAIN_JSON,JSON.stringify(info));
             root_mode_activated();
+            swal(msg);
+            break;
+          case "join":
+            window.location.href = "./join_quizzes.html";
             swal(msg);
             break;
           default:

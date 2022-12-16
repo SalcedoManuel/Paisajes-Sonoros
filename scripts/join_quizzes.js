@@ -31,7 +31,7 @@ function logFilenames_Main(){
     let mode = files.item(0).type.split("/")[0];
     console.log("Modo: ",mode)
     //-- ¿Cuál es la extensión? Si no la extencisón no encaja descartar también.
-    let format = files.item(i).type.split("/")[1];
+    let format = files.item(0).type.split("/")[1];
     //-- Si el formato y el modo encaja dar por bueno el ingreso de información.
     if (mode == "application" && format == "json" ) {
         ok_files = true;
@@ -104,4 +104,10 @@ function join_quizzes() {
     //-- Después de introducir todos los ficheros, guardamos el main actualizado.
     let myJSON = JSON.stringify(main_file);
     fs.writeFileSync(main_json_file,myJSON);
+
+    //-- Para acabar, mostrará un mensaje de que se ha juntado correctamente.
+    document.getElementById("<h4>El proceso de fusión de los ficheros se ha realizado con éxito.</h4>");
+
+    //-- Se oculta la recogida de archivos.
+    document.getElementById("wrapper0").style.display = "none"
 }
