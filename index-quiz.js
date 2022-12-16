@@ -206,9 +206,23 @@ function show_questions() {
             format_visual = aux_visual[aux_visual_length-1]; // El formato del vídeo o de la imagen.
             // Dependiendo del formato se eligirá una foto o un video.
             if (format_visual == 'jpg' || format_visual == 'jiff' || format_visual == 'png' || format_visual == 'jfif') {
-                document.getElementById("wrapper_files").innerHTML += '<img id="file_image" src="'+visual_files[number_places_questions_replied][number_recordings_questions_replied]+'" alt=""></img><br>';
+                //-- Pedir un número entero que sea o cero o uno. Si es cero, NO se muestra contenido y si es 1 Sí.
+                let show_content = Math.floor(Math.random()*2);
+                if (show_content  == 0) {
+                    document.getElementById("wrapper_files").innerHTML += '<img id="file_image" src="images/logo3.png" alt=""></img><br>';
+                } else {
+                    document.getElementById("wrapper_files").innerHTML += '<img id="file_image" src="'+visual_files[number_places_questions_replied][number_recordings_questions_replied]+'" alt=""></img><br>';
+                }
+                //document.getElementById("wrapper_files").innerHTML += '<img id="file_image" src="'+visual_files[number_places_questions_replied][number_recordings_questions_replied]+'" alt=""></img><br>';
             }else if (format_visual == 'mp4' || format_visual == 'ogg' || format_visual == 'webm') {
-                document.getElementById("wrapper_files").innerHTML += '<video id="file_video" src="'+visual_files[number_places_questions_replied][number_recordings_questions_replied]+'" autoplay muted loop></video><br>';
+                //-- Pedir un número entero que sea o cero o uno. Si es cero, NO se muestra contenido y si es 1 Sí.
+                let show_content = Math.floor(Math.random()*2);
+                if (show_content == 0) {
+                    document.getElementById("wrapper_files").innerHTML += '<img id="file_image" src="images/logo3.png" alt="No_Video"></img><br>';
+                }else{
+                    document.getElementById("wrapper_files").innerHTML += '<video id="file_video" src="'+visual_files[number_places_questions_replied][number_recordings_questions_replied]+'" autoplay muted loop></video><br>';
+                }
+                //document.getElementById("wrapper_files").innerHTML += '<video id="file_video" src="'+visual_files[number_places_questions_replied][number_recordings_questions_replied]+'" autoplay muted loop></video><br>';
             }else{
                 document.getElementById('wrapper_files').innerHTML += '<iframe id="file_video" src="'+visual_files[number_places_questions_replied][number_recordings_questions_replied]+'?controls=0?showinfo=0?modestbranding=1?loop=1?rel=0&amp;autoplay=1"'+
                 ' allow="accelerometer; autoplay;loop;showinfo;modestbranding; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><br>';
