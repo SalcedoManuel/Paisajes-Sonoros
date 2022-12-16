@@ -6,6 +6,7 @@ function add_user_questions(pos) {
         reply += pos +". <strong>"+user_questions[pos] + "</strong>:";
         reply += '&nbsp;&nbsp;';
         reply += '<input type="number" id="score" min="0" max="100" value="75" style="width:35px;text-align:center;">';
+        reply += '<br><h5>Si no tiene la App puede descargarsela y realziar el test leyendo el siguiente QR.</h5><br><img src="images/QR.PNG" alt="QRCODE" style="margin-left: 30% ">'
     }
     reply += "<br><br>";
     return reply;
@@ -244,7 +245,7 @@ function save_file_app() {
 }
 
 function add_support_examples() {
-    var text = '<div style="text-align: center;margin: 0 auto;border-bottom: 1px #ffff solid;width: 200px;">'+
+    var text = '<h4>Pincha en los nombres para escuchar audios de referencia y poder asociar mejor los resultados</h4><hr><div style="text-align: center;margin: 0 auto;border-bottom: 1px #ffff solid;width: 200px;">'+
                     '<div onclick="functions_quiz.show_audio(0)"><h4>Audio Agradable <img id="img_pleasant"style="width: 12px;" src="images/down-arrow.png" alt="" srcset=""></h4></div>'+
                     '<div id="support_pleasant" style="text-align: center;margin: 0 auto;width: 200px;">'+
                         '<audio controls loop style="width: 200px;"><source src="resources/examples/Pleasant/Agradable.wav"></audio>'+
@@ -253,19 +254,19 @@ function add_support_examples() {
                 '<div style="text-align: center;margin: 0 auto;border-bottom: 1px #ffff solid;width: 200px;">'+
                     '<div onclick="functions_quiz.show_audio(1)"><h4>Audio Sin Actividad <img id="img_uneventful"style="width: 12px;" src="images/down-arrow.png" alt="" srcset=""></h4></div>'+
                     '<div id="support_uneventful" style="text-align: center;margin: 0 auto;width: 200px;">'+
-                        '<audio controls loop style="width: 200px;"><source src="resources/examples/Pleasant/Agradable.wav"></audio>'+
+                        '<audio controls loop style="width: 200px;"><source src="resources/examples/Uneventful/No_definido.wav"></audio>'+
                     '</div>'+
                 '</div>'+
                 '<div style="text-align: center;margin: 0 auto;border-bottom: 1px #ffff solid;width: 200px;">'+
-                    '<div onclick="functions_quiz.show_audio(2)"><h4>Desagradable <img id="img_annoying"style="width: 12px;" src="images/down-arrow.png" alt="" srcset=""></h4></div>'+
+                    '<div onclick="functions_quiz.show_audio(2)"><h4> Audio Desagradable <img id="img_annoying"style="width: 12px;" src="images/down-arrow.png" alt="" srcset=""></h4></div>'+
                     '<div id="support_annoying" style="text-align: center;margin: 0 auto;width: 200px;">'+
-                        '<audio controls loop style="width: 200px;"><source src="resources/examples/Pleasant/Agradable.wav"></audio>'+
+                        '<audio controls loop style="width: 200px;"><source src="resources/examples/Annoying/Molesto.wav"></audio>'+
                     '</div>'+
                 '</div>'+
                 '<div style="text-align: center;margin: 0 auto;border-bottom: 1px #ffff solid;width: 200px;">'+
-                    '<div onclick="functions_quiz.show_audio(3)"><h4>Dinámico <img id="img_eventful"style="width: 12px;" src="images/down-arrow.png" alt="" srcset=""></h4></div>'+
+                    '<div onclick="functions_quiz.show_audio(3)"><h4> Audio Dinámico <img id="img_eventful"style="width: 12px;" src="images/down-arrow.png" alt="" srcset=""></h4></div>'+
                     '<div id="support_eventful" style="text-align: center;margin: 0 auto;width: 200px;">'+
-                        '<audio controls loop style="width: 200px;"><source src="resources/examples/Pleasant/Agradable.wav"></audio>'+
+                        '<audio controls loop style="width: 200px;"><source src="resources/examples/Eventful/Eventful.wav"></audio>'+
                     '</div>'+
                 '</div>';
     document.getElementById("wrapper_support").innerHTML = text;
