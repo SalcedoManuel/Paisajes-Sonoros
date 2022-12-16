@@ -245,7 +245,7 @@ function save_file_app() {
 }
 
 function add_support_examples() {
-    var text = '<h4>Pincha en los nombres para escuchar audios de referencia y poder asociar mejor los resultados</h4><hr><div style="text-align: center;margin: 0 auto;border-bottom: 1px #ffff solid;width: 200px;">'+
+    var text = '<h4 style="width:150px;margin-left:15%">Pincha en los nombres para escuchar audios de referencia y poder asociar mejor los resultados</h4><hr><div style="text-align: center;margin: 0 auto;border-bottom: 1px #ffff solid;width: 200px;">'+
                     '<div onclick="functions_quiz.show_audio(0)"><h4>Audio Agradable <img id="img_pleasant"style="width: 12px;" src="images/down-arrow.png" alt="" srcset=""></h4></div>'+
                     '<div id="support_pleasant" style="text-align: center;margin: 0 auto;width: 200px;">'+
                         '<audio controls loop style="width: 200px;"><source src="resources/examples/Pleasant/Agradable.wav"></audio>'+
