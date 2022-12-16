@@ -2,6 +2,7 @@
 const electron = require('electron');
 const fs = require('fs');
 
+const nav_extras = require('./functions/nav_extras');
 const functions_canvas = require('./functions/functions_canvas');
 const functions_tableinfo = require('./functions/functions_tableinfo')
 const functions_readfile = require('./functions/functions_readfile');

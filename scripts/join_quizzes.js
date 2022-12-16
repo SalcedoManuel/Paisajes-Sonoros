@@ -1,5 +1,6 @@
 const electron = require('electron');
 const fs = require('fs');
+const nav_extras = require('./functions/nav_extras');
 
 const output_main = document.querySelector('#output_main');
 const output_secundary = document.querySelector('#output_secundary');
