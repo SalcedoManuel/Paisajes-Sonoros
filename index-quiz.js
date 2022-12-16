@@ -165,7 +165,7 @@ function show_questions() {
         case "user_questions":
             //-- Preguntas al participante
             var table_user_questions = '<table><caption><div id="wrapper_title_question"><h2>Cuestionario: '+quiz_name_actual_file.split('.')[0]+'</h2></div></caption>'+
-            '<tr><th><h3>Resumen General:</h3></th><th><h3>Preguntas Generales al Participante</h3></th><th><h3 style="text-align: center;">Material de Apoyo</h3></th></tr>'+
+            '<tr><th><h3>Resumen General:</h3></th><th><h3>Preguntas Generales al Participante</h3></th><th><h3 style="margin-left: 5%">Material de Apoyo</h3></th></tr>'+
             '<tr><td rowspan="2" style="border-right: 2px white solid"><div id="wrapper_files" style="margin-right:10px;"></div></td><td style="border-right: 2px white solid;"><div id="wrapper_replys" style="margin-left: 5px;"></div></td>'+
             '<td></td></tr>'+
             '<tr><th><div id="wrapper_next"></div></th></tr></table>';               
@@ -173,12 +173,10 @@ function show_questions() {
             //-- Cambiar Título.
             let info = document.getElementById("wrapper_files");
             for (let i = 0; i < number_places; i++) {
+                console.log(name_scenary)
                 info.innerHTML += "Nombre del Escenario: " + name_scenary[i] + "<br>";
                 name_actual_scenary = name_scenary[i];
-                for (let e = 0; e < number_recordings; e++) {
-                   info.innerHTML += "Número de tomas: " +  (e+1) + "<br>";                    
-                }
-                info.innerHTML += "<br>"
+                info.innerHTML += "Número de tomas por lugar: " + number_recordings+ "<br>";
             }
             replys = document.getElementById("wrapper_replys")
             replys.innerHTML = "";
@@ -192,14 +190,15 @@ function show_questions() {
             break;
         case "places_questions":
             console.log("Empezamos por el lugar ",number_places_questions_replied," y Grabación ",number_recordings_questions_replied)  
+            name_actual_scenary = name_scenary[number_places_questions_replied]
             var table_recordings_questions = '<table><caption><div id="wrapper_title_question"><h2>Cuestionario: '+quiz_name_actual_file.split('.')[0]+'</h2></div></caption>'+
-            '<tr><th style="padding-right: 5px;"><h3>Nombre Escenario:</h3></th><th style=""><h3>Preguntas sobre el Escenario</h3></th><th><h3">Material de Apoyo</h3></th></tr>'+
+            '<tr><th style="padding-right: 5px;"><h3>Nombre Escenario: '+name_actual_scenary+'</h3></th><th style=""><h3>Preguntas sobre el Escenario</h3></th><th><h3">Material de Apoyo</h3></th></tr>'+
             '<tr><td rowspan="2" style="border-right: 2px white solid"><div id="wrapper_files" style="margin-right:10px;"></div></td><td><div id="wrapper_replys" style="margin-left: 5px;border-right: 2px #ffff solid"></div></td>'+
             '<td style="max-height: fit-content;"><div id="wrapper_support"></div></td></tr>'+
             '<tr><th><div id="wrapper_next"></div></th></tr></table>';
             document.getElementById("wrapper2").innerHTML = table_recordings_questions;
             //-- Contenido visual
-            name_actual_scenary = name_scenary[number_places_questions_replied]
+            
             aux_visual = visual_files[number_places_questions_replied][number_recordings_questions_replied].split(".");
             aux_visual_length = aux_visual.length;
             console.log(aux_visual[aux_visual_length-1])/* Formato del contenido visual */

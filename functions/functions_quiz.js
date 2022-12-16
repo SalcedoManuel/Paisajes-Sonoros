@@ -1,5 +1,10 @@
 const { fstat } = require("original-fs");
 
+var support_pleasant = document.querySelector("#audio_support_pleasant");
+var support_uneventful = document.getElementById("audio_support_uneventful");
+var support_annoying = document.getElementById("audio_support_annoying");
+var support_eventful = document.getElementById("audio_support_eventful"); 
+
 function add_user_questions(pos) {
     let reply = "";
     if (user_questions[pos] == "Introduce aquí tu puntaje auditivo obtenido en el test hearWHO") {
@@ -248,25 +253,25 @@ function add_support_examples() {
     var text = '<h4 style="width:150px;margin-left:15%">Pincha en los nombres para escuchar audios de referencia y poder asociar mejor los resultados</h4><hr><div style="text-align: center;margin: 0 auto;border-bottom: 1px #ffff solid;width: 200px;">'+
                     '<div onclick="functions_quiz.show_audio(0)"><h4>Audio Agradable <img id="img_pleasant"style="width: 12px;" src="images/down-arrow.png" alt="" srcset=""></h4></div>'+
                     '<div id="support_pleasant" style="text-align: center;margin: 0 auto;width: 200px;">'+
-                        '<audio controls loop style="width: 200px;"><source src="resources/examples/Pleasant/Agradable.wav"></audio>'+
+                        '<audio id="audio_support_pleasant" controls loop style="width: 200px;"><source src="resources/examples/Pleasant/Agradable.wav"></audio>'+
                     '</div>'+
                 '</div>'+
                 '<div style="text-align: center;margin: 0 auto;border-bottom: 1px #ffff solid;width: 200px;">'+
                     '<div onclick="functions_quiz.show_audio(1)"><h4>Audio Sin Actividad <img id="img_uneventful"style="width: 12px;" src="images/down-arrow.png" alt="" srcset=""></h4></div>'+
                     '<div id="support_uneventful" style="text-align: center;margin: 0 auto;width: 200px;">'+
-                        '<audio controls loop style="width: 200px;"><source src="resources/examples/Uneventful/No_definido.wav"></audio>'+
+                        '<audio id="audio_support_uneventful" controls loop style="width: 200px;"><source src="resources/examples/Uneventful/No_definido.wav"></audio>'+
                     '</div>'+
                 '</div>'+
                 '<div style="text-align: center;margin: 0 auto;border-bottom: 1px #ffff solid;width: 200px;">'+
                     '<div onclick="functions_quiz.show_audio(2)"><h4> Audio Desagradable <img id="img_annoying"style="width: 12px;" src="images/down-arrow.png" alt="" srcset=""></h4></div>'+
                     '<div id="support_annoying" style="text-align: center;margin: 0 auto;width: 200px;">'+
-                        '<audio controls loop style="width: 200px;"><source src="resources/examples/Annoying/Molesto.wav"></audio>'+
+                        '<audio id="audio_support_annoying" controls loop style="width: 200px;"><source src="resources/examples/Annoying/Molesto.wav"></audio>'+
                     '</div>'+
                 '</div>'+
                 '<div style="text-align: center;margin: 0 auto;border-bottom: 1px #ffff solid;width: 200px;">'+
                     '<div onclick="functions_quiz.show_audio(3)"><h4> Audio Dinámico <img id="img_eventful"style="width: 12px;" src="images/down-arrow.png" alt="" srcset=""></h4></div>'+
                     '<div id="support_eventful" style="text-align: center;margin: 0 auto;width: 200px;">'+
-                        '<audio controls loop style="width: 200px;"><source src="resources/examples/Eventful/Eventful.wav"></audio>'+
+                        '<audio id="audio_support_eventful" controls loop style="width: 200px;"><source src="resources/examples/Eventful/Eventful.wav"></audio>'+
                     '</div>'+
                 '</div>';
     document.getElementById("wrapper_support").innerHTML = text;
@@ -295,24 +300,15 @@ function show_audio(value) {
             img_id = "img_eventful";
             break;
     }
-    console.info(document.getElementById(text_id).style.display=="")
-    if (document.getElementById(text_id).style.display == "") {
-        document.getElementById("support_pleasant").style.display = "none";
-        document.getElementById("support_uneventful").style.display = "none";
-        document.getElementById("support_annoying").style.display = "none";
-        document.getElementById("support_eventful").style.display = "none";
+    console.info(document.getElementById(text_id).style.display=="");
+
+    document.getElementById("support_pleasant").style.display = "none";
+    document.getElementById("support_uneventful").style.display = "none";
+    document.getElementById("support_annoying").style.display = "none";
+    document.getElementById("support_eventful").style.display = "none";
+    if (document.getElementById(text_id).style.display == "" || document.getElementById(text_id).style.display == "none" ) {
         document.getElementById(text_id).style.display = "block";
-    }else if(document.getElementById(text_id).style.display == "none"){
-        document.getElementById("support_pleasant").style.display = "none";
-        document.getElementById("support_uneventful").style.display = "none";
-        document.getElementById("support_annoying").style.display = "none";
-        document.getElementById("support_eventful").style.display = "none";
-        document.getElementById(text_id).style.display = "block";
-    }else{
-        document.getElementById("support_pleasant").style.display = "none";
-        document.getElementById("support_uneventful").style.display = "none";
-        document.getElementById("support_annoying").style.display = "none";
-        document.getElementById("support_eventful").style.display = "none";
+
     }
     console.log(document.getElementById(text_id).style.display)
 

@@ -417,7 +417,7 @@ function create_quiz() {
                 // Nombre del Escenario 1
                 name_place1 = document.getElementById("name_place1").value;
                 //-- Si no está definido el nombre generamos uno por defecto.
-                if (name_place1 == null) {
+                if (name_place1 == null || name_place1 == "") {
                     name_place1 = "Escenario 1";
                 }
                 break;
@@ -427,10 +427,10 @@ function create_quiz() {
                 // Nombre del Escenario 2
                 name_place2 = document.getElementById("name_place2").value;
                 //-- Si no está definido el nombre generamos uno por defecto.
-                if (name_place1 == null) {
+                if (name_place1 == null || name_place1 == "") {
                     name_place1 = "Escenario 1";
                 }
-                if (name_place2 == null) {
+                if (name_place2 == null || name_place2 == "") {
                     name_place2 = "Escenario 2";
                 }
                 break
