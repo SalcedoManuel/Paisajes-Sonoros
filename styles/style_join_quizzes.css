@@ -1,0 +1,48 @@
+div[id^="file_table"],div[id^="online_table"]{
+    width: 800px;background-color: #fff;
+    text-align:center;color:black;
+    padding: 1vh; margin: auto;
+    border: 2px solid #000;
+    display: none;
+}
+
+#label_main{
+    color: #000;
+}
+
+#table{
+    width: 800px;
+    display: block;
+    background-color: #ffff;
+    margin: 0 auto;
+    border: 2px rgb(255, 0, 0) solid;
+}
+#wrapper_file_secundary{
+    border-left: 2px rgb(255,0,0) solid;
+    height: 300px;
+}
+#wrapper_file_main{
+    border-right: 2px rgb(255, 0, 0) solid;
+    height: 300px;
+}
+
+input[id^="myfiles_"]{
+    background-color: rgb(97, 97, 97);
+    width: 300px;
+}
+
+div[id^="output_"]{
+    background-color: rgb(97, 97, 97);
+    min-height: fit-content;
+    max-height: 100%;
+}
+
+.output{
+    text-align: left; background-color: beige; margin: 1vh;
+  }
+  .encabezado{
+    width: fit-content;text-align: left; margin-left: 1vh;
+  }
+#scenary_title{
+    padding-right: 2%;
+  }
