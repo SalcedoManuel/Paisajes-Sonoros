@@ -29,7 +29,7 @@ h3{
 #wrapper_create,#wrapper_show{
     display:none;
 }
-#wrapper_create,#wrapper_fill#wrapper_show{
+#wrapper_create,#wrapper_fill,#wrapper_show{
     margin-left: 15%;
 
 }
@@ -70,7 +70,6 @@ button[id^="btn_"]:hover{
     margin-top: 1%;
     margin-bottom: 1%;
     grid-template-columns: minmax(200px,300px)1fr;
-    margin-left: 15%;
 }
 #wrapper0,#wrapper1,#wrapper2,#wrapper3,#wrapper4{
     display: none;
