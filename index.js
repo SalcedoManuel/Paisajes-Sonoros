@@ -466,6 +466,11 @@ function create_quiz() {
         quiz_json["Number_Recordings"] = number_sistems;
         //-- Si la ubicación de los recursos es online
         quiz_json["File_Location_Online"] = file_location_online;
+        //-- Creamos el ID del Cuestionario, el objetivo de esto es que en caso de que dos custionarios NO tengan
+        //-- el mismo ID no se puedan juntar a pesar de tener el mismo nombre.
+        var d = new Date();
+        var id_quiz = Math.round(d.getTime() / 1000);
+        quiz_json["ID_Quiz"] = id_quiz;
         //-- Si el contenido multimedia son enlaces, entrará en esta opción, si no en el else.
         if (file_location_online) {
             for (let i = 0; i < number_places; i++) {

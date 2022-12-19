@@ -27,6 +27,7 @@ var pos_recording = 0;
 // Los archivos son locales o en remoto --> file_location_online
 var name_scenary = [[],[],[]];
 var name_actual_scenary = "";
+var id_quiz = 0;
 var file_location_online = false;
 var audio_files = [[],[],[]];
 var visual_files = [[],[],[]];
@@ -165,7 +166,7 @@ function show_questions() {
         case "user_questions":
             //-- Preguntas al participante
             var table_user_questions = '<table><caption><div id="wrapper_title_question"><h2>Cuestionario: '+quiz_name_actual_file.split('.')[0]+'</h2></div></caption>'+
-            '<tr><th><h3>Resumen General:</h3></th><th><h3>Preguntas Generales al Participante</h3></th><th><h3 style="margin-left: 5%">Material de Apoyo</h3></th></tr>'+
+            '<tr><th><h3>Resumen General:</h3></th><th><h3>Preguntas Generales al Participante</h3></th><th id="Material_Apoyo"><h3 style="margin-left: 5%">Material de Apoyo</h3></th></tr>'+
             '<tr><td rowspan="2" style="border-right: 2px white solid"><div id="wrapper_files" style="margin-right:10px;"></div></td><td style="border-right: 2px white solid;"><div id="wrapper_replys" style="margin-left: 5px;"></div></td>'+
             '<td></td></tr>'+
             '<tr><th><div id="wrapper_next"></div></th></tr></table>';               
@@ -192,7 +193,7 @@ function show_questions() {
             console.log("Empezamos por el lugar ",number_places_questions_replied," y Grabación ",number_recordings_questions_replied)  
             name_actual_scenary = name_scenary[number_places_questions_replied]
             var table_recordings_questions = '<table><caption><div id="wrapper_title_question"><h2>Cuestionario: '+quiz_name_actual_file.split('.')[0]+'</h2></div></caption>'+
-            '<tr><th style="padding-right: 5px;"><h3>Nombre Escenario: '+name_actual_scenary+'</h3></th><th style=""><h3>Preguntas sobre el Escenario</h3></th><th><h3">Material de Apoyo</h3></th></tr>'+
+            '<tr><th style="padding-right: 5px;"><h3>Nombre Escenario: '+name_actual_scenary+'</h3></th><th style=""><h3>Preguntas sobre el Escenario</h3></th><th id="Material_Apoyo"><h3>Material de Apoyo</h3></th></tr>'+
             '<tr><td rowspan="2" style="border-right: 2px white solid"><div id="wrapper_files" style="margin-right:10px;"></div></td><td><div id="wrapper_replys" style="margin-left: 5px;border-right: 2px #ffff solid"></div></td>'+
             '<td style="max-height: fit-content;"><div id="wrapper_support"></div></td></tr>'+
             '<tr><th><div id="wrapper_next"></div></th></tr></table>';
@@ -289,6 +290,8 @@ function Select_Quiz(position) {
     number_recordings = quiz_json["Number_Recordings"];
     // Ruta online o local
     file_location_online = quiz_json["File_Location_Online"];
+    // Extraemos el Identificador del fichero.
+    id_quiz = quiz_json["ID_Quiz"];
 
     //  Conociendo la información genérica extraemos
     // las rutas de los ficheros y el nombre del escenario.
@@ -315,20 +318,18 @@ function Select_Quiz(position) {
     show_questions();
 }
 
-function root_activated_mode() {
-    //Preguntamos al main si el modo root está activado. Si es así, desactivar el menú de arriba.
-    electron.ipcRenderer.invoke('root_activated_mode', root_mode);
-}
-electron.ipcRenderer.on('root_activated_mode', (event, message) => {
-    console.log("Recibido: " + message);
-    // Si lo recibido es un true, el modo root está activado y por tanto no se puede mostrar el menú del centro.
-    if (message) {
-        document.getElementById("nav_center").style.display = "none";
-        document.getElementById("home_reference").style.display = "block";
+function root_mode_activated() {
+    const MAIN_JSON = "resources/plantillas/main.json";
+    const  MAIN_JSON_FILE = fs.readFileSync(MAIN_JSON);
+    var main_info = JSON.parse(MAIN_JSON_FILE);
+    if (main_info["root_mode"]) {
+        document.getElementById("wrapper_create").style.display = "none";
+        document.getElementById("wrapper_show").style.display = "none";
     }else{
-        document.getElementById("nav_center").style.display = "block";
-        document.getElementById("home_reference").style.display = "none";
+        document.getElementById("wrapper_create").style.display = "block";
+        document.getElementById("wrapper_show").style.display = "block";
     }
-    root_mode = message;
-});
-
+    console.log("Root")   
+    let myJSON = JSON.stringify(main_info);
+    fs.writeFileSync(MAIN_JSON,myJSON);
+}

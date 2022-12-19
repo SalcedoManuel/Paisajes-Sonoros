@@ -93,10 +93,39 @@
     </span>
     <br>
   </div>
+  <div id="wrapper1" style="display: none;">
+      <table border="1" style="margin: auto;width: 700px;">
+        <colgroup span="2"></colgroup>
+        <colgroup span="2"></colgroup>
+        <tr>
+          <th colspan="3"><h1>Resumen</h1></th>
+        </tr>
+        <tr>
+          <th scope="col" colgroup style="margin: auto;width: 300px;"><h3>Estado</h3></th>
+          <th colspan="3"><h4 id="status_quiz">Correcto</h4></th>
+        </tr>
+        <tr>
+          <th scope="col" colgroup style="margin: auto;width: 300px;"><h4>Número de Cuestionarios Secundarios Aptos</h4></th>
+          <th colspan="3"><h4 id="secundary_quiz_number">12345679</h4></th>
+        </tr>
+        <tr>
+          <th scope="col" colgroup style="margin: auto;width: 300px;"><h3>Nombre del Cuestionario</h3></th>
+          <th colspan="3"><h3 id="name_quiz">Prueba</h3></th>
+        </tr>
+        <tr>
+          <th scope="col" colgroup style="margin: auto;width: 300px;"><h3>ID del Cuestionario</h3></th>
+          <th colspan="3" ><h4 id="id_quiz">123456789</h4></th>
+        </tr>
+
+      </table>
+      <br>
+
+
+  </div>
   <table style="margin: auto;">
     <tr>
       <td id="button_end_page1"> <!-- Botón que sirve para terminar el proceso de creación del cuestionario-->
-        <button id="end_create" onclick="join_quizzes()">Finalizar</button>
+        <button id="end_create" onclick="check_results()">Comprobar</button>
       </td>
       <td> <!-- Botón de rehacer el cuestionario-->
         <a href="join_quizzes.html"><button id="retry">Reintentar</button></a>

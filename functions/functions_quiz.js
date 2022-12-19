@@ -121,6 +121,8 @@ function next_option(type) {
             user_object[user_questions[1]] = hearing_score.value;
             user_object["Places_Number"] = number_places;
             user_object["Recordings_Number"] = number_recordings;
+            user_object["ID_Quiz"] = id_quiz;
+            user_object["Name_Quiz"] = quiz_name_actual;
             console.log("Valor del WHO: "+user_object[user_questions[1]])
             type_of_question_active = "places_questions";
             // Aleatorizar los números para el cuestionario.
@@ -233,11 +235,18 @@ function end_quiz() {
     let myJSON = JSON.stringify(completed_quiz)
     fs.writeFileSync(SAVE_JSON,myJSON)
     // Después del envío de datos se procede a cambiar la interfaz para dar por finalizado el Cuestionario. 
-    document.getElementById("wrapper_title_question").innerHTML = "<strong>Cuestionario Finalizado</strong>";
-    document.getElementById("wrapper_files").innerHTML = '<a href="'+SAVE_JSON+'" download><button><h4>Exportar fichero</h4></button></a>';
-    document.getElementById("wrapper_replys").innerHTML = '<button onclick="functions_quiz.save_file_app()">Guardar en la App</button>';
-    document.getElementById("wrapper_next").innerHTML = '';
 
+    let table = '<table><colgroup span="2"></colgroup><colgroup span="2"></colgroup>'+
+                '<tr><th colspan="4" scope="colgroup"><h3 id="wrapper_title_question">Cuestionario Finalizado</h3></th></tr>'+
+                '<tr><th scope="col" id="wrapper_files_info" style="margin: 0 auto;width:200px;border-right: 1px red solid;padding-right:10px"></th><th scope="col" id="wrapper_replys_info" style="margin: 0 auto;width:200px"></th></tr>'+
+                '<tr><th scope="col" id="wrapper_files" style="margin: 0 auto;width:400px;border-right: 1px red solid;"></th><th scope="col" id="wrapper_replys" style="margin: 0 auto;width:400px"></th></tr>'+
+                '</table>';
+    
+    document.getElementById("wrapper2").innerHTML = table;
+    document.getElementById("wrapper_files_info").innerHTML = "<h5>Si se quiere enviar el fichero a otra persona, se recomienda usar la opción 'Exportar fichero'</h5>";
+    document.getElementById("wrapper_replys_info").innerHTML = "<h5>En caso de que se desee guardar todos las realizaciones en este ordenador se recomienda usar la opción 'Guardar en la App'</h5>"
+    document.getElementById("wrapper_files").innerHTML = '<a href="'+SAVE_JSON+'" download><button><h4>Exportar fichero</h4></button></a>';
+    document.getElementById("wrapper_replys").innerHTML = '<button onclick="functions_quiz.save_file_app()"><h4>Guardar en la App</h4></button>';
 }
 
 function save_file_app() {
@@ -245,8 +254,7 @@ function save_file_app() {
     const TEMPORAL_JSON_FILE = fs.readFileSync(TEMPORAL_JSON)
     let temporal_quiz = JSON.parse(TEMPORAL_JSON_FILE)
     electron.ipcRenderer.invoke('completed_quiz', temporal_quiz);
-    document.getElementById("wrapper_title_question").innerHTML = "<strong>Cuestionario Finalizado</strong>";
-    document.getElementById("wrapper2").innerHTML = '<a href='+'"index.html"'+'><button>Volver a Inicio</button></a>';
+    document.getElementById("wrapper2").innerHTML = '<a href='+'"index.html"'+'><button style="width:300px;height:50px;"><strong>Cuestionario Finalizado Volver al Inicio</strong></button></a>';
 }
 
 function add_support_examples() {

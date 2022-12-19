@@ -81,6 +81,50 @@ function logFilenames_Secundary(){
     }  
 }
 
+function check_results() {
+      //-- Leer el fichero principal, en main_json_file guardamos la ruta.
+      const  MAIN_JSON_FILE = fs.readFileSync(main_json_file);
+      var main_file = JSON.parse(MAIN_JSON_FILE);
+
+      //-- Leeremos el ID_QUIZ y el Nombre del Principal
+      var id_quiz = main_file[0][0]["ID_Quiz"];
+      var name_quiz = main_file[0][0]["Name_Quiz"]
+
+      //-- Iremos leyendo cada fichero secundario para ver si su ID es el mismo.
+      //-- Si su ID es distinto se borra de la lista de JSON.
+      for (let i = 0; i < secundary_json_file.length; i++) {
+        //-- Obtenemos la ruta.
+        let path = secundary_json_file[i];
+        //-- Leemos el fichero secundario
+        const  SECUNDARY_JSON_FILE = fs.readFileSync(path);
+        var secundary_file = JSON.parse(SECUNDARY_JSON_FILE);
+
+        //-- Leemos el ID.
+        console.log(secundary_file[0][0])
+        var id_quiz_secundary = secundary_file[0][0]["ID_Quiz"];
+        //-- Si el Identificador no coincide --> Borrar de la lista.
+        if (id_quiz_secundary != id_quiz) {
+          secundary_json_file.pop(path)
+        }
+      }
+      console.log(secundary_json_file.length)
+      //-- Modificar los valores de la tabla.
+      if (secundary_json_file.length > 0) {
+        document.getElementById("wrapper0").style.display = "none";
+        document.getElementById("wrapper1").style.display = "block";
+        document.getElementById("status_quiz").innerHTML = "Correcto";
+        document.getElementById("secundary_quiz_number").innerHTML = secundary_json_file.length;
+        document.getElementById("name_quiz").innerHTML = name_quiz;
+        document.getElementById("id_quiz").innerHTML = id_quiz;
+        document.getElementById("button_end_page1").innerHTML = '<button id="end_create" onclick="join_quizzes()">Realizar Unión</button>';
+      }else{
+        document.getElementById("status_quiz").innerHTML = "Incorrecto";
+      }
+
+
+      
+}
+
 function join_quizzes() {
     //-- Leer el fichero principal, en main_json_file guardamos la ruta.
     const  MAIN_JSON_FILE = fs.readFileSync(main_json_file);
@@ -106,8 +150,26 @@ function join_quizzes() {
     fs.writeFileSync(main_json_file,myJSON);
 
     //-- Para acabar, mostrará un mensaje de que se ha juntado correctamente.
-    document.getElementById("<h4>El proceso de fusión de los ficheros se ha realizado con éxito.</h4>");
-
+    document.getElementById("back").innerHTML += "<h4 style='text-align:center;'>El proceso de fusión de los ficheros se ha realizado con éxito.</h4>";
+    document.getElementById("button_end_page1").innerHTML = "";
     //-- Se oculta la recogida de archivos.
-    document.getElementById("wrapper0").style.display = "none"
+    document.getElementById("wrapper0").style.display = "none";
+    //-- Se oculta el resumen
+    document.getElementById("wrapper1").style.display = "none";
+}
+
+function root_mode_activated() {
+  const MAIN_JSON = "resources/plantillas/main.json";
+  const  MAIN_JSON_FILE = fs.readFileSync(MAIN_JSON);
+  var main_info = JSON.parse(MAIN_JSON_FILE);
+  if (main_info["root_mode"]) {
+      document.getElementById("wrapper_create").style.display = "none";
+      document.getElementById("wrapper_show").style.display = "none";
+  }else{
+      document.getElementById("wrapper_create").style.display = "block";
+      document.getElementById("wrapper_show").style.display = "block";
+  }
+  console.log("Root")   
+  let myJSON = JSON.stringify(main_info);
+  fs.writeFileSync(MAIN_JSON,myJSON);
 }
