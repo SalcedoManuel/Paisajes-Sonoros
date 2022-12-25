@@ -553,6 +553,98 @@ function places_global_results() {
     global_results.innerHTML += string;
 }
 
+function last_user_questions() {
+    const number_people = quiz_info.length;
+    const number_questions = quiz_info[0][2].length;
+    const VALUE = 1/number_people;
+
+    /* Crearemos un array que contendrá las partes de las preguntas.*/
+
+    var array = new Array()
+    array.push(functions_readfile.create_map_last_user_questions())
+    string = "";
+    for (let e = 0; e < number_questions; e++) {
+        for (let i = 0; i < number_people; i++) {
+            if (quiz_info[i][2][e]['¿Conoces Menorca? ¿En qué grado estás familiarizado/a o relacionado/a con la isla?'] == "no") {
+                let value = array[e].get("¿Conoces Menorca? ¿En qué grado estás familiarizado/a o relacionado/a con la isla?")
+                value[0] += 1/number_people;
+            }else if(quiz_info[i][2][e]['¿Conoces Menorca? ¿En qué grado estás familiarizado/a o relacionado/a con la isla?'] == "si_poco"){
+                let value = array[e].get("¿Conoces Menorca? ¿En qué grado estás familiarizado/a o relacionado/a con la isla?")
+                value[1] += 1/number_people;
+            }else if(quiz_info[i][2][e]['¿Conoces Menorca? ¿En qué grado estás familiarizado/a o relacionado/a con la isla?'] == "si_neutro"){
+                let value = array[e].get("¿Conoces Menorca? ¿En qué grado estás familiarizado/a o relacionado/a con la isla?")
+                value[2] += 1/number_people;
+            }else if(quiz_info[i][2][e]['¿Conoces Menorca? ¿En qué grado estás familiarizado/a o relacionado/a con la isla?'] == "si_mucho"){
+                let value = array[e].get("¿Conoces Menorca? ¿En qué grado estás familiarizado/a o relacionado/a con la isla?")
+                value[3] += 1/number_people;
+            }
+
+            if (quiz_info[i][2][e]['¿Tienes algún tipo de conocimiento o formación en Acústica?'] == "no") {
+                let value = array[e].get('¿Tienes algún tipo de conocimiento o formación en Acústica?')
+                value[0] += 1/number_people;
+            }else if (quiz_info[i][2][e]['¿Tienes algún tipo de conocimiento o formación en Acústica?'] == "si_poco") {
+                let value = array[e].get('¿Tienes algún tipo de conocimiento o formación en Acústica?')
+                value[1] += 1/number_people;
+            }else if (quiz_info[i][2][e]['¿Tienes algún tipo de conocimiento o formación en Acústica?'] == "si_mucho") {
+                let value = array[e].get('¿Tienes algún tipo de conocimiento o formación en Acústica?')
+                value[2] += 1/number_people;                
+            }
+        }
+    }
+    console.table(array)
+    string += "<h3> Preguntas sobre los Escenarios </h3>"
+    var preguntas = array[0].keys();
+    // Crearemos tantas tablas como preguntas 
+    for (let i = 0; i < array[0].size; i++) {
+        string +='<table class="table_global_results">';
+        let pregunta_actual = preguntas.next().value
+        string += '<caption id="caption_table"><h3>'+pregunta_actual+'</h3></caption>\n';
+        string += '<tr><th scope="col">Posibles Respuestas</th>';
+        string += '<th>Número</th><th>Porcentaje</th>';
+        string += '</tr>';
+        if (pregunta_actual == "¿Conoces Menorca?¿En qué grado estás familiarizado/a o relacionado/a con la isla?") {
+            string += '<tr>';
+            string +='<th>No, no he ido nunca.</th>';
+            let number = array.get('¿Conoces Menorca?¿En qué grado estás familiarizado/a o relacionado/a con la isla?')[0]
+            string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
+            string += '</tr>';
+
+            string +='<th>Sí, he estado una o dos veces.</th>'
+            number = array.get('¿Conoces Menorca?¿En qué grado estás familiarizado/a o relacionado/a con la isla?')[1]
+            string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
+            string += '</tr>';
+
+            string +='<th>Sí, la visito regularmente cada año.</th>'
+            number = array.get('¿Conoces Menorca?¿En qué grado estás familiarizado/a o relacionado/a con la isla?')[2]
+            string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
+            string += '</tr>';
+
+            string +='<th>Sí, soy residente en la isla.</th>'
+            number = array.get('¿Conoces Menorca?¿En qué grado estás familiarizado/a o relacionado/a con la isla?')[3]
+            string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
+            string += '</tr>';
+
+        }else if(pregunta_actual == "¿Tienes algún tipo de conocimiento o formación en Acústica?"){
+            string += '<tr>';
+            string +='<th>No, no tengo ningún conocimiento sobre Acústica.</th>';
+            let number = array.get('¿Tienes algún tipo de conocimiento o formación en Acústica?')[0]
+            string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
+            string += '</tr>';
+
+            string +='<th>Sí, soy/he sido estudiante de materias relacionadas con la Acústica.</th>'
+            number = array.get('¿Tienes algún tipo de conocimiento o formación en Acústica?')[1]
+            string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
+            string += '</tr>';
+
+            string +='<th>Sí, tengo conocimientos sólidos sobre Acústica.</th>'
+            number = array.get('¿Tienes algún tipo de conocimiento o formación en Acústica?')[2]
+            string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
+            string += '</tr>';
+        }
+        string +='</table>\n\n';    
+    }
+}
+
 function recordings_global_results() {
     /* Extraemos de la información del Quiz los valores que necesitamos para dibujar.
     Lo primero es crear la constante que marque el número de participantes en el custionario.*/
@@ -717,6 +809,7 @@ module.exports = {
     WHO_score_global_results,
     gender_global_results,
     places_global_results,
+    last_user_questions,
     recordings_global_results,
     generic_global_results
 }

@@ -66,6 +66,7 @@ electron.ipcRenderer.on('quizs_summary', (event, message) => {
     // AÑADIMOS LA INFORMACIÓN SOBRE LOS LUGARES.
     functions_tableinfo.places_global_results();
 
+    functions_tableinfo.last_user_questions();
     // AÑADIMOS LA INFORMACIÓN SOBRE LAS GRABACIONES.
     //functions_tableinfo.recordings_global_results();
     // DIBUJAMOS LA INFORMACIÓN SOBRE LAS GRABACIONES.
