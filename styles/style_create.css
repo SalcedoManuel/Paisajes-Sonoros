@@ -93,3 +93,6 @@ img[id^="status"]{
 #scenary_title{
   padding-right: 2%;
 }
+input[id^=places]{
+  margin-left: 40%;
+}

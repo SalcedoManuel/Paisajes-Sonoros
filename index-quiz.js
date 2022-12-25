@@ -38,12 +38,13 @@ var questions_types_replies = [];
 var user_questions = new Object;
 var places_questions = new Object;
 var places_replies_tag = new Object;
+var last_user_questions = new Object;
 var type_of_question_active = "";
 
 // Respuestas del cuestionario.
 var user_object = new Object;
 var all_places_replies = [];
-var all_recordings_replies = [];
+var last_user_replies = [];
 
 //-- Esta función se encarga de preparar todo para obtener un cuestionario que está online.
 function seek_online_quiz() {
@@ -164,21 +165,16 @@ function show_questions() {
     let replys = document.getElementById("wrapper_replys");
     switch (type_of_question_active) {
         case "user_questions":
-            //-- Preguntas al participante
+            //-- Instrucciones y Preguntas al participante
             var table_user_questions = '<table><caption><div id="wrapper_title_question"><h2>Cuestionario: '+quiz_name_actual_file.split('.')[0]+'</h2></div></caption>'+
-            '<tr><th><h3>Resumen General:</h3></th><th><h3>Preguntas Generales al Participante</h3></th><th id="Material_Apoyo"><h3 style="margin-left: 5%">Material de Apoyo</h3></th></tr>'+
-            '<tr><td rowspan="2" style="border-right: 2px white solid"><div id="wrapper_files" style="margin-right:10px;"></div></td><td style="border-right: 2px white solid;"><div id="wrapper_replys" style="margin-left: 5px;"></div></td>'+
-            '<td></td></tr>'+
+            '<tr><th><h3>Instrucciones para el Usuario</h3></th></tr>'+
+            '<tr><td><div id="wrapper_instructions" style="width:fit-content;"></div><div id="wrapper_replys" style="margin-left: 5px;"></div></td>'+
+            '</tr>'+
             '<tr><th><div id="wrapper_next"></div></th></tr></table>';               
             document.getElementById("wrapper2").innerHTML = table_user_questions;
-            //-- Cambiar Título.
-            let info = document.getElementById("wrapper_files");
-            for (let i = 0; i < number_places; i++) {
-                console.log(name_scenary)
-                info.innerHTML += "Nombre del Escenario: " + name_scenary[i] + "<br>";
-                name_actual_scenary = name_scenary[i];
-                info.innerHTML += "Número de tomas por lugar: " + number_recordings+ "<br>";
-            }
+            //-- Introducimos las instrucciones para el cuestionario.
+            instructions_info = functions_quiz.add_instructions();
+            //-- Introducimos las preguntas para el usuario.
             replys = document.getElementById("wrapper_replys")
             replys.innerHTML = "";
             for (let i = 0; i < Object.keys(user_questions).length; i++) {
@@ -190,12 +186,12 @@ function show_questions() {
           
             break;
         case "places_questions":
-            console.log("Empezamos por el lugar ",number_places_questions_replied," y Grabación ",number_recordings_questions_replied)  
+            //-- Cambiamos el nombre del escenario actual.
             name_actual_scenary = name_scenary[number_places_questions_replied]
+            //-- Creamos la tabla
             var table_recordings_questions = '<table><caption><div id="wrapper_title_question"><h2>Cuestionario: '+quiz_name_actual_file.split('.')[0]+'</h2></div></caption>'+
-            '<tr><th style="padding-right: 5px;"><h3>Nombre Escenario: '+name_actual_scenary+'</h3></th><th style=""><h3>Preguntas sobre el Escenario</h3></th><th id="Material_Apoyo"><h3>Material de Apoyo</h3></th></tr>'+
-            '<tr><td rowspan="2" style="border-right: 2px white solid"><div id="wrapper_files" style="margin-right:10px;"></div></td><td><div id="wrapper_replys" style="margin-left: 5px;border-right: 2px #ffff solid"></div></td>'+
-            '<td style="max-height: fit-content;"><div id="wrapper_support"></div></td></tr>'+
+            '<tr><th style="padding-right: 5px;"></th><th style=""><h3>Preguntas sobre el Escenario</h3></th></tr>'+
+            '<tr><td rowspan="2" style="border-right: 2px white solid"><div id="wrapper_files" style="margin-right:10px;"></div></td><td><div id="wrapper_replys" style="margin-left: 5px;border-right: 2px #ffff solid"></div></td></tr>'+
             '<tr><th><div id="wrapper_next"></div></th></tr></table>';
             document.getElementById("wrapper2").innerHTML = table_recordings_questions;
             //-- Contenido visual
@@ -206,25 +202,14 @@ function show_questions() {
             format_visual = aux_visual[aux_visual_length-1]; // El formato del vídeo o de la imagen.
             // Dependiendo del formato se eligirá una foto o un video.
             if (format_visual == 'jpg' || format_visual == 'jiff' || format_visual == 'png' || format_visual == 'jfif') {
-                //-- Pedir un número entero que sea o cero o uno. Si es cero, NO se muestra contenido y si es 1 Sí.
-                let show_content = Math.floor(Math.random()*2);
-                if (show_content  == 0) {
-                    document.getElementById("wrapper_files").innerHTML += '<img id="file_image" src="images/logo3.png" alt=""></img><br>';
-                } else {
-                    document.getElementById("wrapper_files").innerHTML += '<img id="file_image" src="'+visual_files[number_places_questions_replied][number_recordings_questions_replied]+'" alt=""></img><br>';
-                }
-                //document.getElementById("wrapper_files").innerHTML += '<img id="file_image" src="'+visual_files[number_places_questions_replied][number_recordings_questions_replied]+'" alt=""></img><br>';
+                document.getElementById("wrapper_files").innerHTML += '<img id="file_image" src="'+visual_files[number_places_questions_replied][number_recordings_questions_replied]+'" alt=""></img><br>';
             }else if (format_visual == 'mp4' || format_visual == 'ogg' || format_visual == 'webm') {
-                //-- Pedir un número entero que sea o cero o uno. Si es cero, NO se muestra contenido y si es 1 Sí.
-                let show_content = Math.floor(Math.random()*2);
-                if (show_content == 0) {
-                    document.getElementById("wrapper_files").innerHTML += '<img id="file_image" src="images/logo3.png" alt="No_Video"></img><br>';
-                }else{
-                    document.getElementById("wrapper_files").innerHTML += '<video id="file_video" src="'+visual_files[number_places_questions_replied][number_recordings_questions_replied]+'" autoplay muted loop></video><br>';
-                }
-                //document.getElementById("wrapper_files").innerHTML += '<video id="file_video" src="'+visual_files[number_places_questions_replied][number_recordings_questions_replied]+'" autoplay muted loop></video><br>';
+
+                document.getElementById("wrapper_files").innerHTML += '<video id="file_video" src="'+visual_files[number_places_questions_replied][number_recordings_questions_replied]+'" autoplay muted loop></video><br>';
+
             }else{
-                document.getElementById('wrapper_files').innerHTML += '<iframe id="file_video" src="'+visual_files[number_places_questions_replied][number_recordings_questions_replied]+'?controls=0?showinfo=0?modestbranding=1?loop=1?rel=0&amp;autoplay=1"'+
+                console.log(visual_files[number_places_questions_replied][number_recordings_questions_replied])
+                document.getElementById('wrapper_files').innerHTML += '<iframe style="width:500px;height:300px"id="file_video" src="'+visual_files[number_places_questions_replied][number_recordings_questions_replied]+'?controls=0?showinfo=0?modestbranding=1?loop=1?rel=0&amp;autoplay=1"'+
                 ' allow="accelerometer; autoplay;loop;showinfo;modestbranding; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><br>';
             }
             
@@ -236,27 +221,44 @@ function show_questions() {
 
             replys = document.getElementById("wrapper_replys");
             replys.innerHTML = "";
-            //console.log(Object.keys(places_questions))
-            //console.table(places_questions)
             for (let i = 0; i < Object.keys(places_questions).length; i++) {
                 let pos = i + 1;
                 replys.innerHTML += functions_quiz.add_places_questions(pos);    
             }
-            document.getElementById("wrapper_next").innerHTML = '<button onclick="functions_quiz.next_option(1)">Siguiente</button>';
-            //-- Esta función añadirá los audios de apoyo.
-            functions_quiz.add_support_examples();
+            document.getElementById("wrapper_next").innerHTML = '<button id="button_next" onclick="functions_quiz.next_option(1)">Siguiente</button>';
+
             console.info("Si los siguientes números son iguales excepción ",pos_recording,number_recordings-1)
             switch (pos_recording) {
                 case (number_recordings-1):
                     console.info("Si los siguientes números son iguales --> SE ACABA",pos_places,number_places-1)
                     if ((number_places-1) == pos_places ) {
-                        document.getElementById("wrapper_next").innerHTML = '<button onclick="functions_quiz.end_quiz()">Finalizar</button>';
+                        type_of_question_active = "last_user_questions";
+                        document.getElementById("wrapper_next").innerHTML = '<button id="button_next" onclick="functions_quiz.last_question_user()">Siguiente</button>';
                         console.log("Se acaba")
                     }
                 break;
             }    
             break;
 
+        case "last_user_questions":
+            //-- Instrucciones y Preguntas al participante
+            var table_last_user_questions = '<table><caption><div id="wrapper_title_question"><h2>Cuestionario: '+quiz_name_actual_file.split('.')[0]+'</h2></div></caption>'+
+            '<tr><th><h3>Preguntas Finales para el Usuario</h3></th></tr>'+
+            '<tr><td><div id="wrapper_replys" style="margin-left: 5px;"></div></td>'+
+            '</tr>'+
+            '<tr><th><div id="wrapper_next"></div></th></tr></table>';               
+            document.getElementById("wrapper2").innerHTML = table_last_user_questions;
+            //-- Introducimos las preguntas para el usuario.
+            replys = document.getElementById("wrapper_replys")
+            replys.innerHTML = "";
+            console.table(last_user_questions)
+            for (let i = 0; i < Object.keys(last_user_questions).length; i++) {
+                let pos = i + 1;
+                replys.innerHTML += functions_quiz.add_last_question_user(pos);    
+            }
+            replys.innerHTML += "<br>"
+            document.getElementById("wrapper_next").innerHTML = '<button id="button_next" onclick="functions_quiz.end_quiz()">Finalizar</button>';
+            break;
         default:
             break;
     }
@@ -307,6 +309,9 @@ function Select_Quiz(position) {
     user_questions = quiz_json["questions"][0];
     //-- Preguntas sobre el escenario para mostrar.
     places_questions = quiz_json["questions"][1];
+    //-- Preguntas que aparecen al acabar.
+    last_user_questions = quiz_json["questions"][2];
+    console.table(last_user_questions)
     //-- Respuestas de las preguntas del escenario.
     places_replies_tag = quiz_json["questions_replies"][1]
     //-- Tipos de Preguntas 
