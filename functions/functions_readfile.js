@@ -48,7 +48,7 @@ function create_map() {
 function create_map_last_user_questions() {
     let new_map = new Map();
     new_map.set("¿Conoces Menorca? ¿En qué grado estás familiarizado/a o relacionado/a con la isla?",[0,0,0,0]);
-    new_map.set("¿Tienes algún tipo de conocimiento o formación en Acústica? ",[0,0,0]);
+    new_map.set("¿Tienes algún tipo de conocimiento o formación en Acústica?",[0,0,0]);
     return new_map;
 }
 

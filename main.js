@@ -234,7 +234,7 @@ electron.ipcMain.handle('online_quiz_save',(event,msg) =>{
       main_info["Number_Quizs"] += 1;
       main_info["Quizs_Names"].push(name_quiz+".json");
   }
-
+  main_info["Number_Completed_Quiz"].push(0)
   //-- Colocamos como cuestionario actual el nuevo cuestionario.
   main_info["Quiz_actual"] = name_quiz;
   //-- Guardamos la información del main en el main.json

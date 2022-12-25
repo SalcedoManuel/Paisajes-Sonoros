@@ -563,34 +563,33 @@ function last_user_questions() {
     var array = new Array()
     array.push(functions_readfile.create_map_last_user_questions())
     string = "";
-    for (let e = 0; e < number_questions; e++) {
+        console.table(array[0])
         for (let i = 0; i < number_people; i++) {
-            if (quiz_info[i][2][e]['¿Conoces Menorca? ¿En qué grado estás familiarizado/a o relacionado/a con la isla?'] == "no") {
-                let value = array[e].get("¿Conoces Menorca? ¿En qué grado estás familiarizado/a o relacionado/a con la isla?")
+            if (quiz_info[i][2][0]['¿Conoces Menorca? ¿En qué grado estás familiarizado/a o relacionado/a con la isla?'] == "no") {
+                let value = array[0].get("¿Conoces Menorca? ¿En qué grado estás familiarizado/a o relacionado/a con la isla?")
                 value[0] += 1/number_people;
-            }else if(quiz_info[i][2][e]['¿Conoces Menorca? ¿En qué grado estás familiarizado/a o relacionado/a con la isla?'] == "si_poco"){
-                let value = array[e].get("¿Conoces Menorca? ¿En qué grado estás familiarizado/a o relacionado/a con la isla?")
+            }else if(quiz_info[i][2][0]['¿Conoces Menorca? ¿En qué grado estás familiarizado/a o relacionado/a con la isla?'] == "si_poco"){
+                let value = array[0].get("¿Conoces Menorca? ¿En qué grado estás familiarizado/a o relacionado/a con la isla?")
                 value[1] += 1/number_people;
-            }else if(quiz_info[i][2][e]['¿Conoces Menorca? ¿En qué grado estás familiarizado/a o relacionado/a con la isla?'] == "si_neutro"){
-                let value = array[e].get("¿Conoces Menorca? ¿En qué grado estás familiarizado/a o relacionado/a con la isla?")
+            }else if(quiz_info[i][2][0]['¿Conoces Menorca? ¿En qué grado estás familiarizado/a o relacionado/a con la isla?'] == "si_neutro"){
+                let value = array[0].get("¿Conoces Menorca? ¿En qué grado estás familiarizado/a o relacionado/a con la isla?")
                 value[2] += 1/number_people;
-            }else if(quiz_info[i][2][e]['¿Conoces Menorca? ¿En qué grado estás familiarizado/a o relacionado/a con la isla?'] == "si_mucho"){
-                let value = array[e].get("¿Conoces Menorca? ¿En qué grado estás familiarizado/a o relacionado/a con la isla?")
+            }else if(quiz_info[i][2][0]['¿Conoces Menorca? ¿En qué grado estás familiarizado/a o relacionado/a con la isla?'] == "si_mucho"){
+                let value = array[0].get("¿Conoces Menorca? ¿En qué grado estás familiarizado/a o relacionado/a con la isla?")
                 value[3] += 1/number_people;
             }
 
-            if (quiz_info[i][2][e]['¿Tienes algún tipo de conocimiento o formación en Acústica?'] == "no") {
-                let value = array[e].get('¿Tienes algún tipo de conocimiento o formación en Acústica?')
+            if (quiz_info[i][2][0]['¿Tienes algún tipo de conocimiento o formación en Acústica?'] == "no") {
+                let value = array[0].get('¿Tienes algún tipo de conocimiento o formación en Acústica?')
                 value[0] += 1/number_people;
-            }else if (quiz_info[i][2][e]['¿Tienes algún tipo de conocimiento o formación en Acústica?'] == "si_poco") {
-                let value = array[e].get('¿Tienes algún tipo de conocimiento o formación en Acústica?')
+            }else if (quiz_info[i][2][0]['¿Tienes algún tipo de conocimiento o formación en Acústica?'] == "si_poco") {
+                let value = array[0].get('¿Tienes algún tipo de conocimiento o formación en Acústica?')
                 value[1] += 1/number_people;
-            }else if (quiz_info[i][2][e]['¿Tienes algún tipo de conocimiento o formación en Acústica?'] == "si_mucho") {
-                let value = array[e].get('¿Tienes algún tipo de conocimiento o formación en Acústica?')
+            }else if (quiz_info[i][2][0]['¿Tienes algún tipo de conocimiento o formación en Acústica?'] == "si_mucho") {
+                let value = array[0].get('¿Tienes algún tipo de conocimiento o formación en Acústica?')
                 value[2] += 1/number_people;                
             }
         }
-    }
     console.table(array)
     string += "<h3> Preguntas sobre los Escenarios </h3>"
     var preguntas = array[0].keys();
@@ -602,47 +601,48 @@ function last_user_questions() {
         string += '<tr><th scope="col">Posibles Respuestas</th>';
         string += '<th>Número</th><th>Porcentaje</th>';
         string += '</tr>';
-        if (pregunta_actual == "¿Conoces Menorca?¿En qué grado estás familiarizado/a o relacionado/a con la isla?") {
+        if (pregunta_actual == "¿Conoces Menorca? ¿En qué grado estás familiarizado/a o relacionado/a con la isla?") {
             string += '<tr>';
             string +='<th>No, no he ido nunca.</th>';
-            let number = array.get('¿Conoces Menorca?¿En qué grado estás familiarizado/a o relacionado/a con la isla?')[0]
+            let number = array[0].get('¿Conoces Menorca? ¿En qué grado estás familiarizado/a o relacionado/a con la isla?')[0]
             string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
             string += '</tr>';
 
             string +='<th>Sí, he estado una o dos veces.</th>'
-            number = array.get('¿Conoces Menorca?¿En qué grado estás familiarizado/a o relacionado/a con la isla?')[1]
+            number = array[0].get('¿Conoces Menorca? ¿En qué grado estás familiarizado/a o relacionado/a con la isla?')[1]
             string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
             string += '</tr>';
 
             string +='<th>Sí, la visito regularmente cada año.</th>'
-            number = array.get('¿Conoces Menorca?¿En qué grado estás familiarizado/a o relacionado/a con la isla?')[2]
+            number = array[0].get('¿Conoces Menorca? ¿En qué grado estás familiarizado/a o relacionado/a con la isla?')[2]
             string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
             string += '</tr>';
 
             string +='<th>Sí, soy residente en la isla.</th>'
-            number = array.get('¿Conoces Menorca?¿En qué grado estás familiarizado/a o relacionado/a con la isla?')[3]
+            number = array[0].get('¿Conoces Menorca? ¿En qué grado estás familiarizado/a o relacionado/a con la isla?')[3]
             string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
             string += '</tr>';
 
         }else if(pregunta_actual == "¿Tienes algún tipo de conocimiento o formación en Acústica?"){
             string += '<tr>';
             string +='<th>No, no tengo ningún conocimiento sobre Acústica.</th>';
-            let number = array.get('¿Tienes algún tipo de conocimiento o formación en Acústica?')[0]
+            let number = array[0].get('¿Tienes algún tipo de conocimiento o formación en Acústica?')[0]
             string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
             string += '</tr>';
 
             string +='<th>Sí, soy/he sido estudiante de materias relacionadas con la Acústica.</th>'
-            number = array.get('¿Tienes algún tipo de conocimiento o formación en Acústica?')[1]
+            number = array[0].get('¿Tienes algún tipo de conocimiento o formación en Acústica?')[1]
             string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
             string += '</tr>';
 
             string +='<th>Sí, tengo conocimientos sólidos sobre Acústica.</th>'
-            number = array.get('¿Tienes algún tipo de conocimiento o formación en Acústica?')[2]
+            number = array[0].get('¿Tienes algún tipo de conocimiento o formación en Acústica?')[2]
             string += '<td id="value_table">'+(number*number_people)+'</td><td id="value_table">'+(number*100)+'%</td>'
             string += '</tr>';
         }
         string +='</table>\n\n';    
     }
+    global_results.innerHTML += string;
 }
 
 function recordings_global_results() {
