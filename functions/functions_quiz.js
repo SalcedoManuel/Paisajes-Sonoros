@@ -2,8 +2,13 @@ const { fstat } = require("original-fs");
 
 function add_user_questions(pos) {
     let reply = "";
+    console.log(user_questions[pos])
     if (user_questions[pos] == "Introduce aquí tu puntaje auditivo obtenido en el test hearWHO") {
-        reply += "<h2 style='text-align:center;'>Preguntas Generales Iniciales al Participante</h2><br>"
+        reply += "<h2 style='text-align:center;'>Preguntas Generales Iniciales al Participante</h2><br>";
+        reply += "<h4>Para realizar este estudio es conveniente disfrutad de salud auditiva. Le sugerimos que realice un sencillo test para comprobarlo.</h4>";
+        reply += "<h4>El Test en ningún caso es eliminatorio y siempre podrá participar en la encuesta de Paisajes Sonoros. Para realizarlo correctamente</h4>";
+        reply += "<h4>esté concentrado en un lugar sin distracciones y preferiblemente con auriculares. Puede hacerlo tantas veces como quiera;</h4>";
+        reply += "<h4>en ese caso tome la puntuación más alta</h4>";
         reply += pos +". <strong>"+user_questions[pos] + "</strong>:";
         reply += '&nbsp;&nbsp;';
         reply += '<input type="number" id="score" min="0" max="100" value="75" style="width:35px;text-align:center;">';
@@ -395,7 +400,11 @@ function add_instructions() {
                '<h3 style="min-width:fit-content;"><strong>• No reproducir los audios de apoyo mientras se está reproduciendo otro audio.&nbsp</strong><img src="images/no.png" style="max-width:20px;background-color:white;border-radius: 50%;"></h3>'+
                '<h3 style="min-width:fit-content;"><strong>• Marque en cada pregunta la opción que mas se ajuste.&nbsp</strong><img src="images/select.png" style="max-width:20px;background-color:white;"></h3>'+
                '<h3 style="min-width:fit-content;"><strong>• En caso de duda, utilice los audios de apoyo.&nbsp</strong><img src="images/duda.png" style="max-width:20px;background-color:white;border-radius: 50%;"></h3>'+
-               '<h3 style="min-width:fit-content;"><strong>• Utilice estos audios de abajo para regular el volumen a su gusto.</strong><img src="images/down-arrow.png" style="max-width:20px;background-color:black;"></h3>';
+               '<h3 style="min-width:fit-content;"><strong>• Puedes reproducir los archivos multimedia tantas veces como creas, no hay un timepo límite para hacer el cuestionario.&nbsp</strong><img src="images/update.png" style="max-width:20px;background-color:white;border-radius: 50%;"></h3>'+
+               '<h3 style="min-width:fit-content;"><strong>• Por favor, es <strong>MUY RECOMENDABLE </strong> escuchar los siguientes audios para ajustar el volumen a su gusto de escucha. </strong>'+
+               '<h3 style="min-width:fit-content;"><strong>&nbsp- Reproduzca todos ellos y relaciónelos con las características sonoras que indica su nombre.</strong></h3>'+
+               '<h3 style="min-width:fit-content;"><strong>&nbsp- Para reproducir los audios pulse los botones de abajo y posteriormente darle al botón play.</strong><img src="images/play.png" style="max-width:20px;background-color:white;"></h3>';
+
     //-- Añadimos después los audios para regular.
     text += add_support_examples();
     var instructions = document.getElementById("wrapper_instructions")
