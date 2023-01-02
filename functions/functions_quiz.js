@@ -3,7 +3,7 @@ const { fstat } = require("original-fs");
 function add_user_questions(pos) {
     let reply = "";
     console.log(user_questions[pos])
-    if (user_questions[pos] == "Introduce aquí tu puntaje auditivo obtenido en el test hearWHO") {
+    if (user_questions[pos] == "Introduce aquí tu puntuación auditivo obtenido en el test hearWHO") {
         reply += "<h2 style='text-align:center;'>Preguntas Generales Iniciales al Participante</h2><br>";
         reply += "<h4>Para realizar este estudio es conveniente disfrutad de salud auditiva. Le sugerimos que realice un sencillo test para comprobarlo.</h4>";
         reply += "<h4>El Test en ningún caso es eliminatorio y siempre podrá participar en la encuesta de Paisajes Sonoros. Para realizarlo correctamente</h4>";
