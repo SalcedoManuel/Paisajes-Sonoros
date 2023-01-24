@@ -48,7 +48,8 @@ var last_user_replies = [];
 
 //-- Esta función se encarga de preparar todo para obtener un cuestionario que está online.
 function seek_online_quiz() {
-    document.getElementById("wrapper_files").innerHTML = "";
+    document.getElementById("wrapper2").style.display = "none";
+    //document.getElementById("wrapper_files").innerHTML = "";
     document.getElementById("wrapper_summary").style.display = "block";
     document.getElementById("table_summary").style.display = "none";
     document.getElementById("wrapper_text").style.display = "none";
@@ -106,6 +107,8 @@ electron.ipcRenderer.on('online_quiz_save', (event, message) => {
 
 function get_quiz_online() {
     //-- La función que crea el cuestionario necesita la posición en el quizs_names.
+    document.getElementById("wrapper2").style.display = "block";
+    document.getElementById("wrapper0").style.display = "none";
     let name = document.getElementById("online_quiz_name").innerHTML + ".json";
     let position = quizs_names.indexOf(name);
     console.log("position es: ",position)
@@ -137,6 +140,8 @@ electron.ipcRenderer.on('quizs', (event, message) => {
 });
 
 function start_quiz() {
+    // Mostramos el contenedor que tendrá la información para el usuario.
+    document.getElementById("wrapper2").style.display = "block";
     // Pedimos al proceso Main que nos mande el Quiz Actual.
     electron.ipcRenderer.invoke('actual_quizs', "Quiz actual");
     document.getElementById("wrapper_summary").style.display = "none";
@@ -267,6 +272,7 @@ function show_questions() {
 function Select_Quiz(position) {
     //-- Eliminamos la información dada si se ha iniciado a través de la opción Cuestionario Online,
     //-- En caso de venir otra opción no pasa nada.
+    document.getElementById("wrapper0").style.display = "none";
     document.getElementById("wrapper_summary").style.display = "none";
     //  Obtenemos el nombre del fichero del que vamos a realiza el Cuestioanrio.
     quiz_name_actual_file = quizs_names[position];
