@@ -41,7 +41,7 @@ electron.app.on('ready', () => {
           contextIsolation: false
         }
     });
-  //win.setMenuBarVisibility(false);
+  win.setMenuBarVisibility(false);
   //-- Cargar interfaz gráfica en HTML
   win.loadFile("index.html");
 });

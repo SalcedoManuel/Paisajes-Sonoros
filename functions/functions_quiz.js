@@ -67,13 +67,13 @@ function add_places_questions(pos) {
     if (places_questions[pos] == "En general, ¿Cómo describirías la calidad acústica del entorno que escuchas?") {
         reply += pos + ". <strong>" + places_questions[pos] + "</strong>:";
         //--Creamos la tabla.
-        reply += '<table><tr><th scope="col"></th><th>Muy malo</th><th>Malo</th><th>Ni bueno ni malo</th><th>Bueno</th><th>Muy bueno</th></tr>';
+        reply += '<table><tr><th scope="col"></th><th style="padding-right: 1em;">Muy malo</th><th style="padding-right: 1em;">Malo</th><th style="padding-right: 1em;">Ni bueno ni malo</th><th style="padding-right: 1em;">Bueno</th><th style="padding-right: 1em;">Muy bueno</th></tr>';
         //--Introducimos las opciones
-        reply += '<tr><th>Escoge una opción</th><td><input type="radio" name="places4" value="muy_malo" id="places4" checked></td>'+
-                                                '<td><input type="radio" name="places4" value="malo" id="places4"></td>'+
-                                                '<td><input type="radio" name="places4" value="neutro" id="places4"></td>'+
-                                                '<td><input type="radio" name="places4" value="bueno" id="places4"></td>'+
-                                                '<td><input type="radio" name="places4" value="muy_bueno" id="places4"></td>'+'</tr>';
+        reply += '<tr><th>Escoge una opción</th><td style="padding-right: 1em;" ><input type="radio" name="places4" value="muy_malo" id="places4" checked></td>'+
+                                                '<td style="padding-right: 1em;"><input type="radio" name="places4" value="malo" id="places4"></td>'+
+                                                '<td style="padding-right: 1em;"><input type="radio" name="places4" value="neutro" id="places4"></td>'+
+                                                '<td style="padding-right: 1em;"><input type="radio" name="places4" value="bueno" id="places4"></td>'+
+                                                '<td style="padding-right: 1em;"><input type="radio" name="places4" value="muy_bueno" id="places4"></td>'+'</tr>';
         reply += '<table>';
     }
     if (places_questions[pos] == "¿Cuánto tiempo permanecerías en un lugar con un ambiente sonoro como este?") {
