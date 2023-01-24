@@ -302,7 +302,7 @@ function end_quiz() {
     document.getElementById("wrapper2").innerHTML = table;
     document.getElementById("wrapper_files_info").innerHTML = "<h5>Si se quiere enviar el fichero a otra persona, se recomienda usar la opción 'Exportar fichero'</h5>";
     document.getElementById("wrapper_replys_info").innerHTML = "<h5>En caso de que se desee guardar todos las realizaciones en este ordenador se recomienda usar la opción 'Guardar en la App'</h5>"
-    document.getElementById("wrapper_files").innerHTML = '<a href="'+SAVE_JSON+'" download><button><h4>Exportar fichero</h4></button></a>';
+    document.getElementById("wrapper_files").innerHTML = '<a href="'+SAVE_JSON+'" download="resultados.json"><button><h4>Exportar fichero</h4></button></a>';
     document.getElementById("wrapper_replys").innerHTML = '<button onclick="functions_quiz.save_file_app()"><h4>Guardar en la App</h4></button>';
 }
 
@@ -320,7 +320,7 @@ function add_support_examples() {
                         '<div style="text-align: center;margin: 0 auto;width: 180px;">'+
                             '<div id="div_support" onclick="functions_quiz.show_audio(0)"><h4>Audio Agradable <img id="img_pleasant"style="width: 12px;" src="images/down-arrow.png" alt="" srcset=""></h4></div>'+
                             '<div id="support_pleasant" style="text-align: center;margin: 0 auto;width: 180px;">'+
-                                '<audio id="audio_support_pleasant" controls loop style="width: 180px;"><source src="resources/examples/Pleasant/Agradable.wav"></audio>'+
+                                '<audio id="audio_support_pleasant" controls loop style="width: 180px;"><source src="../examples/Pleasant/Agradable.wav"></audio>'+
                             '</div>'+
                         '</div>'+
                     '</td>'+
@@ -328,7 +328,7 @@ function add_support_examples() {
                         '<div style="text-align: center;margin: 0 auto;width: 180px;">'+
                             '<div id="div_support" onclick="functions_quiz.show_audio(1)"><h4>Audio Estático <img id="img_uneventful"style="width: 12px;" src="images/down-arrow.png" alt="" srcset=""></h4></div>'+
                             '<div id="support_uneventful" style="text-align: center;margin: 0 auto;width: 180px;">'+
-                                '<audio id="audio_support_uneventful" controls loop style="width: 180px;"><source src="resources/examples/Uneventful/No_definido.wav"></audio>'+
+                                '<audio id="audio_support_uneventful" controls loop style="width: 180px;"><source src="../examples/Uneventful/No_definido.wav"></audio>'+
                             '</div>'+
                         '</div>'+
                     '</td>'+
@@ -336,7 +336,7 @@ function add_support_examples() {
                         '<div style="text-align: center;margin: 0 auto;width: 180px;">'+
                             '<div id="div_support" onclick="functions_quiz.show_audio(2)"><h4> Audio Desagradable <img id="img_annoying"style="width: 12px;" src="images/down-arrow.png" alt="" srcset=""></h4></div>'+
                             '<div id="support_annoying" style="text-align: center;margin: 0 auto;width: 180px;">'+
-                                '<audio id="audio_support_annoying" controls loop style="width: 180px;"><source src="resources/examples/Annoying/Molesto.wav"></audio>'+
+                                '<audio id="audio_support_annoying" controls loop style="width: 180px;"><source src="../examples/Annoying/Annoying.wav"></audio>'+
                             '</div>'+
                         '</div>'+
                     '</td>'+
@@ -344,7 +344,7 @@ function add_support_examples() {
                         '<div style="text-align: center;margin: 0 auto;width: 180px;">'+
                             '<div id="div_support" onclick="functions_quiz.show_audio(3)"><h4> Audio Dinámico <img id="img_eventful"style="width: 12px;" src="images/down-arrow.png" alt="" srcset=""></h4></div>'+
                             '<div id="support_eventful" style="text-align: center;margin: 0 auto;width: 180px;">'+
-                                '<audio id="audio_support_eventful" controls loop style="width: 180px;"><source src="resources/examples/Eventful/Eventful.wav"></audio>'+
+                                '<audio id="audio_support_eventful" controls loop style="width: 180px;"><source src="../examples/Eventful/Eventful.wav"></audio>'+
                             '</div>'+
                         '</div>'+
                     '</td>'+
