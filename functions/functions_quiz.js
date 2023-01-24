@@ -395,15 +395,15 @@ function show_audio(value) {
 }
 
 function add_instructions() {
-    var text = '<h3 style="min-width:fit-content;"><strong>• Estar en un ambiente tranquilo cuando se realice el experimento.&nbsp</strong><img src="images/silence.png" style="max-width:20px;background-color:white;border-radius:50%"></h3>'+
-               '<h3 style="min-width:fit-content;"><strong>• Usar auriculares que aíslen del entorno para escuchar los audios.&nbsp</strong><img src="images/headphone.png" style="max-width:20px;background-color:white;"></h3>'+
+    var text = '<h3 style="min-width:fit-content;"><strong>• Estar en un ambiente tranquilo cuando se realice el experimento.&nbsp</strong><img src="images/silencio.png" style="max-width:20px;>&nbsp&nbsp&nbsp&nbsp</h3>'+
+               '<h3 style="min-width:fit-content;"><h3 style="min-width:fit-content;"><strong>• Usar auriculares que aíslen del entorno para escuchar los audios.&nbsp</strong><img src="images/headphone1.png" style="max-width:20px;"></h3>'+
                '<h3 style="min-width:fit-content;"><strong>• No reproducir los audios de apoyo mientras se está reproduciendo otro audio.&nbsp</strong><img src="images/no.png" style="max-width:20px;background-color:white;border-radius: 50%;"></h3>'+
-               '<h3 style="min-width:fit-content;"><strong>• Marque en cada pregunta la opción que más se ajuste.&nbsp</strong><img src="images/select.png" style="max-width:20px;background-color:white;"></h3>'+
-               '<h3 style="min-width:fit-content;"><strong>• En caso de duda, utilice los audios de apoyo.&nbsp</strong><img src="images/duda.png" style="max-width:20px;background-color:white;border-radius: 50%;"></h3>'+
-               '<h3 style="min-width:fit-content;"><strong>• Puedes reproducir los archivos multimedia tantas veces como creas, no hay un tiempo límite para hacer el cuestionario.&nbsp</strong><img src="images/update.png" style="max-width:20px;background-color:white;border-radius: 50%;"></h3>'+
+               '<h3 style="min-width:fit-content;"><strong>• Marque en cada pregunta la opción que más se ajuste.&nbsp</strong><img src="images/select1.png" style="max-width:20px;"></h3>'+
+               '<h3 style="min-width:fit-content;"><strong>• En caso de duda, utilice los audios de apoyo.&nbsp</strong><img src="images/duda1.png" style="max-width:20px;border-radius: 50%;"></h3>'+
+               '<h3 style="min-width:fit-content;"><strong>• Puedes reproducir los archivos multimedia tantas veces como creas, no hay un tiempo límite para hacer el cuestionario.&nbsp</strong><img src="images/update.png" style="max-width:20px;border-radius: 50%;"></h3>'+
                '<h3 style="min-width:fit-content;"><strong>• Por favor, es <strong>MUY RECOMENDABLE </strong> escuchar los siguientes audios para ajustar el volumen a su gusto de escucha. </strong>'+
                '<h3 style="min-width:fit-content;"><strong>&nbsp- Reproduzca todos ellos y relaciónelos con las características sonoras que indica su nombre.</strong></h3>'+
-               '<h3 style="min-width:fit-content;"><strong>&nbsp- Para reproducir los audios pulse los botones de abajo y posteriormente darle al botón play.</strong><img src="images/play.png" style="max-width:20px;background-color:white;"></h3>';
+               '<h3 style="min-width:fit-content;"><strong>&nbsp- Para reproducir los audios pulse los botones de abajo y posteriormente darle al botón play.</strong><img src="images/play.png" style="max-width:20px;"></h3>';
 
     //-- Añadimos después los audios para regular.
     text += add_support_examples();
