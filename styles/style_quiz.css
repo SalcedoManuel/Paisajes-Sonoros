@@ -27,7 +27,10 @@ audio{
 }
 div[id^="wrapper0"],div[id^="wrapper1"],div[id^="wrapper2"]{
     display: flex;
-    justify-content: center
+    justify-content: center;
+}
+div[id^="wrapper2"]{
+    margin-left: auto;
 }
 span[id^="wrapper_summary"]{
     display: none;
