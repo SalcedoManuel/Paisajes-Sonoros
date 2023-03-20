@@ -54,7 +54,9 @@ function logFilenames_Secundary(){
     const files = fileInput.files;
     console.log("Ficheros: " + files)
     const fileListLength = files.length;
+    output_secundary.innerText = "";
     output_secundary.innerHTML = "";
+    secundary_json_file = [];
     console.log("Número de ficheros ingresados: " + fileListLength)
     for (let i = 0; i < fileListLength; i++) {
         if (i==0) {
@@ -87,8 +89,9 @@ function check_results() {
       var main_file = JSON.parse(MAIN_JSON_FILE);
 
       //-- Leeremos el ID_QUIZ y el Nombre del Principal
-      var id_quiz = main_file[0][0]["ID_Quiz"];
-      var name_quiz = main_file[0][0]["Name_Quiz"]
+      console.table(main_json_file)
+      var id_quiz = main_file[0]["ID_Quiz"];
+      var name_quiz = main_file[0]["Name_Quiz"]
 
       //-- Iremos leyendo cada fichero secundario para ver si su ID es el mismo.
       //-- Si su ID es distinto se borra de la lista de JSON.
@@ -100,8 +103,8 @@ function check_results() {
         var secundary_file = JSON.parse(SECUNDARY_JSON_FILE);
 
         //-- Leemos el ID.
-        console.log(secundary_file[0][0])
-        var id_quiz_secundary = secundary_file[0][0]["ID_Quiz"];
+        console.log(path,secundary_file[0])
+        var id_quiz_secundary = secundary_file[0]["ID_Quiz"];
         //-- Si el Identificador no coincide --> Borrar de la lista.
         if (id_quiz_secundary != id_quiz) {
           secundary_json_file.pop(path)
@@ -127,22 +130,36 @@ function check_results() {
 
 function join_quizzes() {
     //-- Leer el fichero principal, en main_json_file guardamos la ruta.
+    var save_file;
     const  MAIN_JSON_FILE = fs.readFileSync(main_json_file);
     var main_file = JSON.parse(MAIN_JSON_FILE);
+    console.table(main_file)
+    //-- Si está indefinido es que solo hay un cuestionario.
+    if (main_file.length == undefined) {
+      save_file = [];
+      save_file[0] = main_file;
+      main_file = save_file;
+    }
     //-- Iremos leyendo cada fichero secundario y añadiremos su información al que ha sido elegido como principal.
+    console.info("Unimos ",secundary_json_file.length," Cuestionarios.")
     for (let i = 0; i < secundary_json_file.length; i++) {
         //-- Obtenemos la ruta.
         let path = secundary_json_file[i];
         //-- Leemos el fichero secundario
         const  SECUNDARY_JSON_FILE = fs.readFileSync(path);
         var secundary_file = JSON.parse(SECUNDARY_JSON_FILE);
+        console.table(secundary_file)
         //-- Introducimos dentro del archivo principal, el secundario.
-        //main_file.push(secundary_file);
         console.info("Número de Quizs hechos: ",secundary_file.length)
         //-- Añadiremos cada cuestionario realizado al principal, en orden de aparición.
-        for (let e = 0; e < secundary_file.length; e++) {
+        if (secundary_file.length == undefined) {
+          main_file.push(secundary_file);
+        }else{
+          for (let e = 0; e < secundary_file.length; e++) {
             main_file.push(secundary_file[e]);            
+          }
         }
+
     }
     
     //-- Después de introducir todos los ficheros, guardamos el main actualizado.

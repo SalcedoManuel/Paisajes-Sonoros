@@ -16,6 +16,7 @@ div[id^="file_table"],div[id^="online_table"]{
     background-color: #ffff;
     margin: 0 auto;
     border: 2px rgb(255, 0, 0) solid;
+
 }
 #wrapper_file_secundary{
     border-left: 2px rgb(255,0,0) solid;
@@ -30,15 +31,19 @@ input[id^="myfiles_"]{
     background-color: rgb(97, 97, 97);
     width: 300px;
 }
-
+.scrollable-element {
+    scrollbar-color: red yellow;
+  }
 div[id^="output_"]{
     background-color: rgb(97, 97, 97);
     min-height: fit-content;
-    max-height: 100%;
+    max-height: 75%;
+    overflow-y: scroll;
 }
 
 .output{
     text-align: left; background-color: beige; margin: 1vh;
+    max-height: 50%;
   }
   .encabezado{
     width: fit-content;text-align: left; margin-left: 1vh;
