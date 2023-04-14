@@ -12,6 +12,9 @@
 
     <!-- Cargar el proceso asociado a esta página -->
     <script src="index_readfile.js" defer></script>
+    <script src="./functions/Treatment of Quiz Questions/SelectOptionReadFile.js" defer></script>
+    <script src="scripts/SetAdminMode.js" defer></script>
+    <script src="scripts/NavigationOption.js" defer></script>
 
     <title>Soundscape Questionnaire</title>
 </head>
@@ -38,13 +41,13 @@
     <ul class="nav__list">
     
       <li class="nav__item">
-        <a href="#" class="nav__link" onclick="nav_extras.contact_click()">Contacto</a>
+        <a href="#" class="nav__link" onclick="ContactPopupScreen()">Contacto</a>
       </li>
       <li class="nav__item">
-        <a href="#" class="nav__link" onclick="nav_extras.settings()">Ajustes</a>
+        <a href="#" class="nav__link" onclick="SettingsPopupScreen()">Ajustes</a>
       </li>
       <li class="nav__item">
-        <a href="#" class="nav__link" onclick="nav_extras.help_click(0)">Ayuda</a>
+        <a href="#" class="nav__link" onclick="HelpPopupScreen()">Ayuda</a>
       </li>
       <li class="nav__item">
         <a href="#" class="nav__link" ></a>
@@ -60,11 +63,25 @@
 
   <div class="wrapper">
       <button id="load_results" onclick="load_results()"><h4>Cargar Resultados</h4></button>
+      <button id="load_results" onclick="OpenFileQuiz()"><h4>Cargar Fichero con Resultados</h4></button>
   </div>
+  <div class="wrapper" id="getInputQuizFile">
+    <input type="file" id="myfilesInputFile" class="input_file" >
+    <button id="load_results" onclick="LoadFileQuiz()"><h4>Cargar Fichero con Resultados</h4></button>
+  </div> 
   <div class="wrapper" id="results_button">
     <h3>Selecciona la opción que posee respuestas: </h3>
     <div id="results"></div>
   </div>
+  <div class="wrapper" id="optionsResultsButton">
+    <h3>Selecciona la opción que quiere ver de los cuestionarios: </h3>
+    <div id="results">
+      <button id="button_select_quiz" onclick="SelectOption2Show('hearWhoResults')"><b>WHO Score<b></button>
+      <button id="button_select_quiz" onclick="SelectOption2Show('tablePlacesResults')"><b>Preguntas sobre el Escenario<b></button>
+      <button id="button_select_quiz" onclick="SelectOption2Show('lastQuestion')"><b>Preguntas sobre el Encuestado<b></button>
+      <button id="button_select_quiz" onclick="SelectOption2Show('canvasResult')"><b>Gráfico sobre el Entorno<b></button>
+    </div>
+  </div> 
   <div class="wrapper" id="user_results">
     <h3>Resúmenes de los Resultados del Cuestionario: <b id="option_name_quiz"></b></h3>
 
@@ -72,17 +89,46 @@
       <tr valign="top" class="top_cell">
         <th scope="row" id="number_quiz">Número</th>
         <th id="date_quiz">Fecha de realización</th>
-        <th id="age_quiz">Edad</th>
-        <th id="gener_quiz">Género</th>
+        <th id="score_quiz">Nota en el test HearWHO</th>
       </tr>
     </table>
   </div>
-  <div class="wrapper" id="global_quiz_results">
-    
+  <div class="wrapper" id="hearWhoResults" style="display: block;"></div>
+  <div class="wrapper" id="tablePlacesResults" style="display: block;"></div>
+  <div class="wrapper" id="lastQuestion" style="display: block;"></div>
+  <div class="wrapper" id="canvasResult" style="display: block;">
+    <div style="display: flex;">
+      <div id="table1" style="display:none;border: 1px red solid;width:300px;height: 360px;min-width: 270px;">
+        <h1 id="namePlace1">Lugar 1</h1>
+        <canvas id="myCanvas1" style="background:white; width: 250px;height: 250px;border: 1px green solid;"></canvas>
+        <span style="text-align: center;min-width: fit-content;">
+          <button style="min-width: fit-content; height: 3vh;" onclick="DrawScenary(0,0)">Escenario 1</button>
+          <button style="min-width: fit-content; height: 3vh;" onclick="DrawScenary(0,1)">Escenario 2</button>
+          <button style="min-width: fit-content; height: 3vh;" onclick="DrawScenary(0,2)">Escenario 3</button>
+      </span>
+      </div>
+
+      <div id="table2" style="display:none;border: 1px red solid;width:300px;height: 360px;min-width: 270px;">
+        <h1 id="namePlace2">Lugar 2</h1>
+        <canvas id="myCanvas2" style="background:white; width: 250px;height: 250px;border: 1px green solid;"></canvas>
+        <span style="text-align: center;min-width: fit-content;">
+          <button style="min-width: fit-content; height: 3vh;" onclick="DrawScenary(1,0)">Escenario 1</button>
+          <button style="min-width: fit-content; height: 3vh;" onclick="DrawScenary(1,1)">Escenario 2</button>
+          <button style="min-width: fit-content; height: 3vh;" onclick="DrawScenary(1,2)">Escenario 3</button>
+      </span>
+      </div>
+
+      <div id="table3" style="display:none;border: 1px red solid;width:300px;height: 360px;min-width: 270px;">
+        <h1 id="namePlace2">Lugar 3</h1>
+        <canvas id="myCanvas3" style="background:white; width: 250px;height: 250px;border: 1px green solid;"></canvas>
+        <span style="text-align: center;min-width: fit-content;">
+            <button style="min-width: fit-content; height: 3vh;" onclick="DrawScenary(2,0)">Escenario 1</button>
+            <button style="min-width: fit-content; height: 3vh;" onclick="DrawScenary(2,1)">Escenario 2</button>
+            <button style="min-width: fit-content; height: 3vh;" onclick="DrawScenary(2,2)">Escenario 3</button>
+        </span>
+      </div>
+    </div>
   </div>
-  <div id="diagram_examples">
-  </div>
-  
-  
+
 </body>
 </html>

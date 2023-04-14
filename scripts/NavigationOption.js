@@ -1,65 +1,58 @@
 const sweetalert = require('sweetalert');
 
-
-function contact_click() {
+/* Pantalla que muestra una ventana emergente con la información de contacto. */
+function ContactPopupScreen() {
     let message = "Contacto: m.salcedoa.2016@alumnos.urjc.es";
     swal(message)
 }
 
-function help_click(params) {
+/* Pantalla que muestra una ventana emergente con indicaciones sobre las tres opciones principales:
+ Crear Cuestionario, Rellenar Cuestionario y Mostrar Cuestionario*/
+function HelpPopupScreen() {
     let message = "";
     let title = "¿En qué apartado necesitas ayuda?";
-    switch (params) {
-        case 0:
-            
-            swal(title, {
-                buttons: {
-                  create: {
-                    text: "Crear Cuestionario",
-                    value: "create_quiz"
-                  },
-                  quiz:{
-                    text: "Rellenar Cuestionario",
-                    value: "quiz"
-                  },
-                  read:{
-                    text: "Mostrar Resultados",
-                    value: "read_quiz"
-                  },
-                },
-              })
-              .then((value) => {
-                switch (value) {
-               
-                  case "create_quiz":
-                    title = "Crear un Cuestionario";
-                    message = "Sirve para crear un cuestionario para que en el futuro se pueda rellenar.\n";
-                    swal(title,message, "info");
-                    break;
-                  case "quiz":
-                    title = "Rellenar un Cuestionario";
-                    message = "El objetivo de esta función es la de que un usuario rellene el cuestionario.\n";
-                    swal(title,message, "info");
-                    break;
-                  case "read_quiz":
-                    title = "Mostrar Resultados";
-                    message = "Con esta función se puede observar los resultados de los cuestionarios.\n";
-                    swal(title,message, "info");
-                    break;
-                  default:
-                    console.log("Exit!!")
-                }
-              });
+    swal(title, {
+        buttons: {
+          create: {
+            text: "Crear Cuestionario",
+            value: "create_quiz"
+          },
+          quiz:{
+            text: "Rellenar Cuestionario",
+            value: "quiz"
+          },
+          read:{
+            text: "Mostrar Resultados",
+            value: "read_quiz"
+          },
+        },
+      })
+      .then((value) => {
+        switch (value) {
+       
+          case "create_quiz":
+            title = "Crear un Cuestionario";
+            message = "Sirve para crear un cuestionario para que en el futuro se pueda rellenar.\n";
+            swal(title,message, "info");
             break;
-    
-        default:
+          case "quiz":
+            title = "Rellenar un Cuestionario";
+            message = "El objetivo de esta función es la de que un usuario rellene el cuestionario.\n";
+            swal(title,message, "info");
             break;
-    }
+          case "read_quiz":
+            title = "Mostrar Resultados";
+            message = "Con esta función se puede observar los resultados de los cuestionarios.\n";
+            swal(title,message, "info");
+            break;
+        }
+      });
 
 }
 
-
-function settings() {
+/* Pantalla que muestra una ventana emergente con las opciones extras que tiene la aplicación, que son:
+    Resetear Información de la aplicación, Modo Administrador que habilitada y Juntar fihceros de Resultados.*/
+function SettingsPopupScreen() {
     let title = "¿Qué ajuste quieres hacer?";
     swal(title, {
         buttons: {
@@ -74,8 +67,7 @@ function settings() {
           join: {
             text: "Juntar Resultados",
             value:"join"
-          },
-          cancel: true
+          }
         },
       })
       .then((value) => {
@@ -102,9 +94,8 @@ function settings() {
               info["root_mode"] = true;
               msg = "Modo Root Activado";
             }
-            console.log(info["root_mode"])
             fs.writeFileSync(MAIN_JSON,JSON.stringify(info));
-            root_mode_activated();
+            ChangeAdminMode();
             swal(msg);
             break;
           case "join":
@@ -118,7 +109,7 @@ function settings() {
 }
 
 module.exports = {
-    contact_click,
-    help_click,
-    settings
+  ContactPopupScreen,
+  HelpPopupScreen,
+  SettingsPopupScreen
 }

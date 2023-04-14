@@ -25,8 +25,12 @@
 #load_results{
     border: 1px #ffff solid;
     border-radius: 5%;
-    font-style: bold;
     height: fit-content;
+    width: fit-content;
+}
+#getInputQuizFile{
+    display: none;
+    flex-direction: column;
 }
 .scrollable-element {
     scrollbar-color: red yellow;

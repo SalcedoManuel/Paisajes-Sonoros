@@ -30,8 +30,7 @@ h3{
     display:none;
 }
 #wrapper_create,#wrapper_fill,#wrapper_show{
-    margin-left: 15%;
-
+    margin: 0 auto;
 }
 #btn_create,#btn_quiz,#btn_show{
     border: rgb(255, 255, 255) 2px solid;
@@ -63,7 +62,7 @@ button[id^="btn_"]:hover{
 
 #option_table_home{
     margin-top: 5%;
-
+    margin-left:20%;
 }
 .wrapper{
     text-align: center;
@@ -74,7 +73,7 @@ button[id^="btn_"]:hover{
 #wrapper0,#wrapper1,#wrapper2,#wrapper3,#wrapper4{
     display: none;
     text-align: center;
-    margin-left: 20%;
+    /*margin-left: 20%;*/
 }
 /*button{
     background-color: white;
@@ -136,7 +135,7 @@ button[id^="btn_"]:hover{
     width: 650px; 
     height: 300px;
     background-color: antiquewhite;
-    overflow: scroll;
+    overflow-y: scroll;
     display:block;
     margin:auto;
 }
@@ -147,24 +146,17 @@ button[id^="btn_"]:hover{
     background-color: rgb(0, 0, 0);
 }
 #number_quiz{
-    width: 100px;
+    width: 50px;
 }
 #date_quiz{
-    width: 300px;
+    width: 350px;
 }
-#age_quiz{
-    width:100px;
-}
-#gener_quiz{
-    width: 100px;
+#score_quiz{
+    width: 250px;
 }
 #table_value{
     border-radius: 2px;
     background-color: #0a0e3f;
-}
-canvas{
-    border: 1px solid black;
-    margin-left: 25%;
 }
 button[class^="select_button"]{
     background-color: transparent;

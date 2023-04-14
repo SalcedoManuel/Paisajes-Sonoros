@@ -322,6 +322,15 @@ function change_status(place,type,recording) {
     }
 }
 
+function GetCheckedValue(element) {
+    let replies;
+    for (let i = 0; i < element.length; i++) {    
+      if (element[i].checked == true) {
+        replies = element[i].value;
+      }
+    }
+    return replies;
+  }
 
 function create_quiz() {
     /*
@@ -513,6 +522,13 @@ function create_quiz() {
                 }
             }
         }
+        
+            //-- Extraemos el nombre del lugar y el nombre de la zona.
+        var namePlace = document.getElementsByName("namePlace");
+        var nameZone  = document.getElementsByName("nameZone");
+        let questionChanged = "¿Conoces "+GetCheckedValue(namePlace)+"?¿En qué grado estás familiarizado/a o relacionado/a con"+GetCheckedValue(nameZone)+"?";
+        quiz_json["questions"][2][1] = questionChanged;
+        quiz_json["questions"][2][1] = questionChanged;
 
         //-- Añadimos la ruta de los ficheros multimedia al JSON en LOCAL.
         switch (number_places) {

@@ -9,12 +9,13 @@
     <link rel="stylesheet" href="./styles/style_nav.css">
 
     <!-- Cargar el proceso asociado a esta página -->
-    <script src="index.js" defer></script>
+    <script src="scripts/SetAdminMode.js" defer></script>
+    <script src="scripts/NavigationOption.js" defer></script>
     <script src="functions/hide_content.js"></script>
 
     <title>Soundscape Questionnaire</title>
 </head>
-<body onload="root_mode_activated();">
+<body onload="ChangeAdminMode();">
   <!-- Barra de navegación -->
   <nav class="nav container" style="height: 50px;">
     <span class="nav__logo">
@@ -23,13 +24,13 @@
     <ul class="nav__list">
     
       <li class="nav__item">
-        <a href="#" class="nav__link" onclick="nav_extras.contact_click()"><b>Contacto</b></a>
+        <a href="#" class="nav__link" onclick="ContactPopupScreen()"><b>Contacto</b></a>
       </li>
       <li class="nav__item">
-        <a href="#" class="nav__link" onclick="nav_extras.settings()"><b>Ajustes</b></a>
+        <a href="#" class="nav__link" onclick="SettingsPopupScreen()"><b>Ajustes</b></a>
       </li>
       <li class="nav__item">
-        <a href="#" class="nav__link" onclick="nav_extras.help_click(0)"><b>Ayuda</b></a>
+        <a href="#" class="nav__link" onclick="HelpPopupScreen()"><b>Ayuda</b></a>
       </li>
       <li class="nav__item">
         <a href="#" class="nav__link" ></a>

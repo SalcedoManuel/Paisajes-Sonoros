@@ -30,7 +30,7 @@ function logFilenames_Main(){
     //-- ¿De qué tipo es el fichero? Si el tipo de fichero no encaja, descartar.
     let mode = files.item(0).type.split("/")[0];
     console.log("Modo: ",mode)
-    //-- ¿Cuál es la extensión? Si no la extencisón no encaja descartar también.
+    //-- ¿Cuál es la extensión? Si no la extensión no encaja descartar también.
     let format = files.item(0).type.split("/")[1];
     //-- Si el formato y el modo encaja dar por bueno el ingreso de información.
     if (mode == "application" && format == "json" ) {
@@ -133,7 +133,6 @@ function join_quizzes() {
     var save_file;
     const  MAIN_JSON_FILE = fs.readFileSync(main_json_file);
     var main_file = JSON.parse(MAIN_JSON_FILE);
-    console.table(main_file)
     //-- Si está indefinido es que solo hay un cuestionario.
     if (main_file.length == undefined) {
       save_file = [];
