@@ -9,12 +9,14 @@
     <link rel="stylesheet" href="./styles/style.css">
     <link rel="stylesheet" href="./styles/style_nav.css">
     <link rel="stylesheet" href="./styles/style_read.css">
+    <link rel="stylesheet" href="./styles/style_canvas.css">
 
     <!-- Cargar el proceso asociado a esta página -->
     <script src="index_readfile.js" defer></script>
     <script src="./functions/Treatment of Quiz Questions/SelectOptionReadFile.js" defer></script>
     <script src="scripts/SetAdminMode.js" defer></script>
     <script src="scripts/NavigationOption.js" defer></script>
+    <script src="./functions/Canvas/Canvas.js" defer></script>
 
     <title>Soundscape Questionnaire</title>
 </head>
@@ -97,38 +99,72 @@
   <div class="wrapper" id="tablePlacesResults" style="display: block;"></div>
   <div class="wrapper" id="lastQuestion" style="display: block;"></div>
   <div class="wrapper" id="canvasResult" style="display: block;">
-    <div style="display: flex;">
-      <div id="table1" style="display:none;border: 1px red solid;width:300px;height: 360px;min-width: 270px;">
-        <h1 id="namePlace1">Lugar 1</h1>
-        <canvas id="myCanvas1" style="background:white; width: 250px;height: 250px;border: 1px green solid;"></canvas>
-        <span style="text-align: center;min-width: fit-content;">
-          <button style="min-width: fit-content; height: 3vh;" onclick="DrawScenary(0,0)">Escenario 1</button>
-          <button style="min-width: fit-content; height: 3vh;" onclick="DrawScenary(0,1)">Escenario 2</button>
-          <button style="min-width: fit-content; height: 3vh;" onclick="DrawScenary(0,2)">Escenario 3</button>
-      </span>
+    <div id="tableScenary1">      
+        <div>
+          <h2>Nombre del Primer Lugar: <b id="placeName1"></b></h2>
+        </div>
+        <div style="display: flex;justify-content: center;">
+          <div id="canvasGraph11">
+            <h1 id="namePlace1">Escenario 1</h1>
+            <canvas id="myCanvas11" style="background:white; width: 280px;height: 280px;border: 1px green solid;"></canvas>
+          </div>
+    
+          <div id="canvasGraph12">
+            <h1 id="namePlace2">Escenario 2</h1>
+            <canvas id="myCanvas12" style="background:white; width: 280px;height: 280px;border: 1px green solid;"></canvas>
+          </div>
+    
+          <div id="canvasGraph13">
+            <h1 id="namePlace2">Escenario 3</h1>
+            <canvas id="myCanvas13" style="background:white; width: 280px;height: 280px;border: 1px green solid;"></canvas>
+          </div>
+        </div>
+    </div>
+    <div id="tableScenary2" style="display:none">      
+      <div>
+        <h2>Nombre del Segundo Lugar: <b id="placeName2"></b></h2>
       </div>
-
-      <div id="table2" style="display:none;border: 1px red solid;width:300px;height: 360px;min-width: 270px;">
-        <h1 id="namePlace2">Lugar 2</h1>
-        <canvas id="myCanvas2" style="background:white; width: 250px;height: 250px;border: 1px green solid;"></canvas>
-        <span style="text-align: center;min-width: fit-content;">
-          <button style="min-width: fit-content; height: 3vh;" onclick="DrawScenary(1,0)">Escenario 1</button>
-          <button style="min-width: fit-content; height: 3vh;" onclick="DrawScenary(1,1)">Escenario 2</button>
-          <button style="min-width: fit-content; height: 3vh;" onclick="DrawScenary(1,2)">Escenario 3</button>
-      </span>
+      <div style="display: flex;justify-content: center;">
+        <div id="canvasGraph21">
+          <h1 id="namePlace1">Escenario 1</h1>
+          <canvas id="myCanvas21" style="background:white; width: 280px;height: 280px;border: 1px green solid;"></canvas>
+        </div>
+  
+        <div id="canvasGraph22">
+          <h1 id="namePlace2">Escenario 2</h1>
+          <canvas id="myCanvas22" style="background:white; width: 280px;height: 280px;border: 1px green solid;"></canvas>
+        </div>
+  
+        <div id="canvasGraph23">
+          <h1 id="namePlace2">Escenario 3</h1>
+          <canvas id="myCanvas23" style="background:white; width: 280px;height: 280px;border: 1px green solid;"></canvas>
+        </div>
       </div>
+    </div>
+    <div id="tableScenary3" style="display:none">      
+      <div>
+        <h2>Nombre del Tercer Lugar: <b id="placeName3"></b></h2>
+      </div>
+      <div style="display: flex;justify-content: center;">
+        <div id="canvasGraph31">
+          <h1 id="namePlace1">Escenario 1</h1>
+          <canvas id="myCanvas11" style="background:white; width: 280px;height: 280px;border: 1px green solid;"></canvas>
+        </div>
 
-      <div id="table3" style="display:none;border: 1px red solid;width:300px;height: 360px;min-width: 270px;">
-        <h1 id="namePlace2">Lugar 3</h1>
-        <canvas id="myCanvas3" style="background:white; width: 250px;height: 250px;border: 1px green solid;"></canvas>
-        <span style="text-align: center;min-width: fit-content;">
-            <button style="min-width: fit-content; height: 3vh;" onclick="DrawScenary(2,0)">Escenario 1</button>
-            <button style="min-width: fit-content; height: 3vh;" onclick="DrawScenary(2,1)">Escenario 2</button>
-            <button style="min-width: fit-content; height: 3vh;" onclick="DrawScenary(2,2)">Escenario 3</button>
-        </span>
+        <div id="canvasGraph32">
+          <h1 id="namePlace2">Escenario 2</h1>
+          <canvas id="myCanvas12" style="background:white; width: 280px;height: 280px;border: 1px green solid;"></canvas>
+        </div>
+
+        <div id="canvasGraph33">
+          <h1 id="namePlace2">Escenario 3</h1>
+          <canvas id="myCanvas13" style="background:white; width: 280px;height: 280px;border: 1px green solid;"></canvas>
+        </div>
       </div>
     </div>
   </div>
+
+
 
 </body>
 </html>

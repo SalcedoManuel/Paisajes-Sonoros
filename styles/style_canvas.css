@@ -1,0 +1,15 @@
+
+
+
+
+div[id^="tableScenary"]{
+    display: block;justify-content:center;
+}
+div[id^="canvasGraph"]{
+    display:none;border: 1px red solid;width:350px;height: 400px;min-width: 300px;
+}
+canvas[id^=myCanvas]{
+    background:white;
+    width: 280px;height: 280px;
+    border: 1px green solid;
+}
