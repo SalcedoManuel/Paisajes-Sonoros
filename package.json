@@ -25,7 +25,7 @@
             "icon": "build/logo3.ico",
             "category": "public.app-category.utilities"
         },
-        "executableName":"Cuestionarios de Paisajes Sonoros",
+        "executableName": "Cuestionarios de Paisajes Sonoros",
         "win": {
             "icon": "build/logo3.png"
         },
@@ -43,6 +43,7 @@
         }
     },
     "dependencies": {
+        "chart.js": "^4.3.0",
         "sweetalert": "^2.1.2"
     },
     "devDependencies": {

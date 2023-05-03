@@ -1,335 +1,285 @@
-
-var xCoordinates = new Array;
-var yCoordinates = new Array;
-
-var placesCoordinates = new Array;
-
 var numberTotalPlaces;
 var numberTotalRecordings;
 var numberTotalPeople;
 
-const MAX_VALUE = 300;
-const MAX_OPTIONS_VALUE = 4;
-const MAX_OPTIONS = 8;
+function drawChronologyGraph() {
+    document.getElementById("canvasResult").style.display = "block";
+    const canvas = document.getElementById("chronologyChart");
+    const ctx = canvas.getContext("2d");
+    var uniqueModels = [...new Set(quiz_info.map(quiz_info => new Date(quiz_info[0]["Date"]).getTime()))];
+    uniqueModels.sort();
+    for (let index = 0; index < uniqueModels.length; index++) {
+        uniqueModels[index] = new Date(uniqueModels[index]).toLocaleDateString();
+    }
+    const label = [...new Set(uniqueModels.map(uniqueModels => uniqueModels))];
 
-function GetDescriptorNumber(number_questions,descriptor) {
-    let arrayDescriptorGeneral = new Array;
-    numberTotalPlaces = quiz_info[0][0]["Places_Number"];
-    numberTotalRecordings = quiz_info[0][0]["Recordings_Number"];
+    const datesNumbers = uniqueModels.filter((number, i) => i == 0 ? true : uniqueModels[i - 1] != number);
+    const counterDates = datesNumbers.map(spec => {
+        return {number: spec, count: 0};
+    });
+
+    counterDates.map((countSpec, i) =>{
+        const actualSpecLength = uniqueModels.filter(number => number === countSpec.number).length;
+        countSpec.count = actualSpecLength;
+    })
+    
+    const data = {
+        labels: label,
+        datasets: [{
+            data: counterDates.map(coaster => coaster.count),
+            tension: .5,
+            borderColor: getDataColors()[1],
+            backgroundColor: getDataColors(20)[1],
+            fill: true,
+            pointBorderWidth: 5
+        }]
+    }
+
+    const options = {
+        plugins: {
+            legend: { display: false }
+        },
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: 'Fechas de realización de los cuestionarios',
+                    font: {
+                        size: 30,
+                        family:"'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif"
+                    }
+                  }
+            },
+            y: {
+              min: 0,
+              title: {
+                display: true,
+                text: 'Cuestionarios realizados por día',
+                font: {
+                    size: 25,
+                    family:"'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif"
+                }
+              }
+            }
+          }
+    }
+    new Chart('chronologyChart',{type: 'line',data,options})
+}
+
+function drawParticipantGraph(option) {
+    var uniqueModels;
+    document.getElementById("participantCanvas").innerHTML = '<canvas id="participantChart" height="5vh" width="5vh"></canvas>';
+    if (option == 0) {
+        var statement = 'La puntuación obtenida en el test HearWHO:'
+        const label = [...new Set(quiz_info.map(quiz_info => quiz_info[0]["Introduce aquí tu puntuación auditiva obtenida en el test hearWHO"]))].sort();
+        var uniqueModels = [];
+        for (let index = 0; index < quiz_info.length; index++) {
+            uniqueModels[index] =  quiz_info[index][0]["Introduce aquí tu puntuación auditiva obtenida en el test hearWHO"];
+        }
+        
+        const testWHONumbers = label.filter((number, i) => i == 0 ? true : uniqueModels[i - 1] != number);
+        const counterTestWHO = testWHONumbers.map(spec => {
+            return {number: spec, count: 0};
+        });
+    
+        counterTestWHO.map((countSpec, i) =>{
+            const actualSpecLength = uniqueModels.filter(number => number === countSpec.number).length;
+            countSpec.count = actualSpecLength;
+        })
+        const data = {
+            labels: label,
+            datasets: [{
+                data: counterTestWHO.map(testWHO => testWHO.count),
+                tension: .9,
+                borderColor: getDataColors()[3],
+                backgroundColor: getDataColors(90)[4],
+                fill: true,
+                pointBorderWidth: 5
+            }]
+        }
+    
+        const options = {
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Notas del Cuestionario TESTWHO',
+                        font: {
+                            size: 30,
+                            family:"'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif"
+                        }
+                      }
+                },
+                y: {
+                  beginAtZero: true,
+                  title: {
+                    display: true,
+                    text: 'Cantidad de Cuestionarios TESTWHO con esa nota',
+                    font: {
+                        size: 10,
+                        family:"'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif"
+                    }
+                  }
+                }
+              }
+        }
+        new Chart('participantChart',{type: 'bar',data,options})
+    }else{
+        const uniqueStatement = [...new Set(quiz_info.map(statement => statement[2]))]
+        var statement = Object.keys(Object.values(uniqueStatement)[0][0])[option-1]
+        console.table(statement)
+
+        var labelOptions = [...new Set(quiz_info.map(quiz_info => quiz_info[2][0][statement]))];
+        console.table(labelOptions)
+        var label = [];
+        for (let index = 0; index < labelOptions.length; index++) {
+            final = labelOptions[index];
+            final = final.replace('_', ' ').charAt(0).toUpperCase() + final.replace('_', ' ').slice(1)
+            label[index] = final;
+        }
+
+        var uniqueModels = [];
+        for (let index = 0; index < quiz_info.length; index++) {
+            uniqueModels[index] =  quiz_info[index][2][0][statement];
+        }
+        const participantNumbers = labelOptions.filter((number, i) => i == 0 ? true : uniqueModels[i - 1] != number);
+        const counterParticipant = participantNumbers.map(spec => {
+            return {number: spec, count: 0};
+        });
+    
+        counterParticipant.map((countSpec, i) =>{
+            const actualSpecLength = uniqueModels.filter(number => number === countSpec.number).length;
+            countSpec.count = actualSpecLength;
+        })
+        console.table(counterParticipant)
+        var newData = [];
+        for (let index = 0; index < counterParticipant.length; index++) {
+            newData[index] = counterParticipant[index].count;            
+        }
+        const data = {
+            //labels: uniqueModels,
+            labels: label,
+            datasets: [{
+                //-- Extrae del array de modelos de montañas rusas, el número que hay por cada una.
+                label:statement,
+                data:newData,
+                borderColor: getDataColors(),
+                backgroundColor: getDataColors(20),
+                aspectRatio: 1
+            }]
+        }
+    
+        const options = {
+            plugins: {
+                legend: { position: 'top' }
+            }
+        }
+        new Chart('participantChart',{type: 'doughnut',data,options})
+    }
+    let text;
+    switch (option) {
+        case 2:
+            text = "• En el gráfico anterior se muestra la formación en acústica de los participantes."
+            break;
+        case 0:
+            text = "• En el gráfico anterior se muestra la puntuación obtenida en los test de la OMS sobre detección auditiva. Este test va de cero (NO REALIZADO) a 100."
+            break;    
+        default:
+            text = "• En el gráfico anterior se muestra el conocimiento sobre la región o la zona de la realización del estudio."
+            break;
+    }
+    document.getElementById("participantSummery").innerHTML = text;
+    document.getElementById("statementQuestion").innerHTML = statement;
+
+}
+
+function getDescriptorNumber(value) {
+    let number;
     const arrayOptions = ["muy_acuerdo","acuerdo","neutro","desacuerdo","muy_desacuerdo"]
-    numberTotalPeople = quiz_info.length;
-    for (let i = 0; i < number_questions; i++) {
-        
-        let arrayDescriptorPoint = new Array;
-        for (let e = 0; e < numberTotalPeople; e++) {
-            let number;
-            if (quiz_info[e][1][i][descriptor] == arrayOptions[0]) {
-                number = 4;
-            }else if(quiz_info[e][1][i][[descriptor]] == arrayOptions[1]){
-                number = 3;
-            }else if(quiz_info[e][1][i][[descriptor]] == arrayOptions[2]){
-                number = 2;
-            }else if(quiz_info[e][1][i][[descriptor]] == arrayOptions[3]){
-                number = 1;
-            }else if(quiz_info[e][1][i][[descriptor]] == arrayOptions[4]){
-                number = 0;
-            }  
-            arrayDescriptorPoint.push(number);       
-        }        
-        arrayDescriptorGeneral.push(arrayDescriptorPoint);
-    }
-    let array = new Array;
-    for (let index = 0; index < numberTotalPlaces; index++) {
-        let inicio = index * numberTotalRecordings;
-        let final = inicio + numberTotalRecordings;
-        array[index] =  arrayDescriptorGeneral.slice(inicio,final);     
-    }
-    arrayDescriptorGeneral = array;
-    return arrayDescriptorGeneral;
+    if (value == arrayOptions[0]) {
+        number = 4;
+    }else if(value == arrayOptions[1]){
+        number = 3;
+    }else if(value == arrayOptions[2]){
+        number = 2;
+    }else if(value == arrayOptions[3]){
+        number = 1;
+    }else if(value == arrayOptions[4]){
+        number = 0;
+    }  
+    return number;
 }
 
-function fillVerticalText(ctx,texto,positionX,positionY) {
-    let arr = [...texto];
-    let intervalo = 12;
-    for (let index = 0; index < arr.length; index++) {
-        ctx.fillText(arr[index],positionX,positionY);
-        positionY += intervalo;       
-    }
+document.querySelector('#recordingOptions').onchange = e => {
+
+    const { value: property, text: label } = e.target.selectedOptions[0]
+    console.info(e.target.selectedOptions)
+    const [place, recording] = property.split('-')
+    
+    //document.getElementById("graphLeft").innerHTML = "";
+    document.getElementById("graphLeft").innerHTML = '<canvas id="renderRadarChart'+place+'"></canvas>'
+
+    drawScenaryGraph(place,recording)
+
 }
 
-function DrawArrow(ctx,direction,positionInitialX,positionInitialY) {
-    switch (direction) {
-        case 'Up':
-            ctx.moveTo(positionInitialX,positionInitialY);
-            ctx.lineTo(positionInitialX-3,positionInitialY+3)
-            ctx.moveTo(positionInitialX,positionInitialY)
-            ctx.lineTo(positionInitialX+3,positionInitialY+3)
-            break;
-        case 'Bottom':
-            ctx.moveTo(positionInitialX,positionInitialY);
-            ctx.lineTo(positionInitialX-3,positionInitialY-3)
-            ctx.moveTo(positionInitialX,positionInitialY)
-            ctx.lineTo(positionInitialX+3,positionInitialY-3)
-            break;
-        case 'Left':
-            ctx.moveTo(positionInitialX,positionInitialY);
-            ctx.lineTo(positionInitialX+3,positionInitialY-3)
-            ctx.moveTo(positionInitialX,positionInitialY)
-            ctx.lineTo(positionInitialX+3,positionInitialY+3)
-            break;
-        case 'Right':
-            ctx.moveTo(positionInitialX,positionInitialY);
-            ctx.lineTo(positionInitialX-3,positionInitialY-3)
-            ctx.moveTo(positionInitialX,positionInitialY)
-            ctx.lineTo(positionInitialX-3,positionInitialY+3)
-            break;
-        default:
-            break;
-    }
+document.querySelector('#generalOptions').onchange = e => {
+
+    const { value: property, text: label } = e.target.selectedOptions[0]
+    console.info(e.target.selectedOptions)
+
+    document.getElementById("participantCanvas").innerHTML = '<canvas id="participantChart" height="15vh" width="30vw"></canvas>'
+
+    drawParticipantGraph(property)
 }
 
-function DrawBase() {
-    for (let index = 1; index <= numberTotalPlaces; index++) {
+function drawScenaryGraph(numberPlace,numberRecording) {
+    numberTotalRecordings = quiz_info[0][0]["Recordings_Number"];    
+    let position = ((numberPlace-1)*numberTotalRecordings)+(numberRecording);
+    const uniqueDescriptor = [...new Set(quiz_info.map(descriptor => descriptor[1][position]))]
+    // Obtenemos los descriptores.
+    var descriptor1 = Object.keys(uniqueDescriptor[0])[3]
+    var descriptor2 = Object.keys(uniqueDescriptor[0])[4]
+    var descriptor3 = Object.keys(uniqueDescriptor[0])[5]
+    var descriptor4 = Object.keys(uniqueDescriptor[0])[6]
+    // Obtenemos los datos.
+    var newData = [];
+    newData[0] = (uniqueDescriptor.map(uniqueDescriptor => getDescriptorNumber(uniqueDescriptor[descriptor1]))).reduce((a, b) => a + b, 0);
+    newData[1] = (uniqueDescriptor.map(uniqueDescriptor => getDescriptorNumber(uniqueDescriptor[descriptor2]))).reduce((a, b) => a + b, 0);
+    newData[2] = (uniqueDescriptor.map(uniqueDescriptor => getDescriptorNumber(uniqueDescriptor[descriptor3]))).reduce((a, b) => a + b, 0);
+    newData[3] = (uniqueDescriptor.map(uniqueDescriptor => getDescriptorNumber(uniqueDescriptor[descriptor4]))).reduce((a, b) => a + b, 0);
 
-        document.getElementById("tableScenary"+index).style.display = "block";
-        for (let graph = 1; graph <= numberTotalRecordings; graph++) {
-            document.getElementById("canvasGraph"+index+graph).style.display = "block";
-            var c = document.getElementById("myCanvas"+index+graph);
-            var ctx = c.getContext("2d");
-            ctx.lineWidth = 1;
-            ctx.moveTo(150, 10);
-            ctx.lineWidth = 0.5;
-            ctx.lineTo(150, 140);
-            ctx.lineWidth = 1;
-            DrawArrow(ctx,'Up',150,10)
-            DrawArrow(ctx,'Bottom',150,140)
-            DrawArrow(ctx,'Left',10,75)
-            DrawArrow(ctx,'Right',290,75)
+    const TOTAL = newData[0]+newData[1]+newData[2]+newData[3];
+    newData[0] = Math.round(newData[0]*100/TOTAL);
+    newData[1] = Math.round(newData[1]*100/TOTAL);
+    newData[2] = Math.round(newData[2]*100/TOTAL);
+    newData[3] = Math.round(newData[3]*100/TOTAL);
 
-            ctx.moveTo(10, 75);
-            ctx.lineTo(290, 75);
+    const data = {
+        //labels: uniqueModels,
+        labels: ['Agradable','Molesto', 'Dinámico','Estático'],
+        datasets: [{
+            //-- Extrae del array de modelos de montañas rusas, el número que hay por cada una.
+            //data: uniqueModels.map(currentModel => coasters.filter(coaster => coaster.model === currentModel).length),
+            data:[newData[0],newData[1],newData[2],newData[3]],
+            borderColor: getDataColors(),
+            backgroundColor: getDataColors(20)
+        }]
+    }
 
-            ctx.stroke();
-            ctx.font = "11.5px Arial";
-            //Añadimos la etiqueta Agradable.
-            ctx.fillText("Agradable", 125, 9);
-            //Añadimos la etiqueta Molesto.
-            ctx.fillText("Molesto", 130, 149);
-            //Añadimos la etiqueta Dinámico.
-            fillVerticalText(ctx,"Dinámico",3,37)
-            //Añadimos la etiqueta Estático.
-            fillVerticalText(ctx,"Estático",292,30)
-            ctx.stroke();            
+    const options = {
+        plugins: {
+            legend: { position: 'top' }
         }
     }
+    const idChart = 'renderRadarChart'+(numberPlace)
 
-}
-
-function DrawRectangulo(numberPlace,numberRecordings,pointX,pointY,grosor) {
-    var c = document.getElementById("myCanvas"+(numberPlace + 1)+(numberRecordings+1));
-    var ctx = c.getContext("2d");
-    ctx.beginPath();
-    let color;
-    switch (numberRecordings) {
-        case 0:
-            color = 'red';
-            break;
-        case 1:
-            color = 'green';
-            break;    
-        default:
-            color = 'blue';
-            break;
-    }
-    ctx.fillStyle = color;
-    ctx.fillRect(pointX-grosor,pointY-grosor,grosor*2,grosor*2)
-    ctx.fill();
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = color;
-    ctx.stroke();
-}
-
-function DrawCruz(numberPlace,numberRecordings,pointX,pointY,grosor) {
-    var c = document.getElementById("myCanvas"+(numberPlace + 1)+(numberRecordings+1));
-    var ctx = c.getContext("2d");
-    ctx.beginPath();
-    ctx.moveTo(pointX-grosor,pointY-grosor)
-    ctx.lineTo(pointX+grosor,pointY+grosor);
-
-    ctx.moveTo(pointX-grosor,pointY+grosor)
-    ctx.lineTo(pointX+grosor,pointY-grosor);
-
-    let color;
-    switch (numberRecordings) {
-        case 0:
-            color = 'red';
-            break;
-        case 1:
-            color = 'green';
-            break;    
-        default:
-            color = 'blue';
-            break;
-    }
-    ctx.fillStyle = color;
-    ctx.fill();
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = color;
-    ctx.stroke();
-}
-
-function DrawPoint(numberPlace,numberRecordings,pointX,pointY,grosor) {
-    var c = document.getElementById("myCanvas"+(numberPlace + 1)+(numberRecordings+1));
-    var ctx = c.getContext("2d");
-    ctx.beginPath();
-
-    ctx.arc(pointX,pointY,grosor,0,2*Math.PI,true);
-    let color;
-    switch (numberRecordings) {
-        case 0:
-            color = 'red';
-            break;
-        case 1:
-            color = 'green';
-            break;    
-        default:
-            color = 'blue';
-            break;
-    }
-    ctx.fillStyle = color;
-    ctx.fill();
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = color;
-    ctx.stroke();
-}
-
-function WriteCount(numberPlace,numberRecording,pointX,pointY,grosor) {
-    let lienzo = "myCanvas"+(numberPlace+1)+(numberRecording + 1);
-    console.info(lienzo)
-    var c = document.getElementById(lienzo);
-    var ctx = c.getContext("2d");
-    ctx.fillStyle = "black";
-    ctx.fillText("x"+grosor, pointX+grosor, pointY+grosor);
-    ctx.stroke();  
-}
-
-function DrawScenary(numberPlace,numberRecording) {
-    let numberTotalPlaces = quiz_info[0][0]["Places_Number"];
-    let numberTotalRecordings = quiz_info[0][0]["Recordings_Number"];
-    let numberTotal = numberTotalPlaces * numberTotalRecordings;
-    for (let index = 0; index < quiz_info.length; index++) {
-        let pointX = placesCoordinates[numberPlace][numberRecording][0][index];
-        let pointY = placesCoordinates[numberPlace][numberRecording][1][index];
-        let grosor = placesCoordinates[numberPlace][numberRecording][2][index];
-        if (grosor > 1) {
-            WriteCount(numberPlace,numberRecording,pointX,pointY,grosor);
-        }
-        if (grosor > 4) {
-            grosor = grosor/2;
-        }else{
-            grosor = 2;
-        }
-        if (grosor > 10) {
-            grosor = 10;
-        }
-        if (numberRecording == 0) {
-            DrawPoint(numberPlace,numberRecording,pointX,pointY,grosor);
-        }else if (numberRecording == 1) {
-            DrawCruz(numberPlace,numberRecording,pointX,pointY,grosor);
-        } else {
-            DrawRectangulo(numberPlace,numberRecording,pointX,pointY,grosor);
-        }
-        
-    }
-}
-function GetCoordinates(eje,lowRangePoints,highRangePoints) {
-    var resultsPoints = [];
-    for (let placeNumber = 0; placeNumber < numberTotalPlaces; placeNumber++) {
-       for (let recordingNumber = 0; recordingNumber < numberTotalRecordings; recordingNumber++) {            
-            let longitud = lowRangePoints[placeNumber][recordingNumber].length;
-            for (let index = 0; index < longitud; index++) {
-                let value;
-                if (lowRangePoints[placeNumber][recordingNumber][index] > highRangePoints[placeNumber][recordingNumber][index]) {                    
-                    value = (lowRangePoints[placeNumber][recordingNumber][index]-MAX_OPTIONS_VALUE)*(-1); 
-                    if (eje == 1) {
-                        value = ((MAX_VALUE/2) * value)/MAX_OPTIONS;
-                    }else{
-                        value = ((MAX_VALUE) * value)/MAX_OPTIONS;
-                    }
-                    if (MAX_VALUE == value || (MAX_VALUE/2) == value || value == 0) {
-                        value += 10;
-                    }else{
-                        value += 5;
-                    }
-                                         
-                }else if (lowRangePoints[placeNumber][recordingNumber][index] < highRangePoints[placeNumber][recordingNumber][index]) {
-                    value = (highRangePoints[placeNumber][recordingNumber][index] + MAX_OPTIONS_VALUE)
-                    if (eje == 1) {
-                        value = (value*((MAX_VALUE)/2))/MAX_OPTIONS;
-                    }else{
-                        value = (value*((MAX_VALUE)))/MAX_OPTIONS;
-                    }
-                    if (MAX_VALUE == value || (MAX_VALUE/2) == value) {
-                        value -= 10;
-                    }else{
-                        value -= 5;
-                    }
-                } else {
-                    if (eje == 1) {
-                        value =  MAX_VALUE/4;
-                    }else{
-                        value = MAX_VALUE/2;
-                    }  
-                    
-                }
-
-                resultsPoints.push(value);        
-            }
-       }        
-    }
-    let placeNumber = 0;
-    let recordingNumber = 0;
-    let indice = 0;
-    for (let index = 0; index < resultsPoints.length; index++) {
-        placesCoordinates[placeNumber][recordingNumber][eje][indice] = resultsPoints[index];
-        placesCoordinates[placeNumber][recordingNumber][2][indice] = 0;
-        recordingNumber +=1;
-        if (recordingNumber == (numberTotalRecordings)) {
-            if (placeNumber == (numberTotalPlaces-1)) {
-                placeNumber = 0;
-                recordingNumber = 0;
-                indice +=1;
-                if (indice > quiz_info.length) {
-                    indice = 0;
-                } 
-            }else{
-                placeNumber +=1;
-                recordingNumber = 0;
-            }            
-            
-        } 
-              
-    }
-}
-
-function GetGrosorCoordinates() {
-    for (let placesPosition = 0; placesPosition < placesCoordinates.length; placesPosition++) {
-        for (let recordingPosition = 0; recordingPosition < placesCoordinates[placesPosition].length; recordingPosition++) {
-            for (let point = 0; point < placesCoordinates[placesPosition][recordingPosition][0].length; point++) {                
-                for (let index = 0; index < placesCoordinates[placesPosition][recordingPosition][0].length; index++) {
-                    console.log(point,index)
-                    if (placesCoordinates[placesPosition][recordingPosition][0][point] == placesCoordinates[placesPosition][recordingPosition][0][index]
-                        && placesCoordinates[placesPosition][recordingPosition][1][point] == placesCoordinates[placesPosition][recordingPosition][1][index])
-                    {
-                        placesCoordinates[placesPosition][recordingPosition][2][point] += 1;      
-                    }
-                    console.info(placesCoordinates[placesPosition][recordingPosition][0][point],placesCoordinates[placesPosition][recordingPosition][0][index],placesCoordinates[placesPosition][recordingPosition][2][point])
-                }
-                
-            }
-        }
-    }
-    console.table(placesCoordinates)
+    // Creamos un nuevo Chart con el identificador del canvas en el html y el tipo (tipo donut), además luego van los datos y las opciones.
+    new Chart(idChart, { type: 'doughnut', data, options })
+    
 }
 
 function Draw() {
@@ -339,51 +289,13 @@ function Draw() {
     numberTotalRecordings = quiz_info[0][0]["Recordings_Number"];
     numberTotalReplies = numberTotalPlaces*numberTotalRecordings;
 
-    var scenaryCoordinates = new Array;
-    for (let index = 0; index < numberTotalRecordings; index++) {
-        let coordinatesX = new Array;
-        let coordinatesY = new Array;
-        let grosor = new Array(quiz_info.length);
-        for (let pos = 0; pos < grosor.length; pos++) {
-           grosor[pos] = 0;           
-        }
-        scenaryCoordinates.push([coordinatesX,coordinatesY,grosor])        
-    }
-
-    //-- Creamos el array que guardará las coordenadas.
-    for (let index = 0; index < numberTotalPlaces; index++) {
-        placesCoordinates.push(scenaryCoordinates)        
-    }
-    console.table(placesCoordinates)
-    placesCoordinates = new Array(numberTotalPlaces);
-    for (let index = 0; index < placesCoordinates.length; index++) {
-        placesCoordinates[index] = new Array(numberTotalRecordings);
-        for (let indice = 0; indice < placesCoordinates[index].length; indice++) {
-            placesCoordinates[index][indice] = new Array(3);
-            placesCoordinates[index][indice][0] = [];
-            placesCoordinates[index][indice][1] = [];
-            placesCoordinates[index][indice][2] = [0]           
-        }        
-    }
-    console.table(placesCoordinates)
-    var arrayPleasantPoints = GetDescriptorNumber(numberTotalReplies,'Agradable/Placentero')
-    var arrayAnnoyingPoints = GetDescriptorNumber(numberTotalReplies,'Desagradable/Molesto')
-    var arrayDinamicPoints = GetDescriptorNumber(numberTotalReplies,'Con Actividad/Dinámico')
-    var arrayStaticPoints = GetDescriptorNumber(numberTotalReplies,'Sin Actividad/Estático')
-
-    GetCoordinates(1,arrayPleasantPoints,arrayAnnoyingPoints);
-    GetCoordinates(0,arrayDinamicPoints,arrayStaticPoints);
-    GetGrosorCoordinates();
-
-/*  xCoordinates = GetCoordinates(arrayPleasantPoints,arrayAnnoyingPoints);
-    yCoordinates = GetCoordinates(arrayDinamicPoints,arrayStaticPoints);
-    console.info(xCoordinates,yCoordinates)*/
-    DrawBase();
-
-    for (let index = 0; index < numberTotalPlaces; index++) {
-        for (let e = 0; e < numberTotalRecordings; e++) {
-            DrawScenary(index,e);
-        }    
+    drawChronologyGraph();
+    drawParticipantGraph(2);
+    for (let numberPlace = 1; numberPlace <= numberTotalPlaces; numberPlace++) {
+        document.getElementById("scenaryGraph"+(numberPlace)).style.display = "block";
+        let position = (numberPlace-1)*numberTotalRecordings;
+        document.getElementById("scenaryName"+numberPlace).innerHTML = quiz_info[0][1][position]["Name_Scenary"];
+        drawScenaryGraph(numberPlace,0)                
     }
 }   
 module.exports = {

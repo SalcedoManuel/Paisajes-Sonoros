@@ -11,6 +11,7 @@
 
     <!-- Cargar el proceso asociado a esta página -->
     <script src="./scripts/join_quizzes.js" defer></script>
+    <script src="scripts/NavigationOption.js" defer></script>
 
     <title>Soundscape Questionnaire</title>
 </head>
@@ -30,13 +31,13 @@
         <a href="read_file.html" class="nav__link"><b> Mostrar Resultados</b></a>
       </li>
       <li class="nav__item">
-        <a href="#" class="nav__link" onclick="nav_extras.contact_click()">Contacto</a>
+        <a href="#" class="nav__link" onclick="ContactPopupScreen()">Contacto</a>
       </li>
       <li class="nav__item">
-        <a href="#" class="nav__link" onclick="nav_extras.settings()">Ajustes</a>
+        <a href="#" class="nav__link" onclick="SettingsPopupScreen()">Ajustes</a>
       </li>
       <li class="nav__item">
-        <a href="#" class="nav__link" onclick="nav_extras.help_click(0)">Ayuda</a>
+        <a href="#" class="nav__link" onclick="HelpPopupScreen()">Ayuda</a>
       </li>
       <li class="nav__item">
         <a href="#" class="nav__link" ></a>
@@ -49,7 +50,7 @@
   <hr>
   <br><br>
   <div id="back"></div>
-  <div id="wrapper0" style="display: flex;"> <!-- Contenedor que recoge los recursos-->
+  <div id="wrapper0" style="display: block;"> <!-- Contenedor que recoge los recursos-->
     <span>
       <div id="table">
         <span class="encabezado" id="label_main">

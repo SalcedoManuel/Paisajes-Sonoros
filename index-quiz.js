@@ -2,7 +2,6 @@ const electron = require('electron');
 const fs = require('fs');
 
 const functions_quiz = require('./functions/functions_quiz');
-const nav_extras = require('./functions/nav_extras');
 
 // Modo root activado:
 var root_mode = false;

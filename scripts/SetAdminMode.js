@@ -1,4 +1,3 @@
-const fs = require('fs');
 
 function ChangeAdminMode() {
     const MAIN_JSON = "resources/plantillas/main.json";

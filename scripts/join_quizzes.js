@@ -1,6 +1,5 @@
 const electron = require('electron');
 const fs = require('fs');
-const nav_extras = require('./functions/nav_extras');
 
 const output_main = document.querySelector('#output_main');
 const output_secundary = document.querySelector('#output_secundary');
@@ -64,7 +63,7 @@ function logFilenames_Secundary(){
         }else{
             output_secundary.innerText = `${output_secundary.innerText}\n${i+1}. ${files.item(i).name}`;
         }
-      console.log(output_secundary.innerHTML)
+      console.log(output_secundary.innerText)
       let mode = files.item(i).type.split("/")[0];
       let format = files.item(i).type.split("/")[1];
       if (mode == "application" && format == "json") {

@@ -6,10 +6,18 @@ div[id^="tableScenary"]{
     display: block;justify-content:center;
 }
 div[id^="canvasGraph"]{
-    display:none;border: 1px red solid;width:350px;height: 400px;min-width: 300px;
+    display:none;border: 1px red solid;width:50vh;height: 78vh;min-width: 300px;
 }
 canvas[id^=myCanvas]{
     background:white;
-    width: 280px;height: 280px;
+    width: 40vh;height: 40vh;
     border: 1px green solid;
+}
+div[id^="chronologyGraph"]{
+    max-width: 80vmax;
+    margin: auto;
+}
+section[class^="cols-1"]{
+    background-color: rgba(0,0,0,0.3);
+    border-radius: 2vh;
 }

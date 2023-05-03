@@ -1,4 +1,5 @@
 const electron = require('electron');
+const fs = require('fs');
 
 const functions_tableinfo = require('./functions/functions_tableinfo')
 const canvasModule = require("./functions/Canvas/Canvas")
