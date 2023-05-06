@@ -107,7 +107,7 @@
               Cronología de la Recogida de los Resultados
             </h2>
             <canvas id="chronologyChart"></canvas>
-            <h4>• En esta cronología se muestra el volumen de encuestas por día siendo el eje abscisas las fechas donde se realizaron cuestionarios y el eje de coordenadas el volumen de cuestionarios realizados ese día.</h4>
+            <h4 id="chronologyText">• En esta cronología se muestra el volumen de encuestas por día siendo el eje abscisas las fechas donde se realizaron cuestionarios y el eje de coordenadas el volumen de cuestionarios realizados ese día.</h4>           
         </figure>
       </section>
     </div>
@@ -134,7 +134,7 @@
     <div id="scenaryGraph1" style="background-color: #191919;">
       <h2 style="height: 10vh; display: flex;justify-content: center;align-items: center;margin: 0;">Escenario 1: <b id="scenaryName1">Escenario 1</b></h2>
       <section class="cols-2">        
-        <figure class="figureScenary">
+        <figure class="figureScenary" id="figure">
             <h2>Comparativa entre grabaciones
               <select id="recordingOptions">
                 <option value="1-0">Grabación 1</option>
@@ -153,7 +153,7 @@
             </span>
         </figure>
 
-        <figure class="figureScenary">
+        <figure class="figureScenary" id="figure">
           <h2>Información del Escenario:
             <select id="featuresOptions">
                 <option value="yearPeriod-1-0">Periodo del Año</option>
@@ -190,8 +190,8 @@
             </span>
             <h4>Opciones a mostrar:</h4>
             <span id="optionsScenary2">
-              <button onclick="changeChart(2,0,0)">Descriptor Radio</button>
-              <button onclick="changeChart(2,0,1)">Descriptor Puntos</button>              
+              <button id="changeChart2Radio" value="2-0">Descriptor Radio</button>
+              <button id="changeChart2Scatter" value="2-0">Descriptor Puntos</button>               
             </span>
         </figure>
 
@@ -230,8 +230,8 @@
             </span>
             <h4>Opciones a mostrar:</h4>
             <span id="optionsScenary3">
-              <button onclick="changeChart(3,0,0)">Descriptor Radio</button>
-              <button onclick="changeChart(3,0,1)">Descriptor Puntos</button>              
+              <button id="changeChart2Radio" value="3-0">Descriptor Radio</button>
+              <button id="changeChart2Scatter" value="3-0">Descriptor Puntos</button>             
             </span>
         </figure>
 

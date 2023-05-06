@@ -17,6 +17,9 @@ canvas[id^="chronologyChart"]{
     width:120vh;
     height: 40vh;
 }
+h4[id^="chronologyText"]{
+    width:120vh;
+}
 canvas[id^="participantChart"]{
     width:40vh;
     height: 40vh;
@@ -102,10 +105,13 @@ html {
   }
   div[id^="scenaryGraph"]{
     width: 70%;
+    height: 100%;
     margin: auto;
     border-radius: 2vh;
   }
   
+
+
   section[id^="summaryGeneral"]{
     padding-bottom: 5%;
   }

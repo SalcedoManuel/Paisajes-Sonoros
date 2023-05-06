@@ -70,8 +70,8 @@ document.querySelector('#recordingOptions').onchange = e => {
 
     document.getElementById("graphLeft"+place).innerHTML = '<canvas id="renderRadarChart'+place+'"></canvas>'
     document.getElementById("graphRight"+place).innerHTML = '<canvas id="renderPieChart'+place+'"></canvas>'
-    document.getElementById("optionsScenary"+place).innerHTML = '<button id="changeChart2Radio" value="'+place+'-'+recording+'">Descriptor Radio</button>'+
-                                                                '<button id="changeChart2Scatter" value="'+place+'-'+recording+'">Descriptor Puntos</button>'
+    document.getElementById("changeChart2Radio").value = place + "-"+recording;
+    document.getElementById("changeChart2Scatter").value = place + "-"+recording;
     
     ScenaryInformation.drawInformationScenary(Math.floor(place),Math.floor(recording),"yearPeriod")
     drawScenaryGraph(place,recording)
