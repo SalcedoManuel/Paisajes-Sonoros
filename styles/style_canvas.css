@@ -1,23 +1,134 @@
 
-
-
-
-div[id^="tableScenary"]{
-    display: block;justify-content:center;
-}
-div[id^="canvasGraph"]{
-    display:none;border: 1px red solid;width:50vh;height: 78vh;min-width: 300px;
-}
-canvas[id^=myCanvas]{
-    background:white;
-    width: 40vh;height: 40vh;
-    border: 1px green solid;
-}
 div[id^="chronologyGraph"]{
     max-width: 80vmax;
     margin: auto;
 }
+div[id^="participantGraph"]{
+    max-width: 80vmax;
+    margin: auto;
+}
+
+figure[class^="figureScenary"]{
+    width: 160vh;
+    height: 50vh;
+}
+
+canvas[id^="chronologyChart"]{
+    width:120vh;
+    height: 40vh;
+}
+canvas[id^="participantChart"]{
+    width:40vh;
+    height: 40vh;
+}
+
 section[class^="cols-1"]{
+    width: max-content;
     background-color: rgba(0,0,0,0.3);
     border-radius: 2vh;
 }
+html {
+    padding: 20px;
+    font-weight: 300;
+  }
+  
+  main {
+      padding: 60px;
+  }
+  
+  section {
+      margin-bottom: 40px;
+  }
+  
+  h1 {
+      font-size: 3em;
+      font-weight: 100;
+  }
+  
+  h2 {
+      font-size: 1.4em;
+      margin-bottom: 15px;
+      font-weight: 200;
+  }
+  
+  
+  hr {
+      border-color: white;
+      margin: 10px 0;
+  }
+  
+  figure, canvas {
+      background-color: rgba(54, 54, 54, 0.3);
+      padding: 10px 10px 30px;
+      margin: 0 auto;
+  }
+  /*
+  canvas {
+      width: 100%;
+  }*/
+  
+  /* grid */
+  figure[id^="figure"]{
+    text-align: center;
+    margin: auto;
+    width: 100%;
+    border-radius: 2vh;
+    background-color: rgba(17, 17, 17, 0.7);
+  }
+  h2[id^="title"]{
+    text-align: center;
+    width: max-content;
+  }
+  [class*='cols'] {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      margin: auto;
+      /*width: 50%;*/
+  }
+  
+  .cols-1 > * {
+      width: 50%;
+      margin:auto;
+  }
+  
+  .cols-2 > * {
+      width: 40%;
+      margin:auto;
+  }
+  .cols-3 > * {
+      width: 90%;
+      margin: auto;
+  }
+  div[id^="scenaryGraph"]{
+    width: 70%;
+    margin: auto;
+    border-radius: 2vh;
+  }
+  
+  section[id^="summaryGeneral"]{
+    padding-bottom: 5%;
+  }
+
+  
+  @media  (max-width: 800px) {
+  
+      main {
+          padding: 0;
+      }
+  
+      h1 {
+          font-size: 2.1em;
+          font-weight: 100;
+      }
+  
+      [class*='cols'] {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+      }
+  
+      .cols-2 > * {
+          width: 100%;
+      }
+  }

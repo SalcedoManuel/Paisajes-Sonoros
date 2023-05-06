@@ -11,14 +11,12 @@
     <link rel="stylesheet" href="./styles/style_read.css">
     <link rel="stylesheet" href="./styles/style_canvas.css">
 
-    <link rel="stylesheet" href="css/style.css">
-
     <!-- Cargar el proceso asociado a esta página -->
     <script src="index_readfile.js" defer></script>
     <script src="./functions/Treatment of Quiz Questions/SelectOptionReadFile.js" defer></script>
     <script src="scripts/SetAdminMode.js" defer></script>
     <script src="scripts/NavigationOption.js" defer></script>
-    <script src="./functions/Canvas/Canvas.js" defer></script>
+    <script src="functions/Canvas/Canvas.js" defer></script>
 
     <title>Soundscape Questionnaire</title>
 </head>
@@ -58,7 +56,7 @@
       </li>
     </ul>
   </nav>
-
+  <a href=""></a>
   <div style="text-align: center;">
     <h1>Mostrar Resultados de los Cuestionarios</h1>
     <p>En esta página se puede observar los datos de forma generalizada, observando los porcentajes y los datos de cada pregunta en función del lugar.</p>
@@ -100,22 +98,23 @@
   <div class="wrapper" id="hearWhoResults" style="display: block;"></div>
   <div class="wrapper" id="tablePlacesResults" style="display: block;"></div>
   <div class="wrapper" id="lastQuestion" style="display: block;"></div>
-  <div class="wrapper" id="canvasResult" style="display: block;">
+  <div class="wrapper" id="canvasResult" style="display: none;">
     <h2>Gráficas sobre el Entorno</h2>
     <div id="chronologyGraph">
       <section class="cols-1">
-        <figure>
-            <h2 style="height: 7vh;  display: grid;justify-content: center;align-items: center;margin: 0;">
+        <figure id="figure">
+            <h2>
               Cronología de la Recogida de los Resultados
             </h2>
-            <canvas id="chronologyChart" height="30vh" width="50vw"></canvas>
+            <canvas id="chronologyChart"></canvas>
             <h4>• En esta cronología se muestra el volumen de encuestas por día siendo el eje abscisas las fechas donde se realizaron cuestionarios y el eje de coordenadas el volumen de cuestionarios realizados ese día.</h4>
         </figure>
       </section>
     </div>
-    <div id="participantGraph" style="width: 70%;margin: auto;">
-      <section class="cols-3">
-        <figure>
+    <br>
+    <div id="participantGraph">
+      <section class="cols-1">
+        <figure id="figure">
           <h2>Resultados de las Preguntas Generales
             <select id="generalOptions">
               <option value="2">Formación en Acústica</option>
@@ -124,17 +123,18 @@
             </select>
           </h2>
           <h3 id="statementQuestion">¿Tienes algún tipo de conocimiento o formación en Acústica?</h3>
-          <span id="participantCanvas" style="margin: 0 auto;">
-            <canvas id="participantChart" height="15vh" width="30vw"></canvas>
+          <span id="participantCanvas">
+            <canvas id="participantChart"></canvas>
           </span>          
           <h4 id="participantSummery"></h4>
         </figure>
       </section>
     </div>
-    <div id="scenaryGraph1" style="background-color: #191919;display: block;">
+    <br>
+    <div id="scenaryGraph1" style="background-color: #191919;">
       <h2 style="height: 10vh; display: flex;justify-content: center;align-items: center;margin: 0;">Escenario 1: <b id="scenaryName1">Escenario 1</b></h2>
       <section class="cols-2">        
-        <figure>
+        <figure class="figureScenary">
             <h2>Comparativa entre grabaciones
               <select id="recordingOptions">
                 <option value="1-0">Grabación 1</option>
@@ -143,39 +143,41 @@
               </select>
             </h2>
             
-            <span id="graphLeft">
+            <span id="graphLeft1">
               <canvas id="renderRadarChart1"></canvas>
             </span>
             <h4>Opciones a mostrar:</h4>
-            <span id="optionsScenary">
-              <button>Descriptor Radio</button>
-              <button>Descriptor Puntos</button>              
+            <span id="optionsScenary1">
+              <button id="changeChart2Radio" value="1-0">Descriptor Radio</button>
+              <button id="changeChart2Scatter" value="1-0">Descriptor Puntos</button>              
             </span>
         </figure>
 
-        <figure>
-            <h2>Información del Escenario:
-                <select id="featuresOptions">
-                    <option value="yearPeriod">Periodo del Año</option>
-                    <option value="urbanContext">Contexto Urbano</option>
-                    <option value="placeKnowledge">Conocimiento del Lugar</option>
-                    <option value="acousticQuality">Calidad Acústica</option>
-                    <option value="soundscapeTime">Tiempo en el Ambiente Sonoro</option>                 
-                </select>
-            </h2>
-            <canvas></canvas>
+        <figure class="figureScenary">
+          <h2>Información del Escenario:
+            <select id="featuresOptions">
+                <option value="yearPeriod-1-0">Periodo del Año</option>
+                <option value="urbanContext-1-0">Contexto Urbano</option>
+                <option value="acousticQuality-1-0">Calidad Acústica</option>
+                <option value="soundscapeTime-1-0">Tiempo en el Ambiente Sonoro</option>               
+            </select>
+        </h2>
+            <span id="graphRight1">
+              <canvas id="renderPieChart1"></canvas>
+            </span>
+            <span id="summaryFeatureOption1">
+
+            </span>
+            
         </figure>
 
       </section>
-      <section class="cols-1">
-        <h2>Resumen:</h2>
-
-      </section>
     </div>
+    <br>
     <div id="scenaryGraph2" style="background-color: #191919;display: none;">
       <h2 style="height: 10vh; display: flex;justify-content: center;align-items: center;margin: 0;">Escenario 2: <b id="scenaryName2">Escenario 2</b></h2>
       <section class="cols-2">        
-        <figure>
+        <figure class="figureScenary" id="figure">
             <h2>Comparativa entre grabaciones:
               <select id="recordingOptions">
                 <option value="2-0">Grabación 1</option>
@@ -183,30 +185,39 @@
                 <option value="2-2">Grabación 3</option>              
               </select>
             </h2>
-
-            <canvas id="renderRadarChart2"></canvas>
+            <span id="graphLeft2">
+              <canvas id="renderRadarChart2"></canvas>
+            </span>
+            <h4>Opciones a mostrar:</h4>
+            <span id="optionsScenary2">
+              <button onclick="changeChart(2,0,0)">Descriptor Radio</button>
+              <button onclick="changeChart(2,0,1)">Descriptor Puntos</button>              
+            </span>
         </figure>
 
-        <figure>
+        <figure class="figureScenary" id="figure">
             <h2>Información del Escenario:
                 <select id="featuresOptions">
-                    <option value="yearPeriod">Periodo del Año</option>
-                    <option value="urbanContext">Contexto Urbano</option>
-                    <option value="placeKnowledge">Conocimiento del Lugar</option>
-                    <option value="acousticQuality">Calidad Acústica</option>
-                    <option value="soundscapeTime">Tiempo en el Ambiente Sonoro</option>
-                    <option value="acousticTraining">Formación en Acústica</option>                    
+                    <option value="yearPeriod-2-0">Periodo del Año</option>
+                    <option value="urbanContext-2-0">Contexto Urbano</option>
+                    <option value="acousticQuality-2-0">Calidad Acústica</option>
+                    <option value="soundscapeTime-2-0">Tiempo en el Ambiente Sonoro</option>               
                 </select>
             </h2>
-            <canvas></canvas>
-        </figure>
+            <span id="graphRight2">
+              <canvas id="renderPieChart2"></canvas>
+            </span>
+            <span id="summaryFeatureOption2">
 
+            </span>
+        </figure>
     </section>
     </div>
+    <br>
     <div id="scenaryGraph3" style="background-color: #191919;display: none;">
       <h2 style="height: 10vh; display: flex;justify-content: center;align-items: center;margin: 0;">Escenario 3: <b id="scenaryName3">Escenario 3</b></h2>
       <section class="cols-2">        
-        <figure>
+        <figure class="figureScenary" id="figure">
             <h2>Comparativa entre grabaciones:
               <select id="recordingOptions">
                 <option value="3-0">Grabación 1</option>
@@ -214,201 +225,37 @@
                 <option value="3-2">Grabación 3</option>              
               </select>
             </h2>
-
-            <canvas id="renderRadarChart3"></canvas>
+            <span id="graphLeft3">
+              <canvas id="renderRadarChart3"></canvas>
+            </span>
+            <h4>Opciones a mostrar:</h4>
+            <span id="optionsScenary3">
+              <button onclick="changeChart(3,0,0)">Descriptor Radio</button>
+              <button onclick="changeChart(3,0,1)">Descriptor Puntos</button>              
+            </span>
         </figure>
 
-        <figure>
-            <h2>Información del Escenario:
-                <select id="featuresOptions">
-                    <option value="yearPeriod">Periodo del Año</option>
-                    <option value="urbanContext">Contexto Urbano</option>
-                    <option value="placeKnowledge">Conocimiento del Lugar</option>
-                    <option value="acousticQuality">Calidad Acústica</option>
-                    <option value="soundscapeTime">Tiempo en el Ambiente Sonoro</option>
-                    <option value="acousticTraining">Formación en Acústica</option>                    
-                </select>
-            </h2>
-            <canvas></canvas>
-        </figure>
+        <figure class="figureScenary" id="figure">
+          <h2>Información del Escenario:
+            <select id="featuresOptions">
+                <option value="yearPeriod-3-0">Periodo del Año</option>
+                <option value="urbanContext-3-0">Contexto Urbano</option>
+                <option value="acousticQuality-3-0">Calidad Acústica</option>
+                <option value="soundscapeTime-3-0">Tiempo en el Ambiente Sonoro</option>               
+            </select>
+        </h2>
+        <span id="graphRight3">
+          <canvas id="renderPieChart3"></canvas>
+        </span>
+        <span id="summaryFeatureOption3">
 
+        </span>
+        </figure>
     </section>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div id="tableScenary1" style="display:none">      
-        <div>
-          <h2>Nombre del Primer Lugar: <b id="placeName1"></b></h2>
-        </div>
-        <div style="display: flex;justify-content: center;">
-          <div id="canvasGraph11">
-            <h1 id="namePlace1">Escenario 1</h1>
-            <canvas id="myCanvas11"></canvas>
-            <span style="text-align: left;">
-              
-              <h5 style="margin-left: 1vw;">Este gráfico está compuesto por dos ejes, uno de abscisas y uno de coordenadas.</h5>
-              <h5 style="margin-left: 1vw;">El eje de abscisas va de más dinámico a más estático.</h5>
-              <h5 style="margin-left: 1vw;">El eje de coordenadas va de más agradable a más molesto.</h5>
-              <h5 style="margin-left: 1vw;">La posición de un punto marca la posición de al menos un resultado</h5>
-              <h3 style="text-align:center; margin-left: 1vw;">Leyenda:</h3>
-              <h5 style="margin-left: 1vw;">• xX: Muestra las veces que un punto está repetido.</h5>
-            </span>
-          </div>
-    
-          <div id="canvasGraph12">
-            <h1 id="namePlace2">Escenario 2</h1>
-            <canvas id="myCanvas12"></canvas>
-            <span style="text-align: left;">
-              
-              <h5 style="margin-left: 1vw;">Este gráfico está compuesto por dos ejes, uno de abscisas y uno de coordenadas.</h5>
-              <h5 style="margin-left: 1vw;">El eje de abscisas va de más dinámico a más estático.</h5>
-              <h5 style="margin-left: 1vw;">El eje de coordenadas va de más agradable a más molesto.</h5>
-              <h5 style="margin-left: 1vw;">La posición de un punto marca la posición de al menos un resultado</h5>
-              <h3 style="text-align:center; margin-left: 1vw;">Leyenda:</h3>
-              <h5 style="margin-left: 1vw;">• xX: Muestra las veces que un punto está repetido.</h5>
-            </span>
-          </div>
-    
-          <div id="canvasGraph13">
-            <h1 id="namePlace2">Escenario 3</h1>
-            <canvas id="myCanvas13"></canvas>
-            <span style="text-align: left;">
-              
-              <h5 style="margin-left: 1vw;">Este gráfico está compuesto por dos ejes, uno de abscisas y uno de coordenadas.</h5>
-              <h5 style="margin-left: 1vw;">El eje de abscisas va de más dinámico a más estático.</h5>
-              <h5 style="margin-left: 1vw;">El eje de coordenadas va de más agradable a más molesto.</h5>
-              <h5 style="margin-left: 1vw;">La posición de un punto marca la posición de al menos un resultado</h5>
-              <h3 style="text-align:center; margin-left: 1vw;">Leyenda:</h3>
-              <h5 style="margin-left: 1vw;">• xX: Muestra las veces que un punto está repetido.</h5>
-            </span>
-          </div>
-        </div>
-    </div>
-    <div id="tableScenary2" style="display:none">      
-      <div>
-        <h2>Nombre del Segundo Lugar: <b id="placeName2"></b></h2>
-      </div>
-      <div style="display: flex;justify-content: center;">
-        <div id="canvasGraph21">
-          <h1 id="namePlace1">Escenario 1</h1>
-          <canvas id="myCanvas21"></canvas>
-          <span style="text-align: left;">
-              
-            <h5 style="margin-left: 1vw;">Este gráfico está compuesto por dos ejes, uno de abscisas y uno de coordenadas.</h5>
-            <h5 style="margin-left: 1vw;">El eje de abscisas va de más dinámico a más estático.</h5>
-            <h5 style="margin-left: 1vw;">El eje de coordenadas va de más agradable a más molesto.</h5>
-            <h5 style="margin-left: 1vw;">La posición de un punto marca la posición de al menos un resultado</h5>
-            <h3 style="text-align:center; margin-left: 1vw;">Leyenda:</h3>
-            <h5 style="margin-left: 1vw;">• xX: Muestra las veces que un punto está repetido.</h5>
-          </span>
-        </div>
-  
-        <div id="canvasGraph22">
-          <h1 id="namePlace2">Escenario 2</h1>
-          <canvas id="myCanvas22"></canvas>
-          <span style="text-align: left;">
-              
-            <h5 style="margin-left: 1vw;">Este gráfico está compuesto por dos ejes, uno de abscisas y uno de coordenadas.</h5>
-            <h5 style="margin-left: 1vw;">El eje de abscisas va de más dinámico a más estático.</h5>
-            <h5 style="margin-left: 1vw;">El eje de coordenadas va de más agradable a más molesto.</h5>
-            <h5 style="margin-left: 1vw;">La posición de un punto marca la posición de al menos un resultado</h5>
-            <h3 style="text-align:center; margin-left: 1vw;">Leyenda:</h3>
-            <h5 style="margin-left: 1vw;">• xX: Muestra las veces que un punto está repetido.</h5>
-          </span>
-        </div>
-  
-        <div id="canvasGraph23">
-          <h1 id="namePlace2">Escenario 3</h1>
-          <canvas id="myCanvas23"></canvas>
-          <span style="text-align: left;">
-              
-            <h5 style="margin-left: 1vw;">Este gráfico está compuesto por dos ejes, uno de abscisas y uno de coordenadas.</h5>
-            <h5 style="margin-left: 1vw;">El eje de abscisas va de más dinámico a más estático.</h5>
-            <h5 style="margin-left: 1vw;">El eje de coordenadas va de más agradable a más molesto.</h5>
-            <h5 style="margin-left: 1vw;">La posición de un punto marca la posición de al menos un resultado</h5>
-            <h3 style="text-align:center; margin-left: 1vw;">Leyenda:</h3>
-            <h5 style="margin-left: 1vw;">• xX: Muestra las veces que un punto está repetido.</h5>
-          </span>
-        </div>
-      </div>
-    </div>
-    <div id="tableScenary3" style="display:none">      
-      <div>
-        <h2>Nombre del Tercer Lugar: <b id="placeName3"></b></h2>
-      </div>
-      <div style="display: flex;justify-content: center;">
-        <div id="canvasGraph31">
-          <h1 id="namePlace1">Escenario 1</h1>
-          <canvas id="myCanvas11"></canvas>
-          <span style="text-align: left;">
-              
-            <h5 style="margin-left: 1vw;">Este gráfico está compuesto por dos ejes, uno de abscisas y uno de coordenadas.</h5>
-            <h5 style="margin-left: 1vw;">El eje de abscisas va de más dinámico a más estático.</h5>
-            <h5 style="margin-left: 1vw;">El eje de coordenadas va de más agradable a más molesto.</h5>
-            <h5 style="margin-left: 1vw;">La posición de un punto marca la posición de al menos un resultado</h5>
-            <h3 style="text-align:center; margin-left: 1vw;">Leyenda:</h3>
-            <h5 style="margin-left: 1vw;">• xX: Muestra las veces que un punto está repetido.</h5>
-          </span>
-        </div>
-
-        <div id="canvasGraph32">
-          <h1 id="namePlace2">Escenario 2</h1>
-          <canvas id="myCanvas12"></canvas>
-          <span style="text-align: left;">
-              
-            <h5 style="margin-left: 1vw;">Este gráfico está compuesto por dos ejes, uno de abscisas y uno de coordenadas.</h5>
-            <h5 style="margin-left: 1vw;">El eje de abscisas va de más dinámico a más estático.</h5>
-            <h5 style="margin-left: 1vw;">El eje de coordenadas va de más agradable a más molesto.</h5>
-            <h5 style="margin-left: 1vw;">La posición de un punto marca la posición de al menos un resultado</h5>
-            <h3 style="text-align:center; margin-left: 1vw;">Leyenda:</h3>
-            <h5 style="margin-left: 1vw;">• xX: Muestra las veces que un punto está repetido.</h5>
-          </span>
-        </div>
-
-        <div id="canvasGraph33">
-          <h1 id="namePlace2">Escenario 3</h1>
-          <canvas id="myCanvas13"></canvas>
-          <span style="text-align: left;">
-              
-            <h5 style="margin-left: 1vw;">Este gráfico está compuesto por dos ejes, uno de abscisas y uno de coordenadas.</h5>
-            <h5 style="margin-left: 1vw;">El eje de abscisas va de más dinámico a más estático.</h5>
-            <h5 style="margin-left: 1vw;">El eje de coordenadas va de más agradable a más molesto.</h5>
-            <h5 style="margin-left: 1vw;">La posición de un punto marca la posición de al menos un resultado</h5>
-            <h3 style="text-align:center; margin-left: 1vw;">Leyenda:</h3>
-            <h5 style="margin-left: 1vw;">• xX: Muestra las veces que un punto está repetido.</h5>
-          </span>
-        </div>
-      </div>
-    </div>
-  </div>
-    <!-- <div style="width: 500px;"><canvas id="dimensions"></canvas></div><br/> -->
-
-    <!-- <script type="module" src="dimensions.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
-
     <script src="js/helpers.js"></script>
-    <script src="js/handlers.js"></script>
-    <script src="js/app.js"></script>
-
-
+  </div>
 
 </body>
 </html>
