@@ -65,10 +65,8 @@ function drawParticipantGraph(option) {
     }else{
         const uniqueStatement = [...new Set(quiz_info.map(statement => statement[2]))]
         var statement = Object.keys(Object.values(uniqueStatement)[0][0])[option-1]
-        console.table(statement)
 
         var labelOptions = [...new Set(quiz_info.map(quiz_info => quiz_info[2][0][statement]))];
-        console.table(labelOptions)
         var label = [];
         for (let index = 0; index < labelOptions.length; index++) {
             final = labelOptions[index];
@@ -89,7 +87,6 @@ function drawParticipantGraph(option) {
             const actualSpecLength = uniqueModels.filter(number => number === countSpec.number).length;
             countSpec.count = actualSpecLength;
         })
-        console.table(counterParticipant)
         var newData = [];
         for (let index = 0; index < counterParticipant.length; index++) {
             newData[index] = counterParticipant[index].count;            
@@ -117,8 +114,7 @@ function drawParticipantGraph(option) {
     let text = "";
     switch (Math.floor(option)) {
         case 0:
-            text = "• En el gráfico anterior se muestra la puntuación obtenida en los test de la OMS sobre detección auditiva. Este test va de cero (NO REALIZADO) a 100."
-            console.log(text)
+            text = "• En el gráfico anterior se muestra la puntuación obtenida en los test de la OMS sobre detección auditiva. Este test va de cero (NO REALIZADO) a 100.";
             break;
         case 1:
             text = "• En el gráfico anterior se muestra el conocimiento sobre la región o la zona de la realización del estudio."
@@ -128,9 +124,7 @@ function drawParticipantGraph(option) {
             break;   
 
     }
-    console.info("La opción es:",option,text)
     document.getElementById("participantSummery").innerHTML = text;
-    console.info(document.getElementById("participantSummery").innerHTML)
     document.getElementById("statementQuestion").innerHTML = statement;
 
 }

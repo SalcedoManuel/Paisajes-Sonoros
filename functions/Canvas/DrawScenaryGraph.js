@@ -45,7 +45,6 @@ function drawScenaryGraph(numberPlace,numberRecording) {
         }
     }
     const idChart = 'renderRadarChart'+(numberPlace)
-    console.info(idChart)
     // Creamos un nuevo Chart con el identificador del canvas en el html y el tipo (tipo donut), además luego van los datos y las opciones.
     new Chart(idChart, { type: 'doughnut', data, options })
     
@@ -69,12 +68,10 @@ document.querySelector('#changeChart2Radio3').onclick = e =>{
     drawScenaryGraph(place,recording)
 }
 
-document.querySelector('#recordingOptions').onchange = e => {
-
-    const { value: property, text: label } = e.target.selectedOptions[0]
+function changeScenarySituation(property) {
     const [place, recording] = property.split('-')
     //-- Cambiamos los valores de las opciones de la derecha al cambiar el escenario.
-    document.getElementById("featuresOptions").innerHTML = '<option value="yearPeriod-'+place+'-'+recording+'">Periodo del Año</option>'+
+    document.getElementById("featuresOptions"+place).innerHTML = '<option value="yearPeriod-'+place+'-'+recording+'">Periodo del Año</option>'+
                                                             '<option value="urbanContext-'+place+'-'+recording+'">Contexto Urbano</option>'+
                                                             '<option value="acousticQuality-'+place+'-'+recording+'">Calidad Acústica</option>'+
                                                             '<option value="soundscapeTime-'+place+'-'+recording+'">Tiempo en el Ambiente Sonoro</option>';
@@ -88,6 +85,22 @@ document.querySelector('#recordingOptions').onchange = e => {
     drawScenaryGraph(place,recording)
 }
 
+document.querySelector('#recordingOptions1').onchange = e => {
+
+    const { value: property, text: label } = e.target.selectedOptions[0];
+    changeScenarySituation(property)
+
+}
+document.querySelector('#recordingOptions2').onchange = e => {
+
+    const { value: property, text: label } = e.target.selectedOptions[0]
+    changeScenarySituation(property)
+}
+document.querySelector('#recordingOptions3').onchange = e => {
+
+    const { value: property, text: label } = e.target.selectedOptions[0]
+    changeScenarySituation(property)
+}
 module.exports = {
     drawScenaryGraph
 }

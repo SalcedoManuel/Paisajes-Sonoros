@@ -32,7 +32,7 @@ function drawInformationScenary(numberPlace,numberRecording,optionText) {
     var option = GetOptionNumber(optionText,numberPlace);
 
     const numberTotalRecordings = quiz_info[0][0]["Recordings_Number"];
-    let position = Math.floor(((numberPlace-1)*numberTotalRecordings)+numberRecording);
+    let position = Math.floor(((numberPlace-1)*numberTotalRecordings)+Math.floor(numberRecording));
     const uniqueDescriptor = [...new Set(quiz_info.map(descriptor => descriptor[1][position]))]
     // Obtenemos los descriptores.
     var descriptor = Object.keys(uniqueDescriptor[0])[option]
@@ -87,7 +87,21 @@ function drawInformationScenary(numberPlace,numberRecording,optionText) {
 
 }
 
-document.querySelector('#featuresOptions').onchange = e => {
+document.querySelector('#featuresOptions1').onchange = e => {
+
+    const { value: property, text: label } = e.target.selectedOptions[0]
+    const [option, place,recording] = property.split('-')
+    document.getElementById("graphRight"+place).innerHTML = '<canvas id="renderPieChart'+place+'"></canvas>'
+    drawInformationScenary(place,recording,option)
+}
+document.querySelector('#featuresOptions2').onchange = e => {
+
+    const { value: property, text: label } = e.target.selectedOptions[0]
+    const [option, place,recording] = property.split('-')
+    document.getElementById("graphRight"+place).innerHTML = '<canvas id="renderPieChart'+place+'"></canvas>'
+    drawInformationScenary(place,recording,option)
+}
+document.querySelector('#featuresOptions3').onchange = e => {
 
     const { value: property, text: label } = e.target.selectedOptions[0]
     const [option, place,recording] = property.split('-')

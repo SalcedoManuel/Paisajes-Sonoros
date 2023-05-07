@@ -29,7 +29,6 @@ function getMediumValue(uniqueDescriptor,descriptor) {
     let data = [];
     const MAX_VALUE = 4;
     for (let index = 0; index < uniqueDescriptor.length; index++) {
-        console
        data[index] =  Functions.getDescriptorNumber(uniqueDescriptor[index][descriptor])/MAX_VALUE       
     }
     let value = (data.reduce((a, b) => a + b, 0))/uniqueDescriptor.length
@@ -37,12 +36,10 @@ function getMediumValue(uniqueDescriptor,descriptor) {
 }
 
 function drawScatterGraph(numberPlace,numberRecording) {
-    console.info(numberPlace,numberRecording)
     document.getElementById("graphLeft"+numberPlace).innerHTML = '<canvas id="renderRadarChart'+numberPlace+'"></canvas>'
     const numberTotalRecordings = quiz_info[0][0]["Recordings_Number"];    
     let position = ((numberPlace-1)*numberTotalRecordings)+Math.floor(numberRecording);
     position = Math.floor(position)
-    console.info(numberTotalRecordings)
     const uniqueDescriptor = [...new Set(quiz_info.map(descriptor => descriptor[1][position]))]
 
     // Obtenemos los descriptores.
