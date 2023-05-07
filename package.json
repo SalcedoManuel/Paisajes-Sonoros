@@ -1,7 +1,7 @@
 {
     "name": "soundscape",
     "description": "Aplicación de escritorio de Cuestionarios de paisajes sonoros",
-    "version": "1.2.3",
+    "version": "1.2.3.1",
     "main": "main.js",
     "repository": {
         "url": "https://https://github.com/SalcedoManuel/Paisajes-Sonoros"
