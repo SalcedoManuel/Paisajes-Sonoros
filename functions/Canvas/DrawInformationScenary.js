@@ -46,6 +46,7 @@ function drawInformationScenary(numberPlace,numberRecording,optionText) {
         final = final.replace('_', ' ').charAt(0).toUpperCase() + final.replace('_', ' ').slice(1)
         label[index] = final;
     }
+    label.sort();
 
     var newData = [];
     for (let index = 0; index < uniqueDescriptor.length; index++) {
@@ -76,7 +77,7 @@ function drawInformationScenary(numberPlace,numberRecording,optionText) {
 
     const options = {
         plugins: {
-            legend: { position: 'top' }
+            legend: { position: 'top',color:'white' }
         }
     }
     const idChart = 'renderPieChart'+numberPlace;

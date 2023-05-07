@@ -14,7 +14,6 @@ function getCoordenates(uniqueDescriptor,descriptor1,descriptor2) {
         }else{
             data[index] = 0;
         } 
-        console.info(descriptor1,descriptorValue1,descriptor2,descriptorValue2,"Resultado: ",data[index]) 
     }
     return data
 }
@@ -28,12 +27,13 @@ function convertXYCoordenates(xCoordenates,yCoordenates) {
 }
 
 function drawScatterGraph(numberPlace,numberRecording) {
+    console.info(numberPlace,numberRecording)
     document.getElementById("graphLeft"+numberPlace).innerHTML = '<canvas id="renderRadarChart'+numberPlace+'"></canvas>'
     const numberTotalRecordings = quiz_info[0][0]["Recordings_Number"];    
-    let position = ((numberPlace-1)*numberTotalRecordings)+numberRecording;
+    let position = ((numberPlace-1)*numberTotalRecordings)+Math.floor(numberRecording);
     position = Math.floor(position)
+    console.info(numberTotalRecordings)
     const uniqueDescriptor = [...new Set(quiz_info.map(descriptor => descriptor[1][position]))]
-    console.table(uniqueDescriptor)
 
     // Obtenemos los descriptores.
     var descriptor1 = Object.keys(uniqueDescriptor[0])[3]
@@ -47,12 +47,12 @@ function drawScatterGraph(numberPlace,numberRecording) {
 
     const Data = convertXYCoordenates(xCoordenates,yCoordenates)
     // Calculamos el valor medio de cada componente.
-    var newData = [];
+    var mediumData = [];
     const MAX_VALUE = 4;
-    newData[0] = ((uniqueDescriptor.map(uniqueDescriptor => Functions.getDescriptorNumber(uniqueDescriptor[descriptor1])/MAX_VALUE)).reduce((a, b) => a + b, 0))/uniqueDescriptor.length;
-    newData[1] = ((uniqueDescriptor.map(uniqueDescriptor => Functions.getDescriptorNumber(uniqueDescriptor[descriptor2])/MAX_VALUE)).reduce((a, b) => a + b, 0))/uniqueDescriptor.length;
-    newData[2] = ((uniqueDescriptor.map(uniqueDescriptor => Functions.getDescriptorNumber(uniqueDescriptor[descriptor3])/MAX_VALUE)).reduce((a, b) => a + b, 0))/uniqueDescriptor.length;
-    newData[3] = ((uniqueDescriptor.map(uniqueDescriptor => Functions.getDescriptorNumber(uniqueDescriptor[descriptor4])/MAX_VALUE)).reduce((a, b) => a + b, 0))/uniqueDescriptor.length;
+    mediumData[0] = ((uniqueDescriptor.map(uniqueDescriptor => Functions.getDescriptorNumber(uniqueDescriptor[descriptor1])/MAX_VALUE)).reduce((a, b) => a + b, 0))/uniqueDescriptor.length;
+    mediumData[1] = ((uniqueDescriptor.map(uniqueDescriptor => Functions.getDescriptorNumber(uniqueDescriptor[descriptor2])/MAX_VALUE)).reduce((a, b) => a + b, 0))/uniqueDescriptor.length;
+    mediumData[2] = ((uniqueDescriptor.map(uniqueDescriptor => Functions.getDescriptorNumber(uniqueDescriptor[descriptor3])/MAX_VALUE)).reduce((a, b) => a + b, 0))/uniqueDescriptor.length;
+    mediumData[3] = ((uniqueDescriptor.map(uniqueDescriptor => Functions.getDescriptorNumber(uniqueDescriptor[descriptor4])/MAX_VALUE)).reduce((a, b) => a + b, 0))/uniqueDescriptor.length;
 
     const data = {
         labels: ['Agradable','Molesto', 'Dinámico','Estático'],
@@ -66,7 +66,7 @@ function drawScatterGraph(numberPlace,numberRecording) {
         },{
             label:"Región Media de cada Descriptor",
             type:"radar",
-            data:newData,
+            data:mediumData,
             borderColor: getDataColors(30)[numberRecording],
             backgroundColor: getDataColors(10)[numberRecording],
             order:1
@@ -82,7 +82,6 @@ function drawScatterGraph(numberPlace,numberRecording) {
                 callbacks:{
                     label:(context) =>{
                         let text;
-                        console.info(context.raw)
                         if (context.raw.x === undefined && context.raw.y === undefined) {
                             text = context.raw;
                         }else{
@@ -146,8 +145,18 @@ function drawScatterGraph(numberPlace,numberRecording) {
     
 }
 
-document.querySelector('#changeChart2Scatter').onclick = e =>{
-    const property = document.getElementById("changeChart2Scatter").value;
+document.querySelector('#changeChart2Scatter1').onclick = e =>{
+    const property = document.getElementById("changeChart2Scatter1").value;
+    const [place, recording] = property.split('-')
+    drawScatterGraph(place,recording)
+}
+document.querySelector('#changeChart2Scatter2').onclick = e =>{
+    const property = document.getElementById("changeChart2Scatter2").value;
+    const [place, recording] = property.split('-')
+    drawScatterGraph(place,recording)
+}
+document.querySelector('#changeChart2Scatter3').onclick = e =>{
+    const property = document.getElementById("changeChart2Scatter3").value;
     const [place, recording] = property.split('-')
     drawScatterGraph(place,recording)
 }

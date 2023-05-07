@@ -4,7 +4,7 @@ const ScenaryInformation = require('./DrawInformationScenary')
 function drawScenaryGraph(numberPlace,numberRecording) {
     document.getElementById("graphLeft"+numberPlace).innerHTML = '<canvas id="renderRadarChart'+numberPlace+'"></canvas>'
     const numberTotalRecordings = quiz_info[0][0]["Recordings_Number"];    
-    let position = ((numberPlace-1)*numberTotalRecordings)+numberRecording;
+    let position = ((numberPlace-1)*numberTotalRecordings)+Math.floor(numberRecording);
     position = Math.floor(position)
     const uniqueDescriptor = [...new Set(quiz_info.map(descriptor => descriptor[1][position]))]
     // Obtenemos los descriptores.
@@ -51,8 +51,20 @@ function drawScenaryGraph(numberPlace,numberRecording) {
     
 }
 
-document.querySelector('#changeChart2Radio').onclick = e =>{
-    const property = document.getElementById("changeChart2Radio").value;
+document.querySelector('#changeChart2Radio1').onclick = e =>{
+    const property = document.getElementById("changeChart2Radio1").value;
+    const [place, recording] = property.split('-')
+    drawScenaryGraph(place,recording)
+}
+
+document.querySelector('#changeChart2Radio2').onclick = e =>{
+    const property = document.getElementById("changeChart2Radio2").value;
+    const [place, recording] = property.split('-')
+    drawScenaryGraph(place,recording)
+}
+
+document.querySelector('#changeChart2Radio3').onclick = e =>{
+    const property = document.getElementById("changeChart2Radio3").value;
     const [place, recording] = property.split('-')
     drawScenaryGraph(place,recording)
 }
