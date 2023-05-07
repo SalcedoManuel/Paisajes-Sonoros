@@ -24,7 +24,14 @@ canvas[id^="participantChart"]{
     width:40vh;
     height: 40vh;
 }
+canvas[id^="participantChart"]{
+    width:40vh;
+    height: 40vh;
+}
 
+canvas[id^="renderRadarChart"],canvas[id^="renderPieChart"]{
+    width: 70%;
+}
 section[class^="cols-1"]{
     width: max-content;
     background-color: rgba(0,0,0,0.3);
@@ -75,6 +82,7 @@ html {
     text-align: center;
     margin: auto;
     width: 100%;
+    height: 100%;
     border-radius: 2vh;
     background-color: rgba(17, 17, 17, 0.7);
   }

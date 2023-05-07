@@ -22,7 +22,7 @@ function getCoordenates(uniqueDescriptor,descriptor1,descriptor2) {
 function convertXYCoordenates(xCoordenates,yCoordenates) {
     let data = [];
     for (let index = 0; index < xCoordenates.length; index++) {
-        data[index] = [xCoordenates[index],yCoordenates[index]]
+        data[index] = {x: xCoordenates[index],y: yCoordenates[index], }
     }
     return data;
 }
@@ -44,20 +44,32 @@ function drawScatterGraph(numberPlace,numberRecording) {
     // Obtenemos los datos.   
     const yCoordenates = getCoordenates(uniqueDescriptor,descriptor1,descriptor3)
     const xCoordenates = getCoordenates(uniqueDescriptor,descriptor2,descriptor4) 
-    console.table(xCoordenates)
-    console.table(yCoordenates)
 
     const Data = convertXYCoordenates(xCoordenates,yCoordenates)
+    // Calculamos el valor medio de cada componente.
+    var newData = [];
+    const MAX_VALUE = 4;
+    newData[0] = ((uniqueDescriptor.map(uniqueDescriptor => Functions.getDescriptorNumber(uniqueDescriptor[descriptor1])/MAX_VALUE)).reduce((a, b) => a + b, 0))/uniqueDescriptor.length;
+    newData[1] = ((uniqueDescriptor.map(uniqueDescriptor => Functions.getDescriptorNumber(uniqueDescriptor[descriptor2])/MAX_VALUE)).reduce((a, b) => a + b, 0))/uniqueDescriptor.length;
+    newData[2] = ((uniqueDescriptor.map(uniqueDescriptor => Functions.getDescriptorNumber(uniqueDescriptor[descriptor3])/MAX_VALUE)).reduce((a, b) => a + b, 0))/uniqueDescriptor.length;
+    newData[3] = ((uniqueDescriptor.map(uniqueDescriptor => Functions.getDescriptorNumber(uniqueDescriptor[descriptor4])/MAX_VALUE)).reduce((a, b) => a + b, 0))/uniqueDescriptor.length;
 
     const data = {
-        //labels: uniqueModels,
         labels: ['Agradable','Molesto', 'Dinámico','Estático'],
         datasets: [{
-            //-- Extrae del array de modelos de montañas rusas, el número que hay por cada una.
-            //data: uniqueModels.map(currentModel => coasters.filter(coaster => coaster.model === currentModel).length),
+            label:"Puntos de los resultados",
+            type: 'scatter',
             data: Data,
             borderColor: getDataColors()[numberRecording],
-            backgroundColor: getDataColors(90)[numberRecording]
+            backgroundColor: getDataColors(90)[numberRecording],
+            order:2
+        },{
+            label:"Región Media de cada Descriptor",
+            type:"radar",
+            data:newData,
+            borderColor: getDataColors(30)[numberRecording],
+            backgroundColor: getDataColors(10)[numberRecording],
+            order:1
         }]
     }
 
@@ -65,29 +77,72 @@ function drawScatterGraph(numberPlace,numberRecording) {
         responsive: true,
         aspectRatio:1,
         plugins: {
-            legend: { display:false }
+            legend: { display:true },
+            tooltip:{
+                callbacks:{
+                    label:(context) =>{
+                        let text;
+                        console.info(context.raw)
+                        if (context.raw.x === undefined && context.raw.y === undefined) {
+                            text = context.raw;
+                        }else{
+                            text = "x: " + context.raw.x +",y: "+context.raw.y;
+                        }
+                        
+                        return text;
+                    }
+                }
+            }
         },
         scales:{
             x:{
-                min:-1,
-                max:1,
+                min:-1.2,
+                max:1.2,
                 ticks:{
-                    stepSize: 0.1
-                }
+                    stepSize: 0.1,
+                    color: "white"
+                },
+                grid: {
+                    display: true,
+                    lineWidth:0.1,
+                    color: "white"
+                  }
             },
             y:{
-                min:-1,
-                max:1,
+                min:-1.2,
+                max:1.2,
                 ticks:{
-                    stepSize: 0.1
-                }
+                    stepSize: 0.1,
+                    color:"white"
+                },
+                grid: {
+                    display: true,
+                    lineWidth:0.1,
+                    color: "white"
+                  }
             },
+            r:{
+                min:0,
+                max:1,
+                angleLines: {
+                    display: false
+                }, 
+                ticks: {
+                    display:false
+                },
+                pointLabels: {
+                    color: 'white'
+                  }
+            },
+            tricks:{
+                display: false
+            }
         }
     }
     const idChart = 'renderRadarChart'+(numberPlace)
 
     // Creamos un nuevo Chart con el identificador del canvas en el html y el tipo (tipo donut), además luego van los datos y las opciones.
-    new Chart(idChart, { type: 'scatter', data, options })
+    new Chart(idChart, {data, options })
     
 }
 

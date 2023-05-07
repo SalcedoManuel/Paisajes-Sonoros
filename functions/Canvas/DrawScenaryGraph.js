@@ -27,7 +27,6 @@ function drawScenaryGraph(numberPlace,numberRecording) {
     newData[3] = Math.round(newData[3]*100/TOTAL);
 
     const data = {
-        //labels: uniqueModels,
         labels: ['Agradable','Molesto', 'Dinámico','Estático'],
         datasets: [{
             //-- Extrae del array de modelos de montañas rusas, el número que hay por cada una.
