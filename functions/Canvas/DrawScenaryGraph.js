@@ -81,8 +81,8 @@ document.querySelector('#recordingOptions').onchange = e => {
 
     document.getElementById("graphLeft"+place).innerHTML = '<canvas id="renderRadarChart'+place+'"></canvas>'
     document.getElementById("graphRight"+place).innerHTML = '<canvas id="renderPieChart'+place+'"></canvas>'
-    document.getElementById("changeChart2Radio").value = place + "-"+recording;
-    document.getElementById("changeChart2Scatter").value = place + "-"+recording;
+    document.getElementById("changeChart2Radio"+place).value = place + "-"+recording;
+    document.getElementById("changeChart2Scatter"+place).value = place + "-"+recording;
     
     ScenaryInformation.drawInformationScenary(Math.floor(place),Math.floor(recording),"yearPeriod")
     drawScenaryGraph(place,recording)

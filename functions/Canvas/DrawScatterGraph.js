@@ -25,6 +25,16 @@ function convertXYCoordenates(xCoordenates,yCoordenates) {
     }
     return data;
 }
+function getMediumValue(uniqueDescriptor,descriptor) {
+    let data = [];
+    const MAX_VALUE = 4;
+    for (let index = 0; index < uniqueDescriptor.length; index++) {
+        console
+       data[index] =  Functions.getDescriptorNumber(uniqueDescriptor[index][descriptor])/MAX_VALUE       
+    }
+    let value = (data.reduce((a, b) => a + b, 0))/uniqueDescriptor.length
+    return value
+}
 
 function drawScatterGraph(numberPlace,numberRecording) {
     console.info(numberPlace,numberRecording)
@@ -49,13 +59,13 @@ function drawScatterGraph(numberPlace,numberRecording) {
     // Calculamos el valor medio de cada componente.
     var mediumData = [];
     const MAX_VALUE = 4;
-    mediumData[0] = ((uniqueDescriptor.map(uniqueDescriptor => Functions.getDescriptorNumber(uniqueDescriptor[descriptor1])/MAX_VALUE)).reduce((a, b) => a + b, 0))/uniqueDescriptor.length;
-    mediumData[1] = ((uniqueDescriptor.map(uniqueDescriptor => Functions.getDescriptorNumber(uniqueDescriptor[descriptor2])/MAX_VALUE)).reduce((a, b) => a + b, 0))/uniqueDescriptor.length;
-    mediumData[2] = ((uniqueDescriptor.map(uniqueDescriptor => Functions.getDescriptorNumber(uniqueDescriptor[descriptor3])/MAX_VALUE)).reduce((a, b) => a + b, 0))/uniqueDescriptor.length;
-    mediumData[3] = ((uniqueDescriptor.map(uniqueDescriptor => Functions.getDescriptorNumber(uniqueDescriptor[descriptor4])/MAX_VALUE)).reduce((a, b) => a + b, 0))/uniqueDescriptor.length;
+    mediumData[0] = getMediumValue(uniqueDescriptor,descriptor1)
+    mediumData[1] = getMediumValue(uniqueDescriptor,descriptor2)
+    mediumData[2] = getMediumValue(uniqueDescriptor,descriptor3)
+    mediumData[3] = getMediumValue(uniqueDescriptor,descriptor4)
 
     const data = {
-        labels: ['Agradable','Molesto', 'Dinámico','Estático'],
+        labels: ['Agradable', 'Dinámico','Molesto','Estático'],
         datasets: [{
             label:"Puntos de los resultados",
             type: 'scatter',
