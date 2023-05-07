@@ -1,5 +1,5 @@
 const sweetalert = require('sweetalert');
-
+const Admin = require("./SetAdminMode")
 /* Pantalla que muestra una ventana emergente con la información de contacto. */
 function ContactPopupScreen() {
     let message = "Contacto: m.salcedoa.2016@alumnos.urjc.es";

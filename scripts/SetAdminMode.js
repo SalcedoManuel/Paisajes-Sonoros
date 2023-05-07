@@ -13,3 +13,7 @@ function ChangeAdminMode() {
     let myJSON = JSON.stringify(main_info);
     fs.writeFileSync(MAIN_JSON,myJSON);
 }
+
+module.exports = {
+ChangeAdminMode
+}

@@ -1,4 +1,5 @@
 function hide_content(content) {
+    console.info(content)
     switch (content) {
         case 0:
             //-- Ocultar el contenido.
