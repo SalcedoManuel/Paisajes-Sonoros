@@ -62,7 +62,7 @@ function drawScatterGraph(numberPlace,numberRecording) {
     mediumData[3] = getMediumValue(uniqueDescriptor,descriptor4)
 
     const data = {
-        labels: ['Agradable', 'Dinámico','Molesto','Estático'],
+        labels: ['Agradable', 'Estático','Molesto','Dinámico'],
         datasets: [{
             label:"Puntos de los resultados",
             type: 'scatter',
