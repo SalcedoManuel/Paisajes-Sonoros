@@ -6,8 +6,8 @@
     "ID_Quiz":0,
     "files": [
       {
-        "Name_Scenary": "Felipe II",
-        "Name_recordings":["Móvil","binaural","micrófono"],
+        "Name_Scenary": "Escenario 1",
+        "Name_recordings":["Uno", "Dos", "Tres"],
         "audio_files": [
           "default.mp3",
           "default.mp3"
@@ -20,8 +20,8 @@
         
       },
       {
-          "Name_Scenary": "Atocha",
-          "Name_recordings":["Móvil","binaural","micrófono"],
+          "Name_Scenary": "Escenario 2",
+          "Name_recordings":["Uno", "Dos", "Tres"],
           "audio_files": [
             "default.mp3"
           ],
@@ -30,8 +30,8 @@
           ]
       },
       {
-      "Name_Scenary": "Metropolitano",
-      "Name_recordings":["Móvil","binaural","micrófono"],
+      "Name_Scenary": "Escenario 3",
+      "Name_recordings":["Uno", "Dos", "Tres"],
       "audio_files": [
           "default.mp3"
       ],

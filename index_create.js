@@ -321,16 +321,6 @@ function change_status(place,type,recording) {
     }
 }
 
-function GetCheckedValue(element) {
-    let replies;
-    for (let i = 0; i < element.length; i++) {    
-      if (element[i].checked == true) {
-        replies = element[i].value;
-      }
-    }
-    return replies;
-  }
-
 function create_quiz() {
     /*
         Dependiendo de si el cuestionario tiene recursos online o locales se comprueba de distinta manera.
@@ -523,11 +513,13 @@ function create_quiz() {
         }
         
             //-- Extraemos el nombre del lugar y el nombre de la zona.
-        var namePlace = document.getElementsByName("namePlace");
-        var nameZone  = document.getElementsByName("nameZone");
-        let questionChanged = "¿Conoces "+GetCheckedValue(namePlace)+"?¿En qué grado estás familiarizado/a o relacionado/a con"+GetCheckedValue(nameZone)+"?";
+        var namePlace = document.getElementById("namePlace").value;
+        console.info(namePlace)
+        var nameZone  = document.getElementById("nameZone").value;
+        let questionChanged = "¿Conoces "+namePlace+"?¿En qué grado estás familiarizado/a o relacionado/a con "+nameZone+"?";
         quiz_json["questions"][2][1] = questionChanged;
-        quiz_json["questions"][2][1] = questionChanged;
+        console.info(quiz_json["questions"][2][1])
+        quiz_json["questions_replies"][2][1] = questionChanged;
 
         //-- Añadimos la ruta de los ficheros multimedia al JSON en LOCAL.
         switch (number_places) {
@@ -561,7 +553,7 @@ function create_quiz() {
         } 
 
         
-      
+      console.info(quiz_json["questions_replies"][2][1])
 
         //-- Convertir la variable a cadena JSON
         let myJSON = JSON.stringify(quiz_json);
