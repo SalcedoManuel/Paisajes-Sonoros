@@ -29,12 +29,17 @@ var position_number_completed_quiz = 0;
 //-- ejecuta esta función
 electron.app.on('ready', () => {
     console.log("Evento Ready!");
-
+    let icon_image_path;
+    if (process.platform == "linux") {
+      icon_image_path = '/images/logo3.png';
+    }else{
+      icon_image_path = '/images/logo3.ico'
+    }
     //-- Crear la ventana principal de nuestra aplicación
     win = new electron.BrowserWindow({
         width: 1340,   //-- Anchura 
         height: 600,  //-- Altura
-        icon: __dirname + '/images/logo3.ico',
+        icon: __dirname + icon_image_path,
         //-- Permitir que la ventana tenga ACCESO AL SISTEMA
         webPreferences: {
           nodeIntegration: true,

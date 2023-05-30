@@ -22,7 +22,7 @@
         "productName": "Soundscape App",
         "copyright": "Copyright © 2023 ${author}",
         "mac": {
-            "icon": "build/logo3.ico",
+            "icon": "build/logo3.icns",
             "category": "public.app-category.utilities"
         },
         "executableName": "Cuestionarios de Paisajes Sonoros",
