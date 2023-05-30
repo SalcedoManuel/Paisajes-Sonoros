@@ -104,22 +104,36 @@ function add_places_questions(pos) {
     return reply;
 }
 
+function getZone(string) {
+    var array = string.split(" ")
+    let finish = false;
+    let index = array.length-1;
+    while (!finish) {
+        if (array[index] == "con" && array[index - 1] == "relacionado/a") {
+            array = array.slice(index+1,array.length).join(' ').replace("?","")
+            finish = true
+        }
+        index--;
+    }
+    return array;
+}
+
 function add_last_question_user(pos) {
     var reply = "";
-    if (last_user_questions[pos] == "¿Conoces Menorca?¿En qué grado estás familiarizado/a o relacionado/a con la isla?") {
-        reply += pos + ". <strong>" + last_user_questions[pos] + "</strong>:";
-        reply += '<br>'
-        reply += '<input type="radio" name="last_0" value="no" id="last_0" checked>No, no he ido nunca</input><br>';
-        reply += '<input type="radio" name="last_0" value="si_poco" id="last_0">Sí, he estado una o dos veces.</input><br>';
-        reply += '<input type="radio" name="last_0" value="si_neutro" id="last_0">Sí, la visito regularmente cada año.</input><br>';
-        reply += '<input type="radio" name="last_0" value="si_mucho" id="last_0">Sí, soy residente en la isla.</input><br>';
-    }
+
     if (last_user_questions[pos] == '¿Tienes algún tipo de conocimiento o formación en Acústica?') {
         reply += pos + ". <strong>" + last_user_questions[pos] + "</strong>:";
         reply += '<br>'
         reply += '<input type="radio" name="last_1" value="no" id="last_1" checked>No, no tengo ningún conocimiento sobre Acústica.</input><br>';
         reply += '<input type="radio" name="last_1" value="si_poco" id="last_1">Sí, soy/he sido estudiante de materias relacionadas con la Acústica.</input><br>';
         reply += '<input type="radio" name="last_1" value="si_mucho" id="last_1">Sí, tengo conocimientos sólidos sobre Acústica.</input><br>';
+    }else{
+        reply += pos + ". <strong>" + last_user_questions[pos] + "</strong>:";
+        reply += '<br>'
+        reply += '<input type="radio" name="last_0" value="no" id="last_0" checked>No, no he ido nunca</input><br>';
+        reply += '<input type="radio" name="last_0" value="si_poco" id="last_0">Sí, he estado una o dos veces.</input><br>';
+        reply += '<input type="radio" name="last_0" value="si_neutro" id="last_0">Sí, la visito regularmente cada año.</input><br>';
+        reply += '<input type="radio" name="last_0" value="si_mucho" id="last_0">Sí, soy residente en '+getZone(last_user_questions[pos])+'.</input><br>';
     }
     reply += "<br><br>";
     return reply

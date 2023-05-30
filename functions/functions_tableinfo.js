@@ -472,16 +472,16 @@ function last_user_results() {
     string = "";
     for (let i = 0; i < number_people; i++) {
         if (quiz_info[i][2][0][questionChanged] == "no") {
-            let value = array[0].get("¿Conoces Menorca?¿En qué grado estás familiarizado/a o relacionado/a con la isla?")
+            let value = array[0].get(questionChanged)
             value[0] += VALUE;
         }else if(quiz_info[i][2][0][questionChanged] == "si_poco"){
-            let value = array[0].get("¿Conoces Menorca?¿En qué grado estás familiarizado/a o relacionado/a con la isla?")
+            let value = array[0].get(questionChanged)
             value[1] += VALUE;
         }else if(quiz_info[i][2][0][questionChanged] == "si_neutro"){
-            let value = array[0].get("¿Conoces Menorca?¿En qué grado estás familiarizado/a o relacionado/a con la isla?")
+            let value = array[0].get(questionChanged)
             value[2] += VALUE;
         }else if(quiz_info[i][2][0][questionChanged] == "si_mucho"){
-            let value = array[0].get("¿Conoces Menorca?¿En qué grado estás familiarizado/a o relacionado/a con la isla?")
+            let value = array[0].get(questionChanged)
             value[3] += VALUE;
         }
 

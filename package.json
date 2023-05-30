@@ -1,7 +1,7 @@
 {
     "name": "soundscape",
     "description": "Aplicación de escritorio de Cuestionarios de paisajes sonoros",
-    "version": "1.2.4",
+    "version": "1.2.5",
     "main": "main.js",
     "repository": {
         "url": "https://https://github.com/SalcedoManuel/Paisajes-Sonoros"
@@ -29,6 +29,13 @@
         "win": {
             "icon": "build/logo3.png"
         },
+        "linux": {
+            "icon":"build/logo3.png",
+            "target": [
+                "AppImage"
+            ],
+            "category": "Utility"
+        },
         "extraResources": [
             {
                 "from": "./resources/",
@@ -47,7 +54,7 @@
         "sweetalert": "^2.1.2"
     },
     "devDependencies": {
-        "electron": "^22.3.8",
-        "electron-builder": "^24.3.0"
+        "electron": "^22.3.11",
+        "electron-builder": "^24.4.0"
     }
 }
