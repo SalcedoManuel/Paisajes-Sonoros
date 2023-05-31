@@ -30,7 +30,7 @@
             "icon": "build/logo3.png"
         },
         "linux": {
-            "icon":"build/logo3.png",
+            "icon": "build/logo3.png",
             "target": [
                 "AppImage"
             ],
