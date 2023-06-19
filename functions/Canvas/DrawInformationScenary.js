@@ -46,7 +46,7 @@ function drawInformationScenary(numberPlace,numberRecording,optionText) {
         final = final.replace('_', ' ').charAt(0).toUpperCase() + final.replace('_', ' ').slice(1)
         label[index] = final;
     }
-    label.sort();
+    //label.sort();
 
     var newData = [];
     for (let index = 0; index < uniqueDescriptor.length; index++) {
