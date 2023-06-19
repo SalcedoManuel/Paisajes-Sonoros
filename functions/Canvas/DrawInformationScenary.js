@@ -77,7 +77,12 @@ function drawInformationScenary(numberPlace,numberRecording,optionText) {
 
     const options = {
         plugins: {
-            legend: { position: 'top',color:'white' }
+            labels:{
+                render: 'percentage',
+                fontColor: 'white',
+                fontStyle: 'bolder'
+            },
+            legend: { position: 'top',labels:{color:'white',fontStyle:'bolder'}}
         }
     }
     const idChart = 'renderPieChart'+numberPlace;

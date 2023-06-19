@@ -71,17 +71,17 @@
     <input type="file" id="myfilesInputFile" class="input_file" >
     <button id="load_results" onclick="LoadFileQuiz()"><h4>Cargar Fichero con Resultados</h4></button>
   </div> 
-  <div class="wrapper" id="results_button">
+  <div class="wrapper" id="results_button" style="display: none;">
     <h3>Selecciona la opción que posee respuestas: </h3>
     <div id="results"></div>
   </div>
   <div class="wrapper" id="optionsResultsButton">
-    <h3>Selecciona la opción que quiere ver de los cuestionarios: </h3>
+    <h3>Selecciona la sección del cuestionario que deseas ver del cuestionario: </h3>
     <div id="results">
-      <button id="button_select_quiz" onclick="SelectOption2Show('hearWhoResults')"><b>WHO Score<b></button>
-      <button id="button_select_quiz" onclick="SelectOption2Show('tablePlacesResults')"><b>Preguntas sobre el Escenario<b></button>
-      <button id="button_select_quiz" onclick="SelectOption2Show('lastQuestion')"><b>Preguntas sobre el Encuestado<b></button>
-      <button id="button_select_quiz" onclick="SelectOption2Show('canvasResult')"><b>Gráfico sobre el Entorno<b></button>
+      <button id="button_select_quiz0" onclick="SelectOption2Show('hearWhoResults',0)"><b>WHO Score<b></button>
+      <button id="button_select_quiz1" onclick="SelectOption2Show('tablePlacesResults',1)"><b>Preguntas sobre el Escenario<b></button>
+      <button id="button_select_quiz2" onclick="SelectOption2Show('lastQuestion',2)"><b>Preguntas sobre el Encuestado<b></button>
+      <button id="button_select_quiz3" onclick="SelectOption2Show('canvasResult',3)"><b>Gráfico sobre el Entorno</b></button>
     </div>
   </div> 
   <div class="wrapper" id="user_results">
@@ -98,7 +98,7 @@
   <div class="wrapper" id="hearWhoResults" style="display: block;"></div>
   <div class="wrapper" id="tablePlacesResults" style="display: block;"></div>
   <div class="wrapper" id="lastQuestion" style="display: block;"></div>
-  <div class="wrapper" id="canvasResult" style="display: none;">
+  <div class="wrapper" id="canvasResult" style="display: block;">
     <h2>Gráficas sobre el Entorno</h2>
     <div id="chronologyGraph">
       <section class="cols-1">
@@ -107,7 +107,7 @@
               Cronología de la Recogida de los Resultados
             </h2>
             <canvas id="chronologyChart"></canvas>
-            <h4 id="chronologyText">• En esta cronología se muestra el volumen de encuestas por día siendo el eje abscisas las fechas donde se realizaron cuestionarios y el eje de coordenadas el volumen de cuestionarios realizados ese día.</h4>           
+            <h4 id="chronologyText">• En esta cronología se muestra el volumen de encuestas por día siendo el eje abscisas las fechas donde se realizaron cuestionarios y el eje de ordenadas el volumen de cuestionarios realizados ese día.</h4>           
         </figure>
       </section>
     </div>
@@ -254,6 +254,8 @@
     </section>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.2/chart.js"></script>
+    <script src="https://unpkg.com/chart.js-plugin-labels-dv/dist/chartjs-plugin-labels.min.js"></script>
     <script src="js/helpers.js"></script>
   </div>
 

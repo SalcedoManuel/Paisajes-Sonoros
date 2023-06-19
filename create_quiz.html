@@ -329,11 +329,14 @@
       </div>
     </span>
     <br>
-    <p>A continuación, se muestran las preguntas que los participantes deberán responder para completar el cuestionario:</p>
+    
   </div>
 
   <div class="wrapper" id="wrapper1"> <!-- Contenedor que guarda las preguntas sobre el participante-->
     <br>
+    
+    <p>A continuación, se muestran las preguntas que los participantes deberán responder para completar el cuestionario.</p>
+    <p>Recuerde rellenar la pregunta sobre la relación con el entorno.</p>
     <table style="margin: auto; width:900px;">
       <tr>    
         <th colspan="2" style="border-bottom: 1px white solid;"><h2>Parte 1: Preguntas al Participante</h2></th>
@@ -391,7 +394,7 @@
       </tr>
       <tr>
         <th style="text-align: right; width:10%;"><p>1ª</p></th>    
-        <td style="text-align: left;"><p>¿Conoces <input type="text" name="namePlace" id="namePlace" placeholder="Lugar del Estudio">? ¿En qué grado estás familiarizado/a o relacionado/a con <input type="text" name="nameZone" id="nameZone"  placeholder="Zona del Estudio">?<br></p></td>    
+        <td style="text-align: left;"><p>¿Conoces <input type="text" name="namePlace" id="namePlace" style="width:180px;" placeholder="Lugar del Estudio Ej:Menorca">? ¿En qué grado estás familiarizado/a o relacionado/a con <input type="text" name="nameZone" id="nameZone" style="width:160px;" placeholder="Zona del Estudio Ej:la isla">?<br></p></td>    
       </tr>     
       <tr>
         <th style="text-align: right; width:10%;"><p>2ª</p></th>    
@@ -402,12 +405,12 @@
   </div>
   <br>
   <br>
-  <table style="margin: auto;">
+  <table style="margin:0 auto;display:none;" id="buttons_end_page">
     <tr>
       <td id="button_end_page1"> <!-- Botón que sirve para terminar el proceso de creación del cuestionario-->
         <button id="end_create" onclick="create_quiz()">Finalizar</button>
       </td>
-      <td> <!-- Botón de rehacer el cuestionario-->
+      <td id="button_end_page2"> <!-- Botón de rehacer el cuestionario-->
         <a href="create_quiz.html"><button id="retry">Reintentar</button></a>
       </td>
     </tr>

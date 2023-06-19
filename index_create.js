@@ -407,8 +407,9 @@ function create_quiz() {
 
         functions_extras.ocultar_wrapper();
 
-        back.innerHTML = '<h3 style:"text-align: center;">Cuestionario creado. Vuelva al menú principal.</h3>';
-        document.getElementById("button_end_page1").style.display = "none";
+        back.innerHTML = '<h3 style:"text-align: center;">Cuestionario creado. Si desea hacerlo pulse la opción Rellenar Cuestionario si no, vuelta al menú principal.</h3>';
+        document.getElementById("button_end_page1").innerHTML = '<a href="index.html"><button id="end_create" style="width:290px">Volver al menú principal</button></a>';
+        document.getElementById("button_end_page2").innerHTML = '<a href="create_quiz.html"><button id="end_create" style="width:290px">Crear un nuevo cuestionario</button></a>';
         // Switch para obtener los nombres de los escenarios.
         switch (number_places) {
             case 1:

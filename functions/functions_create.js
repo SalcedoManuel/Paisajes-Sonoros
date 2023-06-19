@@ -46,6 +46,7 @@ function restart_creation() {
 
 function start_creation() {
     document.getElementById("back").innerHTML = '';
+    document.getElementById("buttons_end_page").style = 'margin:0 auto;';
     if (number_examples > 0) {
         // Desaparecen los botones para elegir escenarios "zero" y el de elegir sistemas de grabación "one_option"
         document.getElementById("zero").style.display = "none";

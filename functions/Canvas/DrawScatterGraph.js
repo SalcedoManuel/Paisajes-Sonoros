@@ -43,10 +43,10 @@ function drawScatterGraph(numberPlace,numberRecording) {
     const uniqueDescriptor = [...new Set(quiz_info.map(descriptor => descriptor[1][position]))]
 
     // Obtenemos los descriptores.
-    var descriptor1 = Object.keys(uniqueDescriptor[0])[3]
-    var descriptor2 = Object.keys(uniqueDescriptor[0])[4]
-    var descriptor3 = Object.keys(uniqueDescriptor[0])[5]
-    var descriptor4 = Object.keys(uniqueDescriptor[0])[6]
+    var descriptor1 = Object.keys(uniqueDescriptor[0])[6]
+    var descriptor2 = Object.keys(uniqueDescriptor[0])[3]
+    var descriptor3 = Object.keys(uniqueDescriptor[0])[4]
+    var descriptor4 = Object.keys(uniqueDescriptor[0])[5]
     
     // Obtenemos los datos.   
     const yCoordenates = getCoordenates(uniqueDescriptor,descriptor1,descriptor3)
@@ -62,7 +62,7 @@ function drawScatterGraph(numberPlace,numberRecording) {
     mediumData[3] = getMediumValue(uniqueDescriptor,descriptor4)
 
     const data = {
-        labels: ['Agradable', 'Estático','Molesto','Dinámico'],
+        labels: ['Dinámico', 'Agradable','Estático','Molesto'],
         datasets: [{
             label:"Puntos de los resultados",
             type: 'scatter',
@@ -84,7 +84,7 @@ function drawScatterGraph(numberPlace,numberRecording) {
         responsive: true,
         aspectRatio:1,
         plugins: {
-            legend: { display:true },
+            legend: { display:true,labels:{color:'white',fontStyle:'bolder'}},
             tooltip:{
                 callbacks:{
                     label:(context) =>{

@@ -30,7 +30,6 @@ function drawScenaryGraph(numberPlace,numberRecording) {
         labels: ['Agradable','Estático','Molesto', 'Dinámico'],
         datasets: [{
             //-- Extrae del array de modelos de montañas rusas, el número que hay por cada una.
-            //data: uniqueModels.map(currentModel => coasters.filter(coaster => coaster.model === currentModel).length),
             data: newData,
             borderColor: getDataColors(),
             backgroundColor: getDataColors(20)
@@ -41,7 +40,12 @@ function drawScenaryGraph(numberPlace,numberRecording) {
         responsive: true,
         aspectRatio:1,
         plugins: {
-            legend: { position: 'top' }
+            labels:{
+                render: 'percentage',
+                fontColor: 'white',
+                fontStyle: 'bolder'
+            },
+            legend: { position: 'top',labels:{color:'white',fontStyle:'bolder'}}
         }
     }
     const idChart = 'renderRadarChart'+(numberPlace)

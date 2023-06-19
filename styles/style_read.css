@@ -35,7 +35,7 @@
 .scrollable-element {
     scrollbar-color: red yellow;
   }
-#button_select_quiz{
+button[id^=button_select_quiz]{
     width: 100px;
     min-width: fit-content;
     height: 50px;
@@ -46,6 +46,11 @@
     background-color: rgb(34, 34, 34);
     color: #ffff;
     margin-right: 1vh;
+}
+button[id^=button_select_quiz]:hover{
+    cursor: pointer;
+    background-color: rgb(139, 139, 139);
+    color: #000000;
 }
 a[id^="home_reference"]{
     display: none;

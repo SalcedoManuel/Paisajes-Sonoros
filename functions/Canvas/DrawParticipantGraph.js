@@ -33,7 +33,7 @@ function drawParticipantGraph(option) {
     
         const options = {
             plugins: {
-                legend: { display: false,color: 'white' }
+                legend: { display: false,labels:{color:'white',fontStyle:'bolder'} }
             },
             scales: {
                 x: {
@@ -106,7 +106,12 @@ function drawParticipantGraph(option) {
     
         const options = {
             plugins: {
-                legend: { position: 'top'}
+                labels:{
+                    render: 'percentage',
+                    fontColor: 'white',
+                    fontStyle: 'bolder'
+                },
+                legend: { position: 'top',labels:{color:'white',fontStyle:'bolder'}}
             }
         }
         new Chart('participantChart',{type: 'doughnut',data,options})
@@ -114,13 +119,13 @@ function drawParticipantGraph(option) {
     let text = "";
     switch (Math.floor(option)) {
         case 0:
-            text = "• En el gráfico anterior se muestra la puntuación obtenida en los test de la OMS sobre detección auditiva. Este test va de cero (NO REALIZADO) a 100.";
+            text = "• En el gráfico de arriba se muestra la puntuación obtenida en los test de la OMS sobre detección auditiva. Este test va de cero (NO REALIZADO) a 100.";
             break;
         case 1:
-            text = "• En el gráfico anterior se muestra el conocimiento sobre la región o la zona de la realización del estudio."
+            text = "• En el gráfico de arriba se muestra el conocimiento sobre la región o la zona de la realización del estudio."
             break; 
         case 2:
-            text = "• En el gráfico anterior se muestra la formación en acústica de los participantes."
+            text = "• En el gráfico de arriba se muestra la formación en acústica de los participantes."
             break;   
 
     }

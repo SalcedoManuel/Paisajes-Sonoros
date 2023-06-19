@@ -41,6 +41,7 @@ function LoadFileQuiz(){
 electron.ipcRenderer.on('load_quizs_opened', (event, message) => { 
     console.log("Recibido la lista de quizs creados: " + message);
     load_quizs_opened = message;
+    document.getElementById("results_button").style.display = "block";
     //Abremos recibido un array de Cuestionarios Creados.
     CloseFileQuiz();
     if (load_quizs_opened.length == 0) {
@@ -99,6 +100,7 @@ function TreatmentFileQuiz(informationQuiz) {
 
 
 function OpenFileQuiz() {
+    document.getElementById("results_button").style.display = "none";
     document.getElementById("getInputQuizFile").style.display = "block";
 }
 function CloseFileQuiz() {

@@ -327,47 +327,69 @@ function save_file_app() {
     electron.ipcRenderer.invoke('completed_quiz', temporal_quiz);
     document.getElementById("wrapper2").innerHTML = '<a href='+'"index.html"'+'><button style="width:300px;height:50px;"><strong>Cuestionario Finalizado Volver al Inicio</strong></button></a>';
 }
+function addTableIdInit(){
+    var text = '<table id="support_examples_table">';
+    return text;
+}
+function addTableIdFinish(){
+    var text = "</table>";
+    return text
+}
+function addPleasantExample(){
+    var text = '<div style="text-align: center;margin: 0 auto;width: 180px;">'+
+                    '<div id="div_support" onclick="functions_quiz.show_audio(0)"><h4>Audio Agradable <img id="img_pleasant"style="width: 12px;" src="images/down-arrow.png" alt="" srcset=""></h4></div>'+
+                    '<div id="support_pleasant" style="text-align: center;margin: 0 auto;width: 180px;">'+
+                        '<audio id="audio_support_pleasant" controls loop style="width: 180px;"><source src="../examples/Pleasant/Agradable.wav"></audio>'+
+                    '</div>'+
+                '</div>';
+    return text
+}
+function addAnnoyingExample(){
+    var text = '<div style="text-align: center;margin: 0 auto;width: 180px;">'+
+                    '<div id="div_support" onclick="functions_quiz.show_audio(2)"><h4> Audio Desagradable <img id="img_annoying"style="width: 12px;" src="images/down-arrow.png" alt="" srcset=""></h4></div>'+
+                    '<div id="support_annoying" style="text-align: center;margin: 0 auto;width: 180px;">'+
+                        '<audio id="audio_support_annoying" controls loop style="width: 180px;"><source src="../examples/Annoying/Molesto.wav"></audio>'+
+                    '</div>'+
+                '</div>'
+    return text;
+}
+function addDinamicExample(){
+    var text = '<div style="text-align: center;margin: 0 auto;width: 180px;">'+
+                    '<div id="div_support" onclick="functions_quiz.show_audio(3)"><h4> Audio Dinámico <img id="img_eventful"style="width: 12px;" src="images/down-arrow.png" alt="" srcset=""></h4></div>'+
+                    '<div id="support_eventful" style="text-align: center;margin: 0 auto;width: 180px;">'+
+                        '<audio id="audio_support_eventful" controls loop style="width: 180px;"><source src="../examples/Eventful/Eventful.wav"></audio>'+
+                    '</div>'+
+                '</div>'
 
+    return text
+}
+function addUneventfulExample(){
+    var text =  '<div style="text-align: center;margin: 0 auto;width: 180px;">'+
+                    '<div id="div_support" onclick="functions_quiz.show_audio(1)"><h4>Audio Estático <img id="img_uneventful"style="width: 12px;" src="images/down-arrow.png" alt="" srcset=""></h4></div>'+
+                    '<div id="support_uneventful" style="text-align: center;margin: 0 auto;width: 180px;">'+
+                        '<audio id="audio_support_uneventful" controls loop style="width: 180px;"><source src="../examples/Uneventful/No_definido.wav"></audio>'+
+                    '</div>'+
+                '</div>'
+
+    return text
+}
 function add_support_examples() {
-    var text = '<table><tr>'+
-                    '<td>'+
-                        '<div style="text-align: center;margin: 0 auto;width: 180px;">'+
-                            '<div id="div_support" onclick="functions_quiz.show_audio(0)"><h4>Audio Agradable <img id="img_pleasant"style="width: 12px;" src="images/down-arrow.png" alt="" srcset=""></h4></div>'+
-                            '<div id="support_pleasant" style="text-align: center;margin: 0 auto;width: 180px;">'+
-                                '<audio id="audio_support_pleasant" controls loop style="width: 180px;"><source src="../examples/Pleasant/Agradable.wav"></audio>'+
-                            '</div>'+
-                        '</div>'+
-                    '</td>'+
-                    '<td>'+
-                        '<div style="text-align: center;margin: 0 auto;width: 180px;">'+
-                            '<div id="div_support" onclick="functions_quiz.show_audio(1)"><h4>Audio Estático <img id="img_uneventful"style="width: 12px;" src="images/down-arrow.png" alt="" srcset=""></h4></div>'+
-                            '<div id="support_uneventful" style="text-align: center;margin: 0 auto;width: 180px;">'+
-                                '<audio id="audio_support_uneventful" controls loop style="width: 180px;"><source src="../examples/Uneventful/No_definido.wav"></audio>'+
-                            '</div>'+
-                        '</div>'+
-                    '</td>'+
-                    '<td>'+
-                        '<div style="text-align: center;margin: 0 auto;width: 180px;">'+
-                            '<div id="div_support" onclick="functions_quiz.show_audio(2)"><h4> Audio Desagradable <img id="img_annoying"style="width: 12px;" src="images/down-arrow.png" alt="" srcset=""></h4></div>'+
-                            '<div id="support_annoying" style="text-align: center;margin: 0 auto;width: 180px;">'+
-                                '<audio id="audio_support_annoying" controls loop style="width: 180px;"><source src="../examples/Annoying/Molesto.wav"></audio>'+
-                            '</div>'+
-                        '</div>'+
-                    '</td>'+
-                    '<td>'+
-                        '<div style="text-align: center;margin: 0 auto;width: 180px;">'+
-                            '<div id="div_support" onclick="functions_quiz.show_audio(3)"><h4> Audio Dinámico <img id="img_eventful"style="width: 12px;" src="images/down-arrow.png" alt="" srcset=""></h4></div>'+
-                            '<div id="support_eventful" style="text-align: center;margin: 0 auto;width: 180px;">'+
-                                '<audio id="audio_support_eventful" controls loop style="width: 180px;"><source src="../examples/Eventful/Eventful.wav"></audio>'+
-                            '</div>'+
-                        '</div>'+
-                    '</td>'+
-                '</tr></table><hr>';
+    var text = addTableIdInit()+'<tr>'+
+                    '<td id="firstExample">'+ addPleasantExample()+'</td>'+
+                    '<td id="secondExample">'+ addUneventfulExample()+'</td>'+
+                    '<td id="thirdExample">'+ addAnnoyingExample()+'</td>'+
+                    '<td id="fourthExample">'+addDinamicExample()+'</td>'+
+                '</tr>'+addTableIdFinish()+'<hr>';
     return text;
 }
 
 function show_audio(value) {
 
+    //-- Apagamos todos los audios primero.
+    document.getElementById("firstExample").innerHTML = addPleasantExample();
+    document.getElementById("secondExample").innerHTML = addUneventfulExample();
+    document.getElementById("thirdExample").innerHTML = addAnnoyingExample();
+    document.getElementById("fourthExample").innerHTML = addDinamicExample();
     var text_id = "";
 
     switch (value) {
