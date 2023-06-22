@@ -1,1 +1,86 @@
-{"Name_Quiz":"Online-Video","Number_Places":2,"Number_Recordings":3,"File_Location_Online":true,"ID_Quiz":1672007570,"files":[{"Name_Scenary":"Ciutadella","Name_recordings":["Móvil","binaural","micrófono"],"audio_files":[],"visual_files":["https://www.youtube.com/embed/sofYlP-w-AE","https://www.youtube.com/embed/r--I86c-kPE","https://www.youtube.com/embed/B9oJtGJ1_WY"]},{"Name_Scenary":"Maó","Name_recordings":["Móvil","binaural","micrófono"],"audio_files":[],"visual_files":["https://www.youtube.com/embed/NkpLBige7X0","https://www.youtube.com/embed/U3LbZ3MTfQw","https://www.youtube.com/embed/HsYuvWc5gNs"]},{"Name_Scenary":"Metropolitano","Name_recordings":["Móvil","binaural","micrófono"],"audio_files":["default.mp3"],"visual_files":["default.png"]}],"questions":[{"1":"Introduce aquí tu puntuación auditiva obtenida en el test hearWHO"},{"1":"¿En qué medida estás de acuerdo o en desacuerdo con los siguientes 8 adjetivos como descriptores del entorno acústico que escuchas?","2":"En general, ¿Cómo describirías la calidad acústica del entorno que escuchas?","3":"¿Cuánto tiempo permanecerías en un lugar con un ambiente sonoro como este?","4":"¿Para cuál de los siguientes contextos urbanos crees que es adecuado el entorno acústico que escuchas?","5":"¿A qué período del año crees que se corresponde el entorno sonoro que escuchas?"},{"1":"¿Conoces Menorca?¿En qué grado estás familiarizado/a o relacionado/a con la isla?","2":"¿Tienes algún tipo de conocimiento o formación en Acústica?"}],"questions_replies":[{"1":"Introduce aquí tu puntuación auditiva obtenida en el test hearWHO"},{"1":"Agradable/Placentero","2":"Sin Actividad/Estático","3":"Desagradable/Molesto","4":"Con Actividad/Dinámico","5":"En general, ¿Cómo describirías la calidad acústica del entorno que escuchas?","6":"¿Cuánto tiempo permanecerías en un lugar con un ambiente sonoro como este?","7":"¿Para cuál de los siguientes contextos urbanos crees que es adecuado el entorno acústico que escuchas?","8":"¿A qué período del año crees que se corresponde el entorno sonoro que escuchas?"},{"1":"¿Conoces Menorca?¿En qué grado estás familiarizado/a o relacionado/a con la isla?","2":"¿Tienes algún tipo de conocimiento o formación en Acústica?"}]}
+{
+    "Name_Quiz": "Online-Video",
+    "Number_Places": 2,
+    "Number_Recordings": 3,
+    "File_Location_Online": true,
+    "ID_Quiz": 1672007570,
+    "files": [
+        {
+            "Name_Scenary": "Ciutadella",
+            "Name_recordings": [
+                "Móvil",
+                "binaural",
+                "micrófono"
+            ],
+            "audio_files": [],
+            "visual_files": [
+                "https://www.youtube.com/embed/B9oJtGJ1_WY",
+                "https://www.youtube.com/embed/r--I86c-kPE",
+                "https://www.youtube.com/embed/sofYlP-w-AE"
+            ]
+        },
+        {
+            "Name_Scenary": "Maó",
+            "Name_recordings": [
+                "Móvil",
+                "binaural",
+                "micrófono"
+            ],
+            "audio_files": [],
+            "visual_files": [
+                "https://www.youtube.com/embed/HsYuvWc5gNs",
+                "https://www.youtube.com/embed/U3LbZ3MTfQw",
+                "https://www.youtube.com/embed/NkpLBige7X0"
+            ]
+        },
+        {
+            "Name_Scenary": "Metropolitano",
+            "Name_recordings": [
+                "Móvil",
+                "binaural",
+                "micrófono"
+            ],
+            "audio_files": [
+                "default.mp3"
+            ],
+            "visual_files": [
+                "default.png"
+            ]
+        }
+    ],
+    "questions": [
+        {
+            "1": "Introduce aquí tu puntuación auditiva obtenida en el test hearWHO"
+        },
+        {
+            "1": "¿En qué medida estás de acuerdo o en desacuerdo con los siguientes 8 adjetivos como descriptores del entorno acústico que escuchas?",
+            "2": "En general, ¿Cómo describirías la calidad acústica del entorno que escuchas?",
+            "3": "¿Cuánto tiempo permanecerías en un lugar con un ambiente sonoro como este?",
+            "4": "¿Para cuál de los siguientes contextos urbanos crees que es adecuado el entorno acústico que escuchas?",
+            "5": "¿A qué período del año crees que se corresponde el entorno sonoro que escuchas?"
+        },
+        {
+            "1": "¿Conoces Menorca?¿En qué grado estás familiarizado/a o relacionado/a con la isla?",
+            "2": "¿Tienes algún tipo de conocimiento o formación en Acústica?"
+        }
+    ],
+    "questions_replies": [
+        {
+            "1": "Introduce aquí tu puntuación auditiva obtenida en el test hearWHO"
+        },
+        {
+            "1": "Agradable/Placentero",
+            "2": "Sin Actividad/Estático",
+            "3": "Desagradable/Molesto",
+            "4": "Con Actividad/Dinámico",
+            "5": "En general, ¿Cómo describirías la calidad acústica del entorno que escuchas?",
+            "6": "¿Cuánto tiempo permanecerías en un lugar con un ambiente sonoro como este?",
+            "7": "¿Para cuál de los siguientes contextos urbanos crees que es adecuado el entorno acústico que escuchas?",
+            "8": "¿A qué período del año crees que se corresponde el entorno sonoro que escuchas?"
+        },
+        {
+            "1": "¿Conoces Menorca?¿En qué grado estás familiarizado/a o relacionado/a con la isla?",
+            "2": "¿Tienes algún tipo de conocimiento o formación en Acústica?"
+        }
+    ]
+}
