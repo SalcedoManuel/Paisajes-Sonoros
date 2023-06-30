@@ -17,6 +17,8 @@
     <script src="scripts/SetAdminMode.js" defer></script>
     <script src="scripts/NavigationOption.js" defer></script>
     <script src="functions/Canvas/Canvas.js" defer></script>
+    <script src="functions/Canvas/DrawChronologyGraph.js" defer></script>
+    <script src="functions/Canvas/DrawParticipantGraph.js" defer></script>
 
     <title>Soundscape Questionnaire</title>
 </head>
@@ -106,7 +108,9 @@
             <h2>
               Cronología de la Recogida de los Resultados
             </h2>
-            <canvas id="chronologyChart"></canvas>
+            <div id="chronologyCanvas">
+              <canvas id="chronologyChart"></canvas>
+            </div>
             <h4 id="chronologyText">• En esta cronología se muestra el volumen de encuestas por día siendo el eje abscisas las fechas donde se realizaron cuestionarios y el eje de ordenadas el volumen de cuestionarios realizados ese día.</h4>           
         </figure>
       </section>
